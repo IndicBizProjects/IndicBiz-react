@@ -1,16 +1,30 @@
-# React + Vite
+# IndicBiz
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> **Note**: This project is currently in **development**.
 
-Currently, two official plugins are available:
+## Environment Requirements
+- **Node.js**: v22.16.0
+- **npm**: 10.9.2
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Available Commands
 
-## React Compiler
+In the project directory, you can run:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### `npm install`
+Installs all the required dependencies for the project. Make sure to run this first after cloning the repository.
 
-## Expanding the ESLint configuration
+### `npm run dev`
+Runs the app in the development mode.
+Open [http://localhost:5173](http://localhost:5173) to view it in your browser.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### `npm run build`
+Builds the app for production to the `dist` folder.
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+## Development Workflow & Branching Strategy
+
+When contributing to this project, please follow the branching strategy below:
+
+1. **Feature Branches**: Create a new branch for your work using the naming convention `feature/<name>`.
+2. **Staging**: All feature branches must first be merged into the `stage` branch for testing and review.
+3. **Main**: Once verified on the staging environment, changes can then be merged into the `main` branch.
