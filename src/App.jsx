@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { Canvas } from '@react-three/fiber';
 import { Environment } from '@react-three/drei';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Menu, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import SceneManager from './components/SceneManager';
@@ -20,6 +20,22 @@ import ScrollToTop from './ui/ScrollToTop';
 function Navbar() {
   const location = useLocation();
   const path = location.pathname;
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [mobileMenuOpen]);
+
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [location]);
 
   return (
     <nav className="navbar container">
@@ -43,9 +59,42 @@ function Navbar() {
           Contact {path === '/contact' && <span style={{display: 'block', textAlign:'center', marginTop:'-8px', fontSize:'24px', color:'var(--text-primary)'}}>•</span>}
         </Link>
       </div>
-      <Link to="/contact" className="btn btn-primary" style={{pointerEvents: 'auto'}}>
-        Let's Talk <ArrowUpRight size={16} />
-      </Link>
+      
+      <div className="nav-right">
+        <Link to="/contact" className="btn btn-primary nav-talk-btn" style={{pointerEvents: 'auto'}}>
+          Let's Talk <ArrowUpRight size={16} />
+        </Link>
+        <button 
+          className="mobile-menu-toggle" 
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      <div className={`mobile-nav-overlay ${mobileMenuOpen ? 'open' : ''}`}>
+        <div className="mobile-nav-links">
+          <Link to="/" className={path === '/' ? 'active' : ''}>
+            Home
+          </Link>
+          <Link to="/services" className={path === '/services' ? 'active' : ''}>
+            Services
+          </Link>
+          <Link to="/about" className={path === '/about' ? 'active' : ''}>
+            About Us
+          </Link>
+          <Link to="/pricing" className={path === '/pricing' ? 'active' : ''}>
+            Pricing
+          </Link>
+          <Link to="/contact" className={path === '/contact' ? 'active' : ''}>
+            Contact
+          </Link>
+          <Link to="/contact" className="btn btn-primary mobile-talk-btn">
+            Let's Talk <ArrowUpRight size={16} />
+          </Link>
+        </div>
+      </div>
     </nav>
   );
 }
