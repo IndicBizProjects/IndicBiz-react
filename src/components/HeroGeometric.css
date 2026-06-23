@@ -1,0 +1,159 @@
+.hero-geometric-section {
+  position: relative;
+  min-height: 100vh;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #030303;
+}
+
+.hero-geo-bg-blur {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 0% 0%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+              radial-gradient(circle at 100% 100%, rgba(244, 63, 94, 0.05) 0%, transparent 50%);
+  filter: blur(60px);
+}
+
+.hero-geo-shapes {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.elegant-shape-wrapper {
+  position: absolute;
+}
+
+.elegant-shape-container {
+  position: relative;
+}
+
+.elegant-shape-inner {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.1);
+}
+
+.elegant-shape-inner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.2), transparent 70%);
+}
+
+.grad-indigo { background: linear-gradient(to right, rgba(255,255,255,0.08), transparent), rgba(99, 102, 241, 0.15); }
+.grad-rose { background: linear-gradient(to right, rgba(255,255,255,0.08), transparent), rgba(244, 63, 94, 0.15); }
+.grad-violet { background: linear-gradient(to right, rgba(255,255,255,0.08), transparent), rgba(139, 92, 246, 0.15); }
+.grad-amber { background: linear-gradient(to right, rgba(255,255,255,0.08), transparent), rgba(245, 158, 11, 0.15); }
+.grad-cyan { background: linear-gradient(to right, rgba(255,255,255,0.08), transparent), rgba(6, 182, 212, 0.15); }
+
+.shape-1 { left: -10%; top: 15%; }
+.shape-2 { right: -5%; top: 70%; }
+.shape-3 { left: 5%; bottom: 5%; }
+.shape-4 { right: 15%; top: 10%; }
+.shape-5 { left: 20%; top: 5%; }
+
+@media (min-width: 768px) {
+  .shape-1 { left: -5%; top: 20%; }
+  .shape-2 { right: 0%; top: 75%; }
+  .shape-3 { left: 10%; bottom: 10%; }
+  .shape-4 { right: 20%; top: 15%; }
+  .shape-5 { left: 25%; top: 10%; }
+}
+
+.hero-geo-content {
+  position: relative;
+  z-index: 10;
+  padding: 0 1rem;
+}
+
+.hero-geo-text-center {
+  max-width: 48rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.hero-geo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1.2rem;
+  border-radius: 9999px;
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 2rem;
+}
+
+.hero-geo-circle {
+  fill: rgba(244, 63, 94, 0.8);
+  color: rgba(244, 63, 94, 0.8);
+}
+
+.hero-geo-badge span {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.05em;
+  text-transform: none;
+}
+
+.hero-geo-title {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 700;
+  margin-bottom: 2rem;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+
+.hero-geo-title1 {
+  background: linear-gradient(to bottom, #ffffff, rgba(255, 255, 255, 0.8));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-geo-title2 {
+  background: linear-gradient(to right, #a5b4fc, rgba(255, 255, 255, 0.9), #fda4af);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-geo-subtitle {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 2rem;
+  line-height: 1.625;
+  font-weight: 300;
+  letter-spacing: 0.025em;
+  max-width: 36rem;
+  margin-inline: auto;
+}
+
+.hero-geo-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+  .hero-geo-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.hero-geo-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, #030303, transparent, rgba(3, 3, 3, 0.8));
+  pointer-events: none;
+}

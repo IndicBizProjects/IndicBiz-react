@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;800;900&display=swap');
+
+.indic-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.absolute {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.indic-text-svg {
+  width: 100%;
+  max-width: 600px;
+  display: inline-block;
+  overflow: visible;
+}
+
+.indic-logo-text {
+  /* Using Nunito for perfectly rounded, sleek letters */
+  font-family: 'Nunito', sans-serif;
+  
+  /* We use an extremely thin font weight so the outline paths are practically touching */
+  font-weight: 200;
+  font-size: 240px;
+  fill: transparent;
+  
+  /* A very thick stroke overlaps the hollow space, creating the illusion of a single solid, bold line! */
+  stroke-width: 14px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  letter-spacing: 2px;
+}
+
+.indic-dash {
+  animation: indicDashArray 3s ease-in-out infinite,
+             indicDashOffset 3s linear infinite;
+}
+
+@keyframes indicDashArray {
+  0% { stroke-dasharray: 0 1 800 0; }
+  50% { stroke-dasharray: 0 800 1 0; }
+  100% { stroke-dasharray: 800 1 0 0; }
+}
+
+@keyframes indicDashOffset {
+  0% { stroke-dashoffset: 800; }
+  100% { stroke-dashoffset: 0; }
+}
