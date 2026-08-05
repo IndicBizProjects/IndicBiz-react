@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title">
+  <title id="title">Hospitality brand website placeholder</title>
+  <rect width="1200" height="675" fill="#ead9c7"/><rect x="40" y="36" width="1120" height="603" rx="28" fill="#fbfaf6"/>
+  <rect x="40" y="36" width="1120" height="68" rx="28" fill="#7b4d45"/><circle cx="84" cy="70" r="12" fill="#e5bf83"/>
+  <rect x="90" y="154" width="450" height="360" rx="100" fill="#d1a3a4"/><circle cx="315" cy="334" r="120" fill="#7b4d45" opacity=".55"/>
+  <rect x="630" y="170" width="390" height="32" rx="8" fill="#7b4d45"/><rect x="630" y="222" width="300" height="32" rx="8" fill="#7b4d45"/>
+  <rect x="630" y="286" width="420" height="13" rx="6" fill="#9c8178"/><rect x="630" y="316" width="350" height="13" rx="6" fill="#9c8178"/>
+  <rect x="630" y="380" width="160" height="52" rx="26" fill="#7b4d45"/><rect x="812" y="380" width="160" height="52" rx="26" fill="none" stroke="#7b4d45" stroke-width="3"/>
+  <rect x="90" y="558" width="960" height="1" fill="#c8b5a5"/><text x="90" y="600" fill="#7b4d45" font-family="Georgia,serif" font-size="22">YOUR HOSPITALITY PROJECT</text>
+</svg>

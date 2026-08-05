@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title">
+  <title id="title">Creative studio website placeholder</title>
+  <rect width="1200" height="675" fill="#0b261a"/><circle cx="1030" cy="95" r="180" fill="#a8bd65" opacity=".24"/>
+  <rect x="60" y="42" width="116" height="18" rx="9" fill="#f3f0e8"/><g fill="#86b99d"><rect x="780" y="46" width="72" height="10" rx="5"/><rect x="880" y="46" width="72" height="10" rx="5"/><rect x="980" y="46" width="72" height="10" rx="5"/></g>
+  <rect x="60" y="152" width="630" height="48" rx="12" fill="#f3f0e8"/><rect x="60" y="218" width="510" height="48" rx="12" fill="#f3f0e8"/>
+  <rect x="60" y="306" width="350" height="16" rx="8" fill="#86b99d"/><rect x="60" y="342" width="290" height="16" rx="8" fill="#86b99d"/>
+  <rect x="60" y="410" width="500" height="190" rx="24" fill="#f3f0e8"/><rect x="590" y="350" width="550" height="250" rx="24" fill="#a8bd65"/>
+  <circle cx="865" cy="475" r="78" fill="#0b261a" opacity=".35"/>
+</svg>

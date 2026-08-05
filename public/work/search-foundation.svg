@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title">
+  <title id="title">Search and growth dashboard placeholder</title>
+  <rect width="1200" height="675" fill="#10251b"/><rect x="46" y="42" width="1108" height="590" rx="26" fill="#f3f0e8"/>
+  <rect x="82" y="82" width="300" height="28" rx="8" fill="#10251b"/><rect x="82" y="134" width="190" height="13" rx="6" fill="#506158"/>
+  <g><rect x="82" y="190" width="230" height="116" rx="18" fill="#fff"/><rect x="334" y="190" width="230" height="116" rx="18" fill="#a8bd65"/><rect x="586" y="190" width="230" height="116" rx="18" fill="#fff"/><rect x="838" y="190" width="280" height="116" rx="18" fill="#86b99d"/></g>
+  <rect x="82" y="336" width="680" height="250" rx="18" fill="#fff"/><path d="M120 530 L210 480 L300 500 L390 410 L480 450 L570 350 L700 380" fill="none" stroke="#8fa34e" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="790" y="336" width="328" height="250" rx="18" fill="#fff"/><g fill="#10251b"><rect x="826" y="380" width="220" height="16" rx="8"/><rect x="826" y="430" width="168" height="16" rx="8"/><rect x="826" y="480" width="244" height="16" rx="8"/><rect x="826" y="530" width="190" height="16" rx="8"/></g>
+</svg>
