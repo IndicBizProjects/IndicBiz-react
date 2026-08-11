@@ -149,7 +149,8 @@ function WorkProjectCard({ project, index }) {
   const [hovered, setHovered] = useState(false)
 
   return (
-    <article
+    <Link to={`/work/${project.id}`} style={{ display: 'block', textDecoration: 'none' }}>
+      <article
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       data-cursor="view"
@@ -235,6 +236,7 @@ function WorkProjectCard({ project, index }) {
           ))}
         </div>
       </div>
-    </article>
+      </article>
+    </Link>
   )
 }
