@@ -4,7 +4,7 @@ import FadeIn, { FadeInStagger, StaggerItem } from '../../components/motion/Fade
 import Eyebrow from '../../components/ui/Eyebrow'
 import { WORK_HERO, WORK_FILTERS, WORK_PROJECTS, WORK_SECTIONS, WORK_CTA } from '../../data/work'
 import { Link } from '../../app/router'
-import ImageTrail from '../../components/motion/ImageTrail'
+import Aurora from '../../components/backgrounds/Aurora/Aurora'
 
 const pageVariants = {
   initial: { opacity: 0 },
@@ -26,46 +26,53 @@ export default function WorkContent() {
       <section
         style={{
           background: 'var(--bg-canvas)',
-          backgroundImage: 'radial-gradient(var(--line) 1px, transparent 1px)',
-          backgroundSize: '24px 24px',
           borderBottom: '1px solid var(--line)',
           position: 'relative',
-          overflow: 'hidden'
+          overflow: 'hidden',
+          minHeight: '60vh',
+          display: 'flex',
+          alignItems: 'center'
         }}
       >
-        <ImageTrail 
-          items={[
-            'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1604871000636-074fa5117945?q=80&w=2787&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=2787&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2670&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=2670&auto=format&fit=crop'
-          ]}
-        >
-          <div style={{ padding: 'calc(var(--header-height) + clamp(4rem, 8vw, 7rem)) var(--layout-gutter) clamp(4rem, 8vw, 6rem)', maxWidth: 'var(--layout-max)', margin: '0 auto', position: 'relative', zIndex: 2, pointerEvents: 'none' }}>
-            <FadeIn>
-              <Eyebrow>{WORK_HERO.eyebrow}</Eyebrow>
-              <h1
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  fontWeight: 800,
-                  fontSize: 'var(--text-hero)',
-                  letterSpacing: '-0.04em',
-                  lineHeight: 1.0,
-                  color: 'var(--ink)',
-                  maxWidth: '18ch',
-                  marginTop: '1rem',
-                  marginBottom: '1.5rem',
-                }}
-              >
-                {WORK_HERO.title}
-              </h1>
-              <p style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-body-lg)', color: 'var(--ink-mid)', maxWidth: '52ch', lineHeight: 1.7 }}>
-                {WORK_HERO.description}
-              </p>
-            </FadeIn>
-          </div>
-        </ImageTrail>
+        <div style={{ position: 'absolute', inset: 0, zIndex: 1, opacity: 0.8 }}>
+          <Aurora 
+            colorStops={["#00FFFF", "#0088FF", "#0000FF"]} 
+            amplitude={1.2}
+            blend={0.5}
+          />
+        </div>
+        <div style={{ 
+          position: 'absolute', 
+          inset: 0, 
+          zIndex: 2, 
+          background: 'radial-gradient(var(--line) 1px, transparent 1px)',
+          backgroundSize: '24px 24px',
+          opacity: 0.5
+        }} />
+        
+        <div style={{ padding: 'calc(var(--header-height) + 2rem) var(--layout-gutter) clamp(4rem, 8vw, 6rem)', maxWidth: 'var(--layout-max)', margin: '0 auto', position: 'relative', zIndex: 3 }}>
+          <FadeIn>
+            <Eyebrow style={{ color: '#000' }}>{WORK_HERO.eyebrow}</Eyebrow>
+            <h1
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontWeight: 800,
+                fontSize: 'var(--text-hero)',
+                letterSpacing: '-0.04em',
+                lineHeight: 1.0,
+                color: 'var(--ink)',
+                maxWidth: '18ch',
+                marginTop: '1rem',
+                marginBottom: '1.5rem',
+              }}
+            >
+              {WORK_HERO.title}
+            </h1>
+            <p style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-body-lg)', color: 'var(--ink-mid)', maxWidth: '52ch', lineHeight: 1.7 }}>
+              {WORK_HERO.description}
+            </p>
+          </FadeIn>
+        </div>
       </section>
 
       {/* Projects */}

@@ -3,7 +3,7 @@ import FadeIn, { FadeInStagger, StaggerItem } from '../../components/motion/Fade
 import Eyebrow from '../../components/ui/Eyebrow'
 import { ABOUT_HERO, VALUES, TEAM, STORY, ABOUT_SECTIONS, ABOUT_CTA } from '../../data/about'
 import { Link } from '../../app/router'
-import ColorBends from '../../components/motion/ColorBends'
+import Particles from '../../components/backgrounds/Particles/Particles'
 import DecryptedText from '../../components/motion/DecryptedText'
 
 const pageVariants = {
@@ -31,13 +31,20 @@ export default function AboutContent() {
         }}
       >
         <div style={{ position: 'absolute', inset: 0, zIndex: 0, opacity: 0.6 }}>
-          <ColorBends 
-            colors={['#171618', '#e8e6e3', '#314438']}
-            speed={0.3}
-            transparent={false}
-            intensity={1.2}
+          <Particles
+            particleColors={['#ffffff', '#ffffff']}
+            particleCount={300}
+            particleSpread={10}
+            speed={0.1}
+            particleBaseSize={100}
+            moveParticlesOnHover={true}
+            alphaParticles={true}
+            disableRotation={false}
           />
         </div>
+        
+        {/* Soft radial gradient to ensure text readability */}
+        <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'radial-gradient(circle at center, transparent 0%, var(--bg-dark) 80%)', pointerEvents: 'none' }} />
         <div style={{ maxWidth: 'var(--layout-max)', margin: '0 auto', position: 'relative', zIndex: 1, width: '100%' }}>
           <FadeIn>
             <Eyebrow light>About IndicBiz</Eyebrow>

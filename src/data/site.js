@@ -24,6 +24,7 @@ export const PRIMARY_NAV = [
   { label: 'Our Work', to: '/work' },
   { label: 'About', to: '/about' },
   { label: 'Pricing', to: '/pricing' },
+  { label: 'UI Catalog', to: '/ui-catalog' },
   { label: 'Contact', to: '/contact' },
 ]
 
@@ -70,6 +71,10 @@ export const ROUTE_META = {
   '/contact': {
     title: 'Start a project — IndicBiz',
     description: 'Tell IndicBiz what you are building and get a thoughtful project response.',
+  },
+  '/ui-catalog': {
+    title: 'UI Design Catalog — IndicBiz',
+    description: 'Explore our design components, templates, and styles directly from the source.',
   },
 }
 

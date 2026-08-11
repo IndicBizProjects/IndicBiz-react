@@ -4,7 +4,7 @@ import Eyebrow from '../../components/ui/Eyebrow'
 import MarqueeStrip from '../../components/motion/MarqueeStrip'
 import { SERVICES, SERVICES_PAGE, SERVICE_PROCESS } from '../../data/services'
 import { Link } from '../../app/router'
-import GridMotion from '../../components/motion/GridMotion'
+import Topography from '../../components/backgrounds/Topography/Topography'
 import BlurText from '../../components/motion/BlurText'
 const pageVariants = {
   initial: { opacity: 0 },
@@ -29,17 +29,17 @@ export default function ServicesContent() {
           borderBottom: '1px solid var(--line)',
         }}
       >
-        <div style={{ position: 'absolute', inset: 0, zIndex: 0, opacity: 0.2, pointerEvents: 'none' }}>
-          <GridMotion items={[
-             'Brand Identity', 'Web Experiences', 'Product Design', 'Growth & SEO',
-             'Creative Strategy', 'Motion Design', 'Digital Clarity', 'Frontend Engineering',
-             'Prototyping', 'User Research', 'Content Strategy', 'Design Systems',
-             'Brand Identity', 'Web Experiences', 'Product Design', 'Growth & SEO',
-             'Creative Strategy', 'Motion Design', 'Digital Clarity', 'Frontend Engineering',
-             'Prototyping', 'User Research', 'Content Strategy', 'Design Systems',
-             'Brand Identity', 'Web Experiences', 'Product Design', 'Growth & SEO'
-          ]} gradientColor="var(--bg-canvas)" />
+        <div style={{ position: 'absolute', inset: 0, zIndex: 0, opacity: 0.15, pointerEvents: 'none' }}>
+          <Topography 
+            baseColor="#00FFFF"
+            contourColor="#000000"
+            animate={true}
+            speed={0.5}
+          />
         </div>
+        
+        {/* Soft radial gradient to ensure text readability */}
+        <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'radial-gradient(circle at center, transparent 0%, var(--bg-canvas) 80%)', pointerEvents: 'none' }} />
 
         <div style={{ position: 'relative', zIndex: 2, maxWidth: 'var(--layout-max)', margin: '0 auto', width: '100%', padding: '0 var(--layout-gutter)' }}>
           <FadeIn>
