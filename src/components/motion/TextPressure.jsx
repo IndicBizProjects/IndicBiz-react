@@ -36,7 +36,7 @@ export default function TextPressure({
   scale = false,
 
   textColor = '#0E0E0C',
-  strokeColor = '#C8F04A',
+  strokeColor = '#D1CECA',
   className = '',
 
   minFontSize = 24

@@ -22,9 +22,9 @@
   --ink-inv-soft:    #8A8880;   /* muted text on dark */
 
   /* ── Accent ── */
-  --accent:          #C8F04A;   /* acid green — CTAs, highlights */
-  --accent-dark:     #A8CC30;   /* darker green for hover */
-  --accent-warm:     #E8C87A;   /* amber — secondary accent */
+  --accent:          #D1CECA;   /* gray — CTAs, highlights */
+  --accent-dark:     #8C8881;   /* darker gray for hover */
+  --accent-warm:     #E8E5E1;   /* light gray — secondary accent */
 
   /* ── Borders ── */
   --line:            rgba(14, 14, 12, 0.10);   /* light section borders */
