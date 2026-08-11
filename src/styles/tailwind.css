@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+/*
+ * Tailwind v4 @theme — mapped to new IndicBiz design tokens
+ */
+@theme {
+  /* Colors */
+  --color-canvas:       #F5F0E8;
+  --color-surface:      #FDFCF9;
+  --color-dark:         #0A0A08;
+  --color-dark-mid:     #141412;
+  --color-dark-card:    #1C1C19;
+  --color-ink:          #0E0E0C;
+  --color-ink-mid:      #3A3834;
+  --color-ink-soft:     #6B6760;
+  --color-ink-inv:      #F0EDE6;
+  --color-ink-inv-soft: #8A8880;
+  --color-accent:       #C8F04A;
+  --color-accent-dark:  #A8CC30;
+  --color-accent-warm:  #E8C87A;
+
+  /* Fonts */
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-body:    "Inter", system-ui, sans-serif;
+  --font-mono:    "JetBrains Mono", monospace;
+}

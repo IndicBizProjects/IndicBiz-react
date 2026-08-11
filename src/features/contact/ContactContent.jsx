@@ -1,191 +1,263 @@
-import { Eyebrow, Section, SectionHeader } from '../../components/primitives/ui'
-import SlideSection from '../../components/motion/SlideSection'
-import {
-  BUDGET_OPTIONS,
-  CONTACT_CHANNELS,
-  CONTACT_HERO,
-  CONTACT_PROCESS,
-  CONTACT_SECTIONS,
-  FORM_COPY,
-  FORM_STEPS,
-  PROJECT_PREP,
-  PROJECT_TYPES,
-  TIMELINE_OPTIONS,
-} from '../../data/contact'
-import { BRAND } from '../../data/site'
-import { useProjectForm } from '../../hooks/useProjectForm'
-import { createEnquiryMailto } from '../../services/contactService'
-import styles from '../shared/pages.module.css'
+import { useState } from 'react'
+import { motion } from 'framer-motion'
+import FadeIn from '../../components/motion/FadeIn'
+import Eyebrow from '../../components/ui/Eyebrow'
+import { CONTACT_HERO, CONTACT_CHANNELS, PROJECT_TYPES, BUDGET_OPTIONS, TIMELINE_OPTIONS, FORM_COPY } from '../../data/contact'
+import SplashCursor from '../../components/motion/SplashCursor'
+import Magnet from '../../components/motion/Magnet'
 
-function ChoiceGroup({ options, selected, onSelect, multiple = false }) {
-  return (
-    <div className={styles.choices}>
-      {options.map((option) => {
-        const active = multiple ? selected.includes(option) : selected === option
-        return (
-          <button
-            type="button"
-            className={`${styles.choice} ${active ? styles.choiceSelected : ''}`}
-            aria-pressed={active}
-            key={option}
-            onClick={() => onSelect(option)}
-          >
-            {option}
-          </button>
-        )
-      })}
-    </div>
-  )
+const pageVariants = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1, transition: { duration: 0.4 } },
+  exit: { opacity: 0, transition: { duration: 0.25 } },
 }
 
-function ProjectForm() {
-  const form = useProjectForm()
-  const panel = FORM_COPY.panels[form.step]
+const inputStyle = {
+  width: '100%',
+  padding: '0.875rem 1rem',
+  borderRadius: 'var(--radius-md)',
+  border: '1.5px solid var(--line-mid)',
+  background: 'var(--bg-surface)',
+  color: 'var(--ink)',
+  fontFamily: 'var(--font-body)',
+  fontSize: '1rem',
+  outline: 'none',
+  transition: 'border-color 0.2s',
+  boxSizing: 'border-box',
+}
 
-  if (form.status === 'success') {
-    const mailto = createEnquiryMailto(form.values, BRAND.email)
-    return (
-      <div className={styles.form} role="status">
-        <div className={styles.formPanel}>
-          <h2>{FORM_COPY.success.title}</h2>
-          <p>{form.result.delivered ? FORM_COPY.success.delivered : FORM_COPY.success.fallback}</p>
-          {!form.result.delivered && <a href={mailto}>{FORM_COPY.success.action}</a>}
-        </div>
-      </div>
-    )
-  }
-
-  return (
-    <form className={styles.form} onSubmit={form.submit} noValidate>
-      <div className={styles.stepper} aria-label={CONTACT_SECTIONS.progressLabel}>
-        {FORM_STEPS.map((item, index) => (
-          <span className={index === form.step ? styles.stepActive : ''} key={item.number}>
-            {item.number}. {item.label}
-          </span>
-        ))}
-      </div>
-      <div className={styles.formPanel}>
-        <div>
-          <h2>{panel.title}</h2>
-          <p>{panel.description}</p>
-        </div>
-
-        {form.step === 0 && (
-          <>
-            <div role="group" aria-describedby={form.errors.service ? 'service-error' : undefined}>
-              <ChoiceGroup options={PROJECT_TYPES} selected={form.values.services} onSelect={form.toggleService} multiple />
-            </div>
-            {form.errors.service && <p className={styles.error} id="service-error">{form.errors.service}</p>}
-          </>
-        )}
-
-        {form.step === 1 && (
-          <div className={styles.fieldGrid}>
-            <div className={styles.field}>
-              <label htmlFor="name">{FORM_COPY.fields.name}</label>
-              <input id="name" value={form.values.name} onChange={(event) => form.update('name', event.target.value)} autoComplete="name" aria-invalid={Boolean(form.errors.name)} aria-describedby={form.errors.name ? 'name-error' : undefined} />
-              {form.errors.name && <p className={styles.error} id="name-error">{form.errors.name}</p>}
-            </div>
-            <div className={styles.field}>
-              <label htmlFor="email">{FORM_COPY.fields.email}</label>
-              <input id="email" type="email" value={form.values.email} onChange={(event) => form.update('email', event.target.value)} autoComplete="email" aria-invalid={Boolean(form.errors.email)} aria-describedby={form.errors.email ? 'email-error' : undefined} />
-              {form.errors.email && <p className={styles.error} id="email-error">{form.errors.email}</p>}
-            </div>
-            <div className={`${styles.field} ${styles.fieldFull}`}>
-              <label htmlFor="company">{FORM_COPY.fields.company}</label>
-              <input id="company" value={form.values.company} onChange={(event) => form.update('company', event.target.value)} autoComplete="organization" />
-            </div>
-          </div>
-        )}
-
-        {form.step === 2 && (
-          <div className={styles.fieldGrid}>
-            <div className={styles.field}>
-              <label htmlFor="budget">{FORM_COPY.fields.budget}</label>
-              <select id="budget" value={form.values.budget} onChange={(event) => form.update('budget', event.target.value)}>
-                {BUDGET_OPTIONS.map((option) => <option key={option}>{option}</option>)}
-              </select>
-            </div>
-            <div className={styles.field}>
-              <label htmlFor="timeline">{FORM_COPY.fields.timeline}</label>
-              <select id="timeline" value={form.values.timeline} onChange={(event) => form.update('timeline', event.target.value)}>
-                {TIMELINE_OPTIONS.map((option) => <option key={option}>{option}</option>)}
-              </select>
-            </div>
-          </div>
-        )}
-
-        {form.step === 3 && (
-          <div className={styles.field}>
-            <label htmlFor="message">{FORM_COPY.fields.message}</label>
-            <textarea id="message" value={form.values.message} onChange={(event) => form.update('message', event.target.value)} />
-          </div>
-        )}
-      </div>
-      {form.errors.submit && <p className={styles.error}>{form.errors.submit}</p>}
-      <div className={styles.formActions}>
-        <button type="button" onClick={form.back} disabled={form.step === 0}>{FORM_COPY.actions.back}</button>
-        {form.step < FORM_STEPS.length - 1 ? (
-          <button type="button" onClick={form.next}>{FORM_COPY.actions.next}</button>
-        ) : (
-          <button type="submit" disabled={form.status === 'sending'}>
-            {form.status === 'sending' ? FORM_COPY.actions.sending : FORM_COPY.actions.submit}
-          </button>
-        )}
-      </div>
-    </form>
-  )
+const labelStyle = {
+  display: 'block',
+  fontFamily: 'var(--font-mono)',
+  fontSize: '0.72rem',
+  letterSpacing: '0.08em',
+  textTransform: 'uppercase',
+  color: 'var(--ink-soft)',
+  marginBottom: '0.5rem',
 }
 
 export default function ContactContent() {
+  const [form, setForm] = useState({ name: '', email: '', company: '', projectType: '', message: '' })
+  const [sent, setSent] = useState(false)
+
+  const handleChange = (e) => setForm(f => ({ ...f, [e.target.name]: e.target.value }))
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    // Simple mailto fallback
+    const body = `Name: ${form.name}\nEmail: ${form.email}\nCompany: ${form.company}\nProject type: ${form.projectType}\n\n${form.message}`
+    window.location.href = `mailto:hello@indicbiz.com?subject=New project enquiry&body=${encodeURIComponent(body)}`
+    setSent(true)
+  }
+
   return (
-    <>
-      <SlideSection className={styles.compactHero}>
-        <Eyebrow>{CONTACT_HERO.eyebrow}</Eyebrow>
-        <h1>{CONTACT_HERO.title}</h1>
-        <p>{CONTACT_HERO.description}</p>
-      </SlideSection>
-      <Section tone="surface">
-        <div className={styles.contactGrid}>
-          <aside>
-            <SectionHeader {...CONTACT_SECTIONS.channels} />
-            <div className={styles.channels}>
+    <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit">
+
+      {/* Hero */}
+      <section
+        style={{
+          background: 'var(--bg-dark)',
+          color: 'var(--ink-inv)',
+          padding: 'calc(var(--header-height) + clamp(4rem, 8vw, 7rem)) var(--layout-gutter) clamp(5rem, 10vw, 9rem)',
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+      >
+        <motion.div
+          aria-hidden="true"
+          animate={{ x: [0, 20, 0], opacity: [0.08, 0.15, 0.08] }}
+          transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+          style={{
+            position: 'absolute',
+            top: '-20%',
+            right: '-5%',
+            width: '50vw',
+            height: '50vw',
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, var(--accent) 0%, transparent 70%)',
+            filter: 'blur(80px)',
+            pointerEvents: 'none',
+          }}
+        />
+        <SplashCursor 
+          SIM_RESOLUTION={128} 
+          DYE_RESOLUTION={1440}
+          COLOR="#a4a29e" // Match our brand accents
+        />
+        <div style={{ maxWidth: 'var(--layout-max)', margin: '0 auto', position: 'relative', zIndex: 2, pointerEvents: 'none' }}>
+          <FadeIn>
+            <Eyebrow light>{CONTACT_HERO.eyebrow}</Eyebrow>
+            <h1
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontWeight: 800,
+                fontSize: 'var(--text-hero)',
+                letterSpacing: '-0.04em',
+                lineHeight: 1.0,
+                color: 'var(--ink-inv)',
+                maxWidth: '16ch',
+                marginTop: '1rem',
+              }}
+            >
+              {CONTACT_HERO.title}
+            </h1>
+          </FadeIn>
+          <FadeIn delay={0.15}>
+            <p style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-body-lg)', color: 'var(--ink-inv-soft)', maxWidth: '48ch', lineHeight: 1.7, marginTop: 'clamp(1.5rem, 3vw, 2rem)' }}>
+              {CONTACT_HERO.description}
+            </p>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* Form + Sidebar */}
+      <section style={{ background: 'var(--bg-canvas)', padding: 'clamp(5rem, 10vw, 9rem) var(--layout-gutter)' }}>
+        <div
+          style={{
+            maxWidth: 'var(--layout-max)',
+            margin: '0 auto',
+            display: 'grid',
+            gridTemplateColumns: '1fr 360px',
+            gap: 'clamp(3rem, 6vw, 6rem)',
+            alignItems: 'start',
+          }}
+        >
+          {/* Form */}
+          <FadeIn>
+            {sent ? (
+              <div style={{ padding: '3rem', borderRadius: 'var(--radius-lg)', background: 'var(--bg-dark)', color: 'var(--ink-inv)', textAlign: 'center' }}>
+                <p style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '2rem', letterSpacing: '-0.04em', marginBottom: '1rem' }}>
+                  Thank you.
+                </p>
+                <p style={{ fontFamily: 'var(--font-body)', color: 'var(--ink-inv-soft)', lineHeight: 1.7 }}>
+                  We'll reply within two working days.
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
+                  <div>
+                    <label htmlFor="name" style={labelStyle}>{FORM_COPY.fields.name}</label>
+                    <input id="name" name="name" type="text" required value={form.name} onChange={handleChange}
+                      style={inputStyle}
+                      onFocus={e => { e.target.style.borderColor = 'var(--accent-dark)' }}
+                      onBlur={e => { e.target.style.borderColor = 'var(--line-mid)' }}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="email" style={labelStyle}>{FORM_COPY.fields.email}</label>
+                    <input id="email" name="email" type="email" required value={form.email} onChange={handleChange}
+                      style={inputStyle}
+                      onFocus={e => { e.target.style.borderColor = 'var(--accent-dark)' }}
+                      onBlur={e => { e.target.style.borderColor = 'var(--line-mid)' }}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="company" style={labelStyle}>{FORM_COPY.fields.company}</label>
+                  <input id="company" name="company" type="text" value={form.company} onChange={handleChange}
+                    style={inputStyle}
+                    onFocus={e => { e.target.style.borderColor = 'var(--accent-dark)' }}
+                    onBlur={e => { e.target.style.borderColor = 'var(--line-mid)' }}
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="projectType" style={labelStyle}>Project type</label>
+                  <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                    {PROJECT_TYPES.map((type) => (
+                      <button
+                        key={type}
+                        type="button"
+                        onClick={() => setForm(f => ({ ...f, projectType: type }))}
+                        style={{
+                          padding: '0.45rem 1rem',
+                          borderRadius: 'var(--radius-pill)',
+                          border: `1.5px solid ${form.projectType === type ? 'var(--ink)' : 'var(--line-mid)'}`,
+                          background: form.projectType === type ? 'var(--ink)' : 'transparent',
+                          color: form.projectType === type ? 'var(--bg-canvas)' : 'var(--ink-mid)',
+                          fontFamily: 'var(--font-body)',
+                          fontSize: '0.875rem',
+                          cursor: 'pointer',
+                          transition: 'all 0.15s',
+                        }}
+                      >
+                        {type}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="message" style={labelStyle}>{FORM_COPY.fields.message}</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows={5}
+                    value={form.message}
+                    onChange={handleChange}
+                    style={{ ...inputStyle, resize: 'vertical', lineHeight: 1.7 }}
+                    onFocus={e => { e.target.style.borderColor = 'var(--accent-dark)' }}
+                    onBlur={e => { e.target.style.borderColor = 'var(--line-mid)' }}
+                  />
+                </div>
+
+                <div>
+                  <Magnet padding={50} disabled={false} magnetStrength={5}>
+                    <motion.button
+                      type="submit"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      style={{
+                        display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
+                        padding: '0.95rem 2.25rem', borderRadius: 'var(--radius-pill)',
+                        background: 'var(--ink)', color: 'var(--bg-canvas)',
+                        fontFamily: 'var(--font-body)', fontWeight: 600,
+                        fontSize: '1rem', cursor: 'pointer', border: 'none',
+                        pointerEvents: 'auto'
+                      }}
+                    >
+                      {FORM_COPY.actions.submit}
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                        <path d="M3 13L13 3M13 3H6M13 3V10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </motion.button>
+                  </Magnet>
+                </div>
+              </form>
+            )}
+          </FadeIn>
+
+          {/* Sidebar */}
+          <FadeIn delay={0.15}>
+            <div style={{ position: 'sticky', top: 'calc(var(--header-height) + 2rem)', display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
               {CONTACT_CHANNELS.map((channel) => (
-                <div className={styles.channel} key={channel.title}>
-                  <span>{channel.title}</span>
-                  {channel.href ? <a href={channel.href}>{channel.value}</a> : <p>{channel.value}</p>}
+                <div key={channel.title} style={{ borderBottom: '1px solid var(--line)', paddingBottom: '2rem' }}>
+                  <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-soft)', marginBottom: '0.5rem' }}>
+                    {channel.title}
+                  </p>
+                  {channel.href ? (
+                    <a href={channel.href} style={{ fontFamily: 'var(--font-body)', fontWeight: 500, fontSize: '1rem', color: 'var(--ink)', textDecoration: 'none', transition: 'color 0.2s' }}>
+                      {channel.value}
+                    </a>
+                  ) : (
+                    <p style={{ fontFamily: 'var(--font-body)', fontWeight: 500, fontSize: '1rem', color: 'var(--ink)' }}>
+                      {channel.value}
+                    </p>
+                  )}
                 </div>
               ))}
             </div>
-          </aside>
-          <ProjectForm />
+          </FadeIn>
         </div>
-      </Section>
-      <Section>
-        <SectionHeader {...CONTACT_SECTIONS.preparation} />
-        <div className={styles.insightGrid}>
-          {PROJECT_PREP.map((item) => (
-            <article className={styles.insightCard} key={item.number}>
-              <span>{item.number}</span>
-              <div>
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </Section>
-      <Section tone="surface">
-        <SectionHeader {...CONTACT_SECTIONS.process} />
-        <ol className={styles.channels}>
-          {CONTACT_PROCESS.map((item) => (
-            <li className={styles.channel} key={item.number}>
-              <span>{item.number}</span>
-              <p>{item.title}</p>
-            </li>
-          ))}
-        </ol>
-      </Section>
-    </>
+      </section>
+
+      <style>{`
+        @media (max-width: 768px) {
+          [data-contact-grid] { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+    </motion.div>
   )
 }

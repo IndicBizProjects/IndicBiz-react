@@ -1,11 +1,7 @@
 .slide {
   position: relative;
-  display: flex;
+  display: block;
   width: 100%;
-  min-height: 100svh;
-  align-items: center;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
 }
 
 .panel {

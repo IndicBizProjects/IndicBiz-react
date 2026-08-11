@@ -44,5 +44,7 @@ export function NavLink({ to, end = false, className, children, ...props }) {
   const { pathname } = useRouter()
   const isActive = end ? pathname === to : pathname === to || pathname.startsWith(`${to}/`)
   const resolvedClassName = typeof className === 'function' ? className({ isActive }) : className
-  return <Link to={to} className={resolvedClassName} aria-current={isActive ? 'page' : undefined} {...props}>{children}</Link>
+  const resolvedChildren = typeof children === 'function' ? children({ isActive }) : children
+  
+  return <Link to={to} className={resolvedClassName} aria-current={isActive ? 'page' : undefined} {...props}>{resolvedChildren}</Link>
 }

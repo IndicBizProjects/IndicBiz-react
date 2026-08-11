@@ -1,4 +1,4 @@
-import { ServicesContent } from '../features/services/ServicesContent'
+import ServicesContent from '../features/services/ServicesContent'
 
 export default function ServicesPage() {
   return <ServicesContent />
