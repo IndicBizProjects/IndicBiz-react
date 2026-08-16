@@ -65,7 +65,7 @@ export default function ServiceFlagshipContent({ service }) {
                 transition={{ duration: 0.55, delay: 0.34, ease }}
               >
                 <MagneticBtn to="/contact" variant="dark" size="lg">{detail.heroAction}</MagneticBtn>
-                <MagneticBtn to="/pricing" variant="light" size="lg">See engagement shapes</MagneticBtn>
+                {/* <MagneticBtn to="/pricing" variant="light" size="lg">See engagement shapes</MagneticBtn> */}
               </motion.div>
             </div>
 
@@ -290,9 +290,9 @@ export default function ServiceFlagshipContent({ service }) {
                 <h2>{detail.engagement.title}</h2>
                 <p>{detail.engagement.body}</p>
               </div>
-              <MagneticBtn to={detail.engagement.action.to} variant="dark" size="md">
+              {/* <MagneticBtn to={detail.engagement.action.to} variant="dark" size="md">
                 {detail.engagement.action.label}
-              </MagneticBtn>
+              </MagneticBtn> */}
             </div>
           </FadeIn>
         </div>

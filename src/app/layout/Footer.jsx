@@ -74,7 +74,11 @@ export default function Footer() {
             transition={{ delay: 0.2, duration: 0.5 }}
           >
             <small style={{ color: '#505050', fontSize: '0.78rem' }}>© {year} {BRAND.legalName}</small>
-            <small style={{ color: '#505050', fontSize: '0.78rem' }}>{BRAND.email}</small>
+            <small style={{ color: '#505050', fontSize: '0.78rem' }}>
+              <a href={`mailto:${BRAND.email}`} style={{ color: 'inherit' }}>{BRAND.email}</a>
+              {' · '}
+              <a href={`tel:${BRAND.phone.replace(/\s/g, '')}`} style={{ color: 'inherit' }}>{BRAND.phone}</a>
+            </small>
           </motion.div>
         </motion.div>
       </div>

@@ -8,7 +8,6 @@ import PageMeta from './PageMeta'
 import AppRoutes from './routes'
 import ScrollManager from './ScrollManager'
 import { SITE_UI } from '../data/site'
-import CustomCursor from '../components/cursor/CustomCursor'
 import BrandLoader from '../components/motion/BrandLoader'
 import ScrollProgress from '../components/motion/ScrollProgress'
 import { useRouter } from './routerContext'
@@ -42,7 +41,6 @@ export default function App() {
       <ErrorBoundary>
         <LenisProvider />
         <ScrollManager />
-        <CustomCursor />
         <BrandLoader />
         <ScrollProgress />
         <a className="skip-link" href="#main-content">{SITE_UI.skipLink}</a>

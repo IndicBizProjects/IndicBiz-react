@@ -42,7 +42,6 @@ export default function MagneticBtn({
   const shared = {
     className: classes,
     style,
-    'data-cursor': 'pointer',
     ...props,
   }
 

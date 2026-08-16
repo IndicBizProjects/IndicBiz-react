@@ -118,7 +118,6 @@ function WorkRow({ project, index }) {
     >
       <Link
         to={`/work/${project.id}`}
-        data-cursor="view"
         style={{ display: 'block', textDecoration: 'none' }}
       >
         <motion.article

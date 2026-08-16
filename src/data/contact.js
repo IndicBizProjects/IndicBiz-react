@@ -63,8 +63,8 @@ export const FORM_COPY = {
 }
 
 export const CONTACT_CHANNELS = [
-  { title: 'New business', value: 'hello@indicbiz.com', href: 'mailto:hello@indicbiz.com' },
-  { title: 'Quick conversation', value: '+91 90000 00000', href: 'tel:+919000000000' },
+  { title: 'New business', value: 'info@indicbiz.com', href: 'mailto:info@indicbiz.com' },
+  { title: 'Quick conversation', value: '+91 76590 42808', href: 'tel:+917659042808' },
   { title: 'Where we work', value: 'India · Worldwide', href: null },
 ]
 

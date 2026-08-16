@@ -2,8 +2,8 @@ export const BRAND = {
   name: 'indicbiz.',
   legalName: 'IndicBiz Digital',
   tagline: 'Digital clarity for ambitious businesses.',
-  email: 'hello@indicbiz.com',
-  phone: '+91 90000 00000',
+  email: 'info@indicbiz.com',
+  phone: '+91 76590 42808',
   location: 'India · Working worldwide',
 }
 
@@ -23,14 +23,14 @@ export const PRIMARY_NAV = [
   { label: 'Services', to: '/services' },
   { label: 'Work', to: '/work' },
   { label: 'About', to: '/about' },
-  { label: 'Pricing', to: '/pricing' },
+  // { label: 'Pricing', to: '/pricing' },
   { label: 'Contact', to: '/contact' },
 ]
 
 export const SOCIAL_LINKS = [
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/' },
-  { label: 'Instagram', href: 'https://www.instagram.com/' },
-  { label: 'X', href: 'https://x.com/' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/indicbiz/' },
+  { label: 'Instagram', href: 'https://www.instagram.com/indicbiz' },
+  { label: 'X', href: 'https://x.com/IndicBiz' },
 ]
 
 export const FOOTER_GROUPS = [

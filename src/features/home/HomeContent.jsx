@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from 'framer-motion'
 import { springHover, staggerContainer, fadeUp, viewportOnce } from '../../lib/motion'
 import MagneticBtn from '../../components/primitives/MagneticBtn'
 import { Link } from '../../app/router'
@@ -12,6 +12,7 @@ import { SERVICES, SERVICE_PROCESS } from '../../data/services'
 import { WORK_PROJECTS } from '../../data/work'
 import { VALUES } from '../../data/about'
 import { AboutIcon } from '../about/AboutIcons'
+import homeHeroImage from '../../assets/homeheroimg.png'
 
 const ease = [0.16, 1, 0.3, 1]
 
@@ -103,22 +104,50 @@ function Hero() {
           </div>
         </FadeIn>
 
-        {/* Hero image — clip-path box reveal */}
-        <motion.div
-          className="ag-card"
-          style={{ marginTop: '3.25rem', padding: '0.7rem', overflow: 'hidden' }}
-          initial={{ opacity: 0, clipPath: 'inset(12% 12% 12% 12% round 22px)' }}
-          animate={{ opacity: 1, clipPath: 'inset(0% 0% 0% 0% round 22px)' }}
-          transition={{ duration: 1.05, delay: 0.45, ease }}
-          whileHover={{ scale: 1.012 }}
-          transition_hover={{ ...springHover }}
-        >
-          <div className="ag-img-reveal" style={{ borderRadius: '22px' }}>
-            <MediaFrame src="/media/indicbiz-hero.jpg" alt="IndicBiz studio workspace" radius="22px" />
-          </div>
-        </motion.div>
+        <HeroVisual />
       </div>
     </section>
+  )
+}
+
+function HeroVisual() {
+  const reduceMotion = useReducedMotion()
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+  const springX = useSpring(x, { stiffness: 120, damping: 18, mass: 0.4 })
+  const springY = useSpring(y, { stiffness: 120, damping: 18, mass: 0.4 })
+  const rotateX = useTransform(springY, [-80, 80], [7, -7])
+  const rotateY = useTransform(springX, [-80, 80], [-8, 8])
+
+  const onMove = (event) => {
+    const rect = event.currentTarget.getBoundingClientRect()
+    x.set(event.clientX - rect.left - rect.width / 2)
+    y.set(event.clientY - rect.top - rect.height / 2)
+  }
+
+  const onLeave = () => {
+    x.set(0)
+    y.set(0)
+  }
+
+  return (
+    <motion.div
+      className="ag-card hm-hero-visual"
+      initial={{ opacity: 0, clipPath: 'inset(12% 12% 12% 12% round 22px)' }}
+      animate={{ opacity: 1, clipPath: 'inset(0% 0% 0% 0% round 22px)' }}
+      transition={{ duration: 1.05, delay: 0.45, ease }}
+      style={reduceMotion ? undefined : { rotateX, rotateY, transformPerspective: 1100 }}
+      onMouseMove={reduceMotion ? undefined : onMove}
+      onMouseLeave={reduceMotion ? undefined : onLeave}
+    >
+      <span className="hm-hero-visual-glow" aria-hidden="true" />
+      <motion.img
+        src={homeHeroImage}
+        alt="IndicBiz"
+        animate={reduceMotion ? undefined : { y: [0, -14, 0], scale: [1, 1.045, 1] }}
+        transition={reduceMotion ? undefined : { duration: 7.5, repeat: Infinity, ease: 'easeInOut' }}
+      />
+    </motion.div>
   )
 }
 
@@ -592,7 +621,7 @@ function Campaigns() {
                 transition={springHover}
                 style={{ height: '100%' }}
               >
-                <Link to={`/work/${project.id}`} className="hm-shot" data-cursor="view">
+                <Link to={`/work/${project.id}`} className="hm-shot">
                   <div className="hm-shot-stage">
                     <img src={project.gallery?.[0] || project.image} alt={project.imageAlt} />
                   </div>

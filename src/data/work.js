@@ -1,3 +1,7 @@
+import destinizeImage from '../assets/Projects/kerala.jpg'
+import blitzImage from '../assets/Projects/blitz.jpg'
+import tamoozImage from '../assets/Projects/tamooz.jpg'
+
 export const WORK_HERO = {
   eyebrow: 'Our work',
   title: 'Selected engagements and the problems behind them.',
@@ -29,8 +33,9 @@ export const WORK_PROJECTS = [
       'A responsive React site the team can keep updating',
       'A calmer booking flow without invented performance claims',
     ],
-    image: '/media/indicbiz-destinize.jpg',
+    image: destinizeImage,
     gallery: [
+      destinizeImage,
       '/work/destinize-tours-1.png',
       '/work/destinize-tours-2.png',
       '/work/destinize-tours-3.png',
@@ -56,8 +61,9 @@ export const WORK_PROJECTS = [
       'A visual system ready for web and everyday use',
       'A presence built to earn stakeholder trust',
     ],
-    image: '/media/indicbiz-blitz.jpg',
+    image: blitzImage,
     gallery: [
+      blitzImage,
       '/work/blitz-india-1.png',
       '/work/blitz-india-2.png',
       '/work/blitz-india-3.png',
@@ -84,8 +90,9 @@ export const WORK_PROJECTS = [
       'Prototypes used to test priorities before build',
       'Reusable patterns the engineering team can extend',
     ],
-    image: '/media/indicbiz-tamooz.jpg',
+    image: tamoozImage,
     gallery: [
+      tamoozImage,
       '/work/tamooz-1.png',
       '/work/tamooz-2.png',
       '/work/tamooz-3.png',

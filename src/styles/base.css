@@ -91,11 +91,6 @@ img, video {
   transform: translateY(0);
 }
 
-/* ── Cursor hide on non-desktop ── */
-@media (hover: none) {
-  .custom-cursor { display: none; }
-}
-
 /* ── Reduced Motion ── */
 @media (prefers-reduced-motion: reduce) {
   *:not(.ag-marquee-track),

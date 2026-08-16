@@ -1,3 +1,8 @@
+import brandIdentityImage from '../assets/Services/brandidentity.png'
+import webExperiencesImage from '../assets/Services/webexp.png'
+import productDesignImage from '../assets/Services/productdesign.jpg'
+import growthSeoImage from '../assets/Services/growth.jpg'
+
 export const SERVICES = [
   {
     id: 'brand-identity',
@@ -7,7 +12,7 @@ export const SERVICES = [
     short: 'Logo, motion, cards, profiles, and the system that holds it together.',
     overview: 'We uncover what makes your business meaningful, then turn that truth into a complete identity: logo, logo animation, business cards, company profiles and every piece the team needs to stay consistent.',
     accent: '#b9c97a',
-    image: '/media/indicbiz-brand.jpg',
+    image: brandIdentityImage,
     bestFor: ['New ventures preparing to launch', 'Businesses that have outgrown their identity', 'Teams struggling with inconsistent communication'],
     outcomes: ['A mark people remember', 'A kit ready for print and digital', 'Practical rules the team can follow'],
     deliverables: [
@@ -25,7 +30,7 @@ export const SERVICES = [
     short: 'Fast, expressive websites engineered to earn attention.',
     overview: 'Strategy, design and development come together in responsive digital experiences that feel effortless and perform under pressure.',
     accent: '#86b99d',
-    image: '/media/indicbiz-web.jpg',
+    image: webExperiencesImage,
     bestFor: ['Businesses replacing a limiting website', 'Teams launching a new digital service', 'Brands that need stronger conversion journeys'],
     outcomes: ['Clear content and navigation', 'Responsive, accessible interfaces', 'A maintainable foundation for growth'],
     deliverables: [
@@ -43,7 +48,7 @@ export const SERVICES = [
     short: 'Useful interfaces for complex products and services.',
     overview: 'We simplify demanding workflows through research, prototyping and scalable interface systems your team can confidently extend.',
     accent: '#e5bf83',
-    image: '/media/indicbiz-product.jpg',
+    image: productDesignImage,
     bestFor: ['Teams validating a product idea', 'Products with confusing or fragmented flows', 'Organisations building a scalable UI system'],
     outcomes: ['Shared product priorities', 'Testable interaction models', 'Reusable interface patterns'],
     deliverables: [
@@ -61,7 +66,7 @@ export const SERVICES = [
     short: 'A practical growth foundation built on real signals.',
     overview: 'We improve discoverability and conversion with technical rigour, useful content and continuous, evidence-led iteration.',
     accent: '#d1a3a4',
-    image: '/media/indicbiz-growth.jpg',
+    image: growthSeoImage,
     bestFor: ['Websites with weak organic visibility', 'Teams unsure what to improve next', 'Businesses preparing to scale acquisition'],
     outcomes: ['A prioritised improvement roadmap', 'A healthier technical foundation', 'More useful measurement and content'],
     deliverables: [
