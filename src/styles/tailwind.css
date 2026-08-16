@@ -5,22 +5,22 @@
  */
 @theme {
   /* Colors */
-  --color-canvas:       #F5F0E8;
-  --color-surface:      #FDFCF9;
-  --color-dark:         #0A0A08;
-  --color-dark-mid:     #141412;
-  --color-dark-card:    #1C1C19;
-  --color-ink:          #0E0E0C;
-  --color-ink-mid:      #3A3834;
-  --color-ink-soft:     #6B6760;
-  --color-ink-inv:      #F0EDE6;
-  --color-ink-inv-soft: #8A8880;
+  --color-canvas:       #F4F5F7;
+  --color-surface:      #FFFFFF;
+  --color-dark:         #08090B;
+  --color-dark-mid:     #111318;
+  --color-dark-card:    #171A20;
+  --color-ink:          #0B0C0F;
+  --color-ink-mid:      #3A3F4A;
+  --color-ink-soft:     #6B7280;
+  --color-ink-inv:      #F2F3F5;
+  --color-ink-inv-soft: #8B929E;
   --color-accent:       #C8F04A;
   --color-accent-dark:  #A8CC30;
-  --color-accent-warm:  #E8C87A;
+  --color-accent-warm:  #9BE7D0;
 
   /* Fonts */
-  --font-display: "Playfair Display", Georgia, serif;
-  --font-body:    "Inter", system-ui, sans-serif;
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body:    "Plus Jakarta Sans", system-ui, sans-serif;
   --font-mono:    "JetBrains Mono", monospace;
 }

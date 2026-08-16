@@ -1,263 +1,181 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import PageHero from '../../components/layout/PageHero'
+import MagneticBtn from '../../components/primitives/MagneticBtn'
 import FadeIn from '../../components/motion/FadeIn'
-import Eyebrow from '../../components/ui/Eyebrow'
-import { CONTACT_HERO, CONTACT_CHANNELS, PROJECT_TYPES, BUDGET_OPTIONS, TIMELINE_OPTIONS, FORM_COPY } from '../../data/contact'
-import SplashCursor from '../../components/motion/SplashCursor'
-import Magnet from '../../components/motion/Magnet'
+import { CONTACT_HERO, CONTACT_CHANNELS, PROJECT_TYPES, BUDGET_OPTIONS, TIMELINE_OPTIONS, FORM_COPY, FORM_INITIAL_VALUES } from '../../data/contact'
+import { PRICING_FAQS as FAQS } from '../../data/pricing'
+import { BRAND } from '../../data/site'
 
-const pageVariants = {
-  initial: { opacity: 0 },
-  animate: { opacity: 1, transition: { duration: 0.4 } },
-  exit: { opacity: 0, transition: { duration: 0.25 } },
-}
-
-const inputStyle = {
-  width: '100%',
-  padding: '0.875rem 1rem',
-  borderRadius: 'var(--radius-md)',
-  border: '1.5px solid var(--line-mid)',
-  background: 'var(--bg-surface)',
-  color: 'var(--ink)',
-  fontFamily: 'var(--font-body)',
-  fontSize: '1rem',
-  outline: 'none',
-  transition: 'border-color 0.2s',
-  boxSizing: 'border-box',
-}
-
-const labelStyle = {
-  display: 'block',
-  fontFamily: 'var(--font-mono)',
-  fontSize: '0.72rem',
-  letterSpacing: '0.08em',
-  textTransform: 'uppercase',
-  color: 'var(--ink-soft)',
-  marginBottom: '0.5rem',
-}
+const pageVariants = { initial: { opacity: 0 }, animate: { opacity: 1, transition: { duration: 0.4 } }, exit: { opacity: 0, transition: { duration: 0.2 } } }
 
 export default function ContactContent() {
-  const [form, setForm] = useState({ name: '', email: '', company: '', projectType: '', message: '' })
+  const [form, setForm] = useState(FORM_INITIAL_VALUES)
   const [sent, setSent] = useState(false)
 
-  const handleChange = (e) => setForm(f => ({ ...f, [e.target.name]: e.target.value }))
-
-  const handleSubmit = (e) => {
+  function setField(key, value) {
+    setForm(f => ({ ...f, [key]: value }))
+  }
+  function toggleService(s) {
+    setForm(f => ({ ...f, services: f.services.includes(s) ? f.services.filter(x => x !== s) : [...f.services, s] }))
+  }
+  function submit(e) {
     e.preventDefault()
-    // Simple mailto fallback
-    const body = `Name: ${form.name}\nEmail: ${form.email}\nCompany: ${form.company}\nProject type: ${form.projectType}\n\n${form.message}`
-    window.location.href = `mailto:hello@indicbiz.com?subject=New project enquiry&body=${encodeURIComponent(body)}`
+    const body = [
+      `Services: ${form.services.join(', ')}`,
+      `Name: ${form.name}`,
+      `Email: ${form.email}`,
+      form.company ? `Company: ${form.company}` : null,
+      `Budget: ${form.budget}`,
+      `Timeline: ${form.timeline}`,
+      form.message ? `\n${form.message}` : null,
+    ].filter(Boolean).join('\n')
+    window.location.href = `mailto:${BRAND.email}?subject=New project enquiry&body=${encodeURIComponent(body)}`
     setSent(true)
   }
 
   return (
-    <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit">
+    <motion.div className="ag-page" variants={pageVariants} initial="initial" animate="animate" exit="exit">
+      <PageHero eyebrow={CONTACT_HERO.eyebrow} title="Reach us at any time" description={CONTACT_HERO.description} />
 
-      {/* Hero */}
-      <section
-        style={{
-          background: 'var(--bg-dark)',
-          color: 'var(--ink-inv)',
-          padding: 'calc(var(--header-height) + clamp(4rem, 8vw, 7rem)) var(--layout-gutter) clamp(5rem, 10vw, 9rem)',
-          position: 'relative',
-          overflow: 'hidden',
-        }}
-      >
-        <motion.div
+      <section className="ag-section ag-ghost-wrap" style={{ paddingTop: 0, overflow: 'hidden' }}>
+        <motion.span
+          className="ag-ghost-text"
           aria-hidden="true"
-          animate={{ x: [0, 20, 0], opacity: [0.08, 0.15, 0.08] }}
-          transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
-          style={{
-            position: 'absolute',
-            top: '-20%',
-            right: '-5%',
-            width: '50vw',
-            height: '50vw',
-            borderRadius: '50%',
-            background: 'radial-gradient(circle, var(--accent) 0%, transparent 70%)',
-            filter: 'blur(80px)',
-            pointerEvents: 'none',
-          }}
-        />
-        <SplashCursor 
-          SIM_RESOLUTION={128} 
-          DYE_RESOLUTION={1440}
-          COLOR="#a4a29e" // Match our brand accents
-        />
-        <div style={{ maxWidth: 'var(--layout-max)', margin: '0 auto', position: 'relative', zIndex: 2, pointerEvents: 'none' }}>
-          <FadeIn>
-            <Eyebrow light>{CONTACT_HERO.eyebrow}</Eyebrow>
-            <h1
-              style={{
-                fontFamily: 'var(--font-display)',
-                fontWeight: 800,
-                fontSize: 'var(--text-hero)',
-                letterSpacing: '-0.04em',
-                lineHeight: 1.0,
-                color: 'var(--ink-inv)',
-                maxWidth: '16ch',
-                marginTop: '1rem',
-              }}
-            >
-              {CONTACT_HERO.title}
-            </h1>
-          </FadeIn>
-          <FadeIn delay={0.15}>
-            <p style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-body-lg)', color: 'var(--ink-inv-soft)', maxWidth: '48ch', lineHeight: 1.7, marginTop: 'clamp(1.5rem, 3vw, 2rem)' }}>
-              {CONTACT_HERO.description}
-            </p>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* Form + Sidebar */}
-      <section style={{ background: 'var(--bg-canvas)', padding: 'clamp(5rem, 10vw, 9rem) var(--layout-gutter)' }}>
-        <div
-          style={{
-            maxWidth: 'var(--layout-max)',
-            margin: '0 auto',
-            display: 'grid',
-            gridTemplateColumns: '1fr 360px',
-            gap: 'clamp(3rem, 6vw, 6rem)',
-            alignItems: 'start',
-          }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 0.038 }}
+          viewport={{ once: true, amount: 0.05 }}
+          style={{ fontSize: 'clamp(5rem, 13vw, 11rem)' }}
         >
-          {/* Form */}
-          <FadeIn>
+          CONTACT
+        </motion.span>
+
+        <div className="ag-wrap" style={{ position: 'relative', zIndex: 1 }}>
+        <motion.div
+          className="contact-grid"
+          initial={{ opacity: 0, y: 32 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <motion.div
+            className="ag-card"
+            style={{ padding: '2rem' }}
+            whileHover={{ y: -4, boxShadow: '0 20px 40px rgba(13,36,38,0.1)' }}
+            transition={{ type: 'spring', stiffness: 340, damping: 26 }}
+          >
+            <p style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '2.4rem', letterSpacing: '-0.04em' }}>Direct</p>
+            <p style={{ color: '#505050', marginBottom: '1.5rem' }}>Average reply within two working days.</p>
+            {CONTACT_CHANNELS.map((ch, i) => (
+              <motion.div
+                key={ch.title}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ delay: 0.06 + i * 0.07, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ x: 4 }}
+                style={{ padding: '0.85rem 0', borderTop: '1px solid rgba(13,36,38,0.08)' }}
+              >
+                <p style={{ fontSize: '0.75rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#505050' }}>{ch.title}</p>
+                {ch.href ? <a href={ch.href} style={{ fontWeight: 600 }}>{ch.value}</a> : <p style={{ fontWeight: 600 }}>{ch.value}</p>}
+              </motion.div>
+            ))}
+          </motion.div>
+
+          <motion.div
+            className="ag-card"
+            style={{ padding: '2rem' }}
+            whileHover={{ y: -4, boxShadow: '0 20px 40px rgba(13,36,38,0.1)' }}
+            transition={{ type: 'spring', stiffness: 340, damping: 26 }}
+          >
             {sent ? (
-              <div style={{ padding: '3rem', borderRadius: 'var(--radius-lg)', background: 'var(--bg-dark)', color: 'var(--ink-inv)', textAlign: 'center' }}>
-                <p style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '2rem', letterSpacing: '-0.04em', marginBottom: '1rem' }}>
-                  Thank you.
-                </p>
-                <p style={{ fontFamily: 'var(--font-body)', color: 'var(--ink-inv-soft)', lineHeight: 1.7 }}>
-                  We'll reply within two working days.
-                </p>
+              <div>
+                <h3 className="ag-h2" style={{ fontSize: '2rem' }}>{FORM_COPY.success.title}</h3>
+                <p className="ag-lede" style={{ marginTop: '0.75rem' }}>{FORM_COPY.success.delivered}</p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
-                  <div>
-                    <label htmlFor="name" style={labelStyle}>{FORM_COPY.fields.name}</label>
-                    <input id="name" name="name" type="text" required value={form.name} onChange={handleChange}
-                      style={inputStyle}
-                      onFocus={e => { e.target.style.borderColor = 'var(--accent-dark)' }}
-                      onBlur={e => { e.target.style.borderColor = 'var(--line-mid)' }}
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="email" style={labelStyle}>{FORM_COPY.fields.email}</label>
-                    <input id="email" name="email" type="email" required value={form.email} onChange={handleChange}
-                      style={inputStyle}
-                      onFocus={e => { e.target.style.borderColor = 'var(--accent-dark)' }}
-                      onBlur={e => { e.target.style.borderColor = 'var(--line-mid)' }}
-                    />
-                  </div>
+              <form onSubmit={submit}>
+                <p className="ag-eyebrow">Project type</p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1.25rem' }}>
+                  {PROJECT_TYPES.map((type) => (
+                    <button key={type} type="button" onClick={() => toggleService(type)} className={`btn3d-chip${form.services.includes(type) ? ' is-active' : ''}`} style={{ textTransform: 'none', fontFamily: 'var(--font-body)' }}>
+                      {type}
+                    </button>
+                  ))}
                 </div>
-
-                <div>
-                  <label htmlFor="company" style={labelStyle}>{FORM_COPY.fields.company}</label>
-                  <input id="company" name="company" type="text" value={form.company} onChange={handleChange}
-                    style={inputStyle}
-                    onFocus={e => { e.target.style.borderColor = 'var(--accent-dark)' }}
-                    onBlur={e => { e.target.style.borderColor = 'var(--line-mid)' }}
-                  />
+                <Field label={FORM_COPY.fields.name} value={form.name} onChange={v => setField('name', v)} required />
+                <Field label={FORM_COPY.fields.email} value={form.email} onChange={v => setField('email', v)} type="email" required />
+                <Field label={FORM_COPY.fields.company} value={form.company} onChange={v => setField('company', v)} />
+                <p className="ag-eyebrow">Budget</p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem', marginBottom: '1rem' }}>
+                  {BUDGET_OPTIONS.map((opt) => (
+                    <button key={opt} type="button" onClick={() => setField('budget', opt)} className={`btn3d-chip${form.budget === opt ? ' is-active' : ''}`}>{opt}</button>
+                  ))}
                 </div>
-
-                <div>
-                  <label htmlFor="projectType" style={labelStyle}>Project type</label>
-                  <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-                    {PROJECT_TYPES.map((type) => (
-                      <button
-                        key={type}
-                        type="button"
-                        onClick={() => setForm(f => ({ ...f, projectType: type }))}
-                        style={{
-                          padding: '0.45rem 1rem',
-                          borderRadius: 'var(--radius-pill)',
-                          border: `1.5px solid ${form.projectType === type ? 'var(--ink)' : 'var(--line-mid)'}`,
-                          background: form.projectType === type ? 'var(--ink)' : 'transparent',
-                          color: form.projectType === type ? 'var(--bg-canvas)' : 'var(--ink-mid)',
-                          fontFamily: 'var(--font-body)',
-                          fontSize: '0.875rem',
-                          cursor: 'pointer',
-                          transition: 'all 0.15s',
-                        }}
-                      >
-                        {type}
-                      </button>
-                    ))}
-                  </div>
+                <p className="ag-eyebrow">Timeline</p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem', marginBottom: '1rem' }}>
+                  {TIMELINE_OPTIONS.map((opt) => (
+                    <button key={opt} type="button" onClick={() => setField('timeline', opt)} className={`btn3d-chip${form.timeline === opt ? ' is-active' : ''}`}>{opt}</button>
+                  ))}
                 </div>
-
-                <div>
-                  <label htmlFor="message" style={labelStyle}>{FORM_COPY.fields.message}</label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={5}
-                    value={form.message}
-                    onChange={handleChange}
-                    style={{ ...inputStyle, resize: 'vertical', lineHeight: 1.7 }}
-                    onFocus={e => { e.target.style.borderColor = 'var(--accent-dark)' }}
-                    onBlur={e => { e.target.style.borderColor = 'var(--line-mid)' }}
-                  />
-                </div>
-
-                <div>
-                  <Magnet padding={50} disabled={false} magnetStrength={5}>
-                    <motion.button
-                      type="submit"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      style={{
-                        display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
-                        padding: '0.95rem 2.25rem', borderRadius: 'var(--radius-pill)',
-                        background: 'var(--ink)', color: 'var(--bg-canvas)',
-                        fontFamily: 'var(--font-body)', fontWeight: 600,
-                        fontSize: '1rem', cursor: 'pointer', border: 'none',
-                        pointerEvents: 'auto'
-                      }}
-                    >
-                      {FORM_COPY.actions.submit}
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                        <path d="M3 13L13 3M13 3H6M13 3V10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </motion.button>
-                  </Magnet>
+                <label style={{ display: 'block', fontSize: '0.78rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#505050', marginBottom: '0.4rem' }}>{FORM_COPY.fields.message}</label>
+                <textarea value={form.message} onChange={e => setField('message', e.target.value)} rows={5} style={inputStyle} />
+                <div style={{ marginTop: '1.25rem' }}>
+                  <MagneticBtn type="submit" variant="dark" size="md">{FORM_COPY.actions.submit}</MagneticBtn>
                 </div>
               </form>
             )}
-          </FadeIn>
-
-          {/* Sidebar */}
-          <FadeIn delay={0.15}>
-            <div style={{ position: 'sticky', top: 'calc(var(--header-height) + 2rem)', display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
-              {CONTACT_CHANNELS.map((channel) => (
-                <div key={channel.title} style={{ borderBottom: '1px solid var(--line)', paddingBottom: '2rem' }}>
-                  <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-soft)', marginBottom: '0.5rem' }}>
-                    {channel.title}
-                  </p>
-                  {channel.href ? (
-                    <a href={channel.href} style={{ fontFamily: 'var(--font-body)', fontWeight: 500, fontSize: '1rem', color: 'var(--ink)', textDecoration: 'none', transition: 'color 0.2s' }}>
-                      {channel.value}
-                    </a>
-                  ) : (
-                    <p style={{ fontFamily: 'var(--font-body)', fontWeight: 500, fontSize: '1rem', color: 'var(--ink)' }}>
-                      {channel.value}
-                    </p>
-                  )}
-                </div>
-              ))}
-            </div>
-          </FadeIn>
+          </motion.div>
+        </motion.div>
         </div>
       </section>
 
-      <style>{`
-        @media (max-width: 768px) {
-          [data-contact-grid] { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
+      <section className="ag-section">
+        <div className="ag-wrap">
+          <FadeIn y={10}>
+            <p className="ag-eyebrow">FAQs</p>
+            <h2 className="ag-h2" style={{ marginBottom: '1.5rem' }}>Questions & answers</h2>
+          </FadeIn>
+          <div className="ag-card" style={{ padding: '1.5rem 2rem' }}>
+            {FAQS.map((faq, i) => (
+              <motion.div
+                key={faq.question}
+                initial={{ opacity: 0, y: 14 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ delay: i * 0.055, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ x: 4 }}
+                style={{ padding: '1rem 0', borderBottom: '1px solid rgba(13,36,38,0.08)' }}
+              >
+                <p style={{ fontWeight: 700, marginBottom: '0.4rem' }}>{faq.question}</p>
+                <p style={{ color: '#505050' }}>{faq.answer}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
     </motion.div>
+  )
+}
+
+const inputStyle = {
+  width: '100%',
+  padding: '0.85rem 1rem',
+  borderRadius: '16px',
+  border: 'none',
+  background: '#f7f7f7',
+  boxShadow: 'inset 0 0 5px rgba(166,166,166,0.35)',
+  fontFamily: 'var(--font-body)',
+  fontSize: '1rem',
+  marginBottom: '1rem',
+  boxSizing: 'border-box',
+}
+
+function Field({ label, value, onChange, type = 'text', required }) {
+  return (
+    <div>
+      <label style={{ display: 'block', fontSize: '0.78rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#505050', marginBottom: '0.4rem' }}>{label}</label>
+      <input type={type} value={value} required={required} onChange={e => onChange(e.target.value)} style={inputStyle} />
+    </div>
   )
 }

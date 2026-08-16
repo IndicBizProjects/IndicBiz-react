@@ -1,261 +1,205 @@
-import { motion } from 'framer-motion'
+import { useRef } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import MagneticBtn from '../../components/primitives/MagneticBtn'
 import FadeIn, { FadeInStagger, StaggerItem } from '../../components/motion/FadeIn'
-import Eyebrow from '../../components/ui/Eyebrow'
-import MarqueeStrip from '../../components/motion/MarqueeStrip'
+import ScrollRevealText from '../../components/motion/ScrollRevealText'
+import MediaFrame from '../../components/layout/MediaFrame'
 import { SERVICES, SERVICES_PAGE, SERVICE_PROCESS } from '../../data/services'
-import { Link } from '../../app/router'
-import Topography from '../../components/backgrounds/Topography/Topography'
-import BlurText from '../../components/motion/BlurText'
+
 const pageVariants = {
   initial: { opacity: 0 },
   animate: { opacity: 1, transition: { duration: 0.4 } },
-  exit: { opacity: 0, transition: { duration: 0.25 } },
+  exit: { opacity: 0, transition: { duration: 0.2 } },
 }
 
 export default function ServicesContent() {
   return (
-    <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit">
+    <motion.div className="ag-page" variants={pageVariants} initial="initial" animate="animate" exit="exit">
+      <ServicesHero />
+      <ServiceChapters />
+      <ProcessRail />
+      <ServicesCta />
+    </motion.div>
+  )
+}
 
-      {/* Hero */}
-      <section
-        style={{
-          position: 'relative',
-          minHeight: '100dvh',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          overflow: 'hidden',
-          background: 'var(--bg-canvas)',
-          borderBottom: '1px solid var(--line)',
-        }}
-      >
-        <div style={{ position: 'absolute', inset: 0, zIndex: 0, opacity: 0.15, pointerEvents: 'none' }}>
-          <Topography 
-            baseColor="#00FFFF"
-            contourColor="#000000"
-            animate={true}
-            speed={0.5}
-          />
-        </div>
-        
-        {/* Soft radial gradient to ensure text readability */}
-        <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'radial-gradient(circle at center, transparent 0%, var(--bg-canvas) 80%)', pointerEvents: 'none' }} />
-
-        <div style={{ position: 'relative', zIndex: 2, maxWidth: 'var(--layout-max)', margin: '0 auto', width: '100%', padding: '0 var(--layout-gutter)' }}>
-          <FadeIn>
-            <Eyebrow>{SERVICES_PAGE.eyebrow}</Eyebrow>
-            <BlurText 
+function ServicesHero() {
+  return (
+    <section className="ag-section svc-hero">
+      <div className="ag-wrap">
+        <div className="svc-hero-grid">
+          <div>
+            <motion.p className="ag-eyebrow" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
+              {SERVICES_PAGE.eyebrow}
+            </motion.p>
+            <ScrollRevealText
               text={SERVICES_PAGE.title}
-              delay={50}
-              animateBy="words"
-              direction="bottom"
-              className="services-hero-title"
-              stepDuration={0.4}
+              reveal="slide"
+              stagger={0.05}
+              delay={0.06}
+              as="h1"
+              className="ag-h1"
+              style={{ maxWidth: '13ch', fontSize: 'clamp(2.8rem, 6.4vw, 5.2rem)' }}
             />
-            {/* Inject a small style block to style BlurText since it renders a p tag by default */}
-            <style>{`
-              .services-hero-title {
-                font-family: var(--font-display);
-                font-weight: 800;
-                font-size: var(--text-hero);
-                letter-spacing: -0.04em;
-                line-height: 1.0;
-                color: var(--ink);
-                max-width: 16ch;
-                margin-top: 1rem;
-                margin-bottom: 1.5rem;
-              }
-            `}</style>
-            <p
-              style={{
-                fontFamily: 'var(--font-body)',
-                fontSize: 'var(--text-body-lg)',
-                color: 'var(--ink-mid)',
-                maxWidth: '50ch',
-                lineHeight: 1.7,
-              }}
-            >
-              {SERVICES_PAGE.description}
-            </p>
+          </div>
+          <FadeIn delay={0.2} y={16}>
+            <p className="ag-lede" style={{ marginBottom: '1.75rem' }}>{SERVICES_PAGE.description}</p>
+            <div className="svc-index">
+              {SERVICES.map((service, i) => (
+                <motion.a
+                  key={service.id}
+                  href={`#service-${service.id}`}
+                  className="svc-index-link"
+                  initial={{ opacity: 0, x: 16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.22 + i * 0.07, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  whileHover={{ x: 6 }}
+                >
+                  <span>{service.number}</span>
+                  {service.title}
+                </motion.a>
+              ))}
+            </div>
           </FadeIn>
         </div>
-      </section>
+      </div>
+    </section>
+  )
+}
 
-      {/* Services list */}
-      <section
-        style={{
-          background: 'var(--bg-canvas)',
-          padding: 'clamp(4rem, 8vw, 7rem) var(--layout-gutter)',
-        }}
+function ServiceChapters() {
+  return (
+    <section className="ag-section" style={{ paddingTop: 0 }}>
+      <div className="ag-wrap svc-chapters">
+        {SERVICES.map((service, i) => (
+          <ServiceChapter key={service.id} service={service} reverse={i % 2 === 1} />
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function ServiceChapter({ service, reverse }) {
+  const ref = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start 0.85', 'end 0.35'],
+  })
+  const numberX = useTransform(scrollYProgress, [0, 1], reverse ? [24, -8] : [-24, 8])
+  const numberOpacity = useTransform(scrollYProgress, [0, 0.35, 1], [0.08, 0.16, 0.08])
+
+  return (
+    <article ref={ref} id={`service-${service.id}`} className={`svc-chapter${reverse ? ' is-reverse' : ''}`}>
+      <motion.span className="svc-watermark" style={{ x: numberX, opacity: numberOpacity }} aria-hidden="true">
+        {service.number}
+      </motion.span>
+
+      <motion.div
+        className="svc-photo"
+        initial={{ opacity: 0, clipPath: 'inset(8% 8% 8% 8% round 24px)' }}
+        whileInView={{ opacity: 1, clipPath: 'inset(0% 0% 0% 0% round 24px)' }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
       >
-        <div style={{ maxWidth: 'var(--layout-max)', margin: '0 auto' }}>
-          <FadeInStagger stagger={0.1}>
-            {SERVICES.map((service) => (
-              <StaggerItem key={service.id}>
-                <div
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: '3rem 1fr auto',
-                    alignItems: 'start',
-                    gap: 'clamp(1.5rem, 3vw, 3rem)',
-                    padding: 'clamp(2rem, 4vw, 3rem) 0',
-                    borderBottom: '1px solid var(--line)',
-                  }}
-                >
-                  <span
-                    style={{
-                      fontFamily: 'var(--font-mono)',
-                      fontSize: '0.72rem',
-                      letterSpacing: '0.1em',
-                      color: 'var(--accent-dark)',
-                      paddingTop: '0.3rem',
-                    }}
-                  >
-                    {service.number}
-                  </span>
+        <div className="ag-card svc-photo-frame ag-img-reveal" style={{ borderRadius: '22px' }}>
+          <MediaFrame src={service.image} alt={service.title} aspect="4 / 5" radius="22px" />
+        </div>
+      </motion.div>
 
-                  <div>
-                    <h2
-                      style={{
-                        fontFamily: 'var(--font-display)',
-                        fontWeight: 800,
-                        fontSize: 'clamp(1.75rem, 3.5vw, 2.75rem)',
-                        letterSpacing: '-0.04em',
-                        color: 'var(--ink)',
-                        marginBottom: '0.75rem',
-                      }}
-                    >
-                      {service.title}
-                    </h2>
-                    <p
-                      style={{
-                        fontFamily: 'var(--font-body)',
-                        fontSize: 'var(--text-body)',
-                        color: 'var(--ink-mid)',
-                        lineHeight: 1.7,
-                        maxWidth: '50ch',
-                        marginBottom: '1.5rem',
-                      }}
-                    >
-                      {service.overview}
-                    </p>
-                    <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-                      {service.deliverables.map((d) => (
-                        <span
-                          key={d}
-                          style={{
-                            fontFamily: 'var(--font-mono)',
-                            fontSize: '0.68rem',
-                            letterSpacing: '0.06em',
-                            textTransform: 'uppercase',
-                            color: 'var(--ink-soft)',
-                            background: 'var(--line)',
-                            padding: '0.25rem 0.6rem',
-                            borderRadius: 'var(--radius-pill)',
-                          }}
-                        >
-                          {d}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+      <FadeIn y={22} delay={0.08} className="svc-copy">
+        <p className="ag-eyebrow">{service.number} · Capability</p>
+        <h2 className="ag-h2" style={{ fontSize: 'clamp(2rem, 4vw, 3.1rem)', marginBottom: '0.85rem' }}>
+          {service.title}
+        </h2>
+        <p className="ag-lede" style={{ marginBottom: '1.5rem' }}>{service.overview}</p>
 
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true" style={{ color: 'var(--ink-soft)', flexShrink: 0, marginTop: '0.4rem' }}>
-                    <path d="M3 15L15 3M15 3H7M15 3V11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+        <ul className="svc-outcomes">
+          {service.outcomes.map((item, i) => (
+            <motion.li
+              key={item}
+              initial={{ opacity: 0, x: -10 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ delay: i * 0.06, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            >
+              {item}
+            </motion.li>
+          ))}
+        </ul>
+
+        <div className="svc-chips">
+          {service.deliverables.slice(0, 3).map((item) => (
+            <span key={item} className="svc-chip">{item}</span>
+          ))}
+        </div>
+
+        <div className="ag-actions" style={{ marginTop: '1.75rem' }}>
+          <MagneticBtn to={`/services/${service.id}`} variant="dark" size="md">
+            {SERVICES_PAGE.rowAction}
+          </MagneticBtn>
+        </div>
+      </FadeIn>
+    </article>
+  )
+}
+
+function ProcessRail() {
+  return (
+    <section className="ag-section">
+      <div className="ag-wrap">
+        <FadeIn y={14}>
+          <p className="ag-eyebrow">{SERVICES_PAGE.process.eyebrow}</p>
+        </FadeIn>
+        <ScrollRevealText
+          text={SERVICES_PAGE.process.title}
+          reveal="slide"
+          stagger={0.04}
+          as="h2"
+          className="ag-h2"
+          style={{ marginBottom: '0.75rem' }}
+        />
+        <FadeIn delay={0.1}>
+          <p className="ag-lede" style={{ marginBottom: '2rem' }}>{SERVICES_PAGE.process.description}</p>
+        </FadeIn>
+
+        <div className="ag-card svc-rail">
+          <FadeInStagger className="svc-rail-grid" stagger={0.1}>
+            {SERVICE_PROCESS.map((step, i) => (
+              <StaggerItem key={step.number}>
+                <div className="svc-rail-step">
+                  <span className="svc-rail-num">{step.number}</span>
+                  {i < SERVICE_PROCESS.length - 1 && <span className="svc-rail-line" aria-hidden="true" />}
+                  <h3>{step.title}</h3>
+                  <p>{step.description}</p>
                 </div>
               </StaggerItem>
             ))}
           </FadeInStagger>
         </div>
-      </section>
+      </div>
+    </section>
+  )
+}
 
-      {/* Process */}
-      <section
-        style={{
-          background: 'var(--bg-dark)',
-          color: 'var(--ink-inv)',
-          padding: 'clamp(5rem, 10vw, 9rem) var(--layout-gutter)',
-        }}
-      >
-        <div style={{ maxWidth: 'var(--layout-max)', margin: '0 auto' }}>
-          <FadeIn style={{ marginBottom: 'clamp(3rem, 6vw, 5rem)' }}>
-            <Eyebrow light>{SERVICES_PAGE.process.eyebrow}</Eyebrow>
-            <h2
-              style={{
-                fontFamily: 'var(--font-display)',
-                fontWeight: 800,
-                fontSize: 'var(--text-headline)',
-                letterSpacing: '-0.04em',
-                color: 'var(--ink-inv)',
-                marginTop: '0.75rem',
-              }}
-            >
-              {SERVICES_PAGE.process.title}
-            </h2>
-          </FadeIn>
-          <FadeInStagger stagger={0.1}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '2rem' }}>
-              {SERVICE_PROCESS.map((step) => (
-                <StaggerItem key={step.number}>
-                  <div
-                    style={{
-                      padding: '2rem',
-                      borderRadius: 'var(--radius-md)',
-                      background: 'var(--bg-dark-card)',
-                      border: '1px solid var(--line-inv)',
-                      height: '100%',
-                    }}
-                  >
-                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', letterSpacing: '0.1em', color: 'var(--accent)', display: 'block', marginBottom: '1rem' }}>
-                      {step.number}
-                    </span>
-                    <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '1.5rem', letterSpacing: '-0.03em', color: 'var(--ink-inv)', marginBottom: '0.75rem' }}>
-                      {step.title}
-                    </h3>
-                    <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.9rem', color: 'var(--ink-inv-soft)', lineHeight: 1.7 }}>
-                      {step.description}
-                    </p>
-                  </div>
-                </StaggerItem>
-              ))}
+function ServicesCta() {
+  return (
+    <section className="ag-section" style={{ paddingTop: 0 }}>
+      <div className="ag-wrap">
+        <FadeIn y={24}>
+          <div className="ag-card svc-cta">
+            <div>
+              <p className="ag-eyebrow">{SERVICES_PAGE.cta.eyebrow}</p>
+              <h2 className="ag-h2" style={{ fontSize: 'clamp(2rem, 4vw, 3.2rem)', maxWidth: '14ch' }}>
+                {SERVICES_PAGE.cta.title}
+              </h2>
+              <p className="ag-lede" style={{ margin: '0.9rem 0 0' }}>{SERVICES_PAGE.cta.description}</p>
             </div>
-          </FadeInStagger>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section style={{ background: 'var(--bg-canvas)', padding: 'clamp(5rem, 10vw, 8rem) var(--layout-gutter)' }}>
-        <div style={{ maxWidth: 'var(--layout-max)', margin: '0 auto' }}>
-          <FadeIn>
-            <Eyebrow>{SERVICES_PAGE.cta.eyebrow}</Eyebrow>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--text-headline)', letterSpacing: '-0.04em', color: 'var(--ink)', marginTop: '0.75rem', marginBottom: '1.5rem', maxWidth: '18ch' }}>
-              {SERVICES_PAGE.cta.title}
-            </h2>
-            <p style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-body-lg)', color: 'var(--ink-mid)', maxWidth: '42ch', lineHeight: 1.7, marginBottom: '2.5rem' }}>
-              {SERVICES_PAGE.cta.description}
-            </p>
-            <Link
-              to={SERVICES_PAGE.cta.action.to}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                padding: '0.9rem 2rem',
-                borderRadius: 'var(--radius-pill)',
-                background: 'var(--ink)',
-                color: 'var(--bg-canvas)',
-                fontFamily: 'var(--font-body)',
-                fontWeight: 500,
-                fontSize: '0.95rem',
-                textDecoration: 'none',
-              }}
-            >
+            <MagneticBtn to={SERVICES_PAGE.cta.action.to} variant="dark" size="lg">
               {SERVICES_PAGE.cta.action.label}
-            </Link>
-          </FadeIn>
-        </div>
-      </section>
-    </motion.div>
+            </MagneticBtn>
+          </div>
+        </FadeIn>
+      </div>
+    </section>
   )
 }

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import Lenis from 'lenis'
-import { AnimatePresence } from 'framer-motion'
+import { AnimatePresence, MotionConfig } from 'framer-motion'
 import ErrorBoundary from './ErrorBoundary'
 import Footer from './layout/Footer'
 import Navbar from './layout/Navbar'
@@ -9,6 +9,8 @@ import AppRoutes from './routes'
 import ScrollManager from './ScrollManager'
 import { SITE_UI } from '../data/site'
 import CustomCursor from '../components/cursor/CustomCursor'
+import BrandLoader from '../components/motion/BrandLoader'
+import ScrollProgress from '../components/motion/ScrollProgress'
 import { useRouter } from './routerContext'
 
 function LenisProvider() {
@@ -36,19 +38,23 @@ export default function App() {
   const { pathname } = useRouter()
 
   return (
-    <ErrorBoundary>
-      <LenisProvider />
-      <ScrollManager />
-      <CustomCursor />
-      <a className="skip-link" href="#main-content">{SITE_UI.skipLink}</a>
-      <PageMeta />
-      <Navbar />
-      <main id="main-content" tabIndex="-1">
-        <AnimatePresence mode="wait" initial={false}>
-          <AppRoutes key={pathname} />
-        </AnimatePresence>
-      </main>
-      <Footer />
-    </ErrorBoundary>
+    <MotionConfig reducedMotion="user" transition={{ ease: [0.16, 1, 0.3, 1] }}>
+      <ErrorBoundary>
+        <LenisProvider />
+        <ScrollManager />
+        <CustomCursor />
+        <BrandLoader />
+        <ScrollProgress />
+        <a className="skip-link" href="#main-content">{SITE_UI.skipLink}</a>
+        <PageMeta />
+        <Navbar />
+        <main id="main-content" tabIndex="-1">
+          <AnimatePresence mode="wait" initial={false}>
+            <AppRoutes key={pathname} />
+          </AnimatePresence>
+        </main>
+        <Footer />
+      </ErrorBoundary>
+    </MotionConfig>
   )
 }

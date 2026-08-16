@@ -1,34 +1,38 @@
 export const HOME_HERO = {
   eyebrow: 'Independent digital studio · India',
-  title: 'We shape digital businesses people choose.',
-  description: 'IndicBiz brings strategy, identity, design and engineering together to make ambitious ideas clear, useful and memorable.',
+  title: 'Digital Clarity for Ambitious Businesses.',
+  titleLines: ['Digital Clarity for', 'Ambitious Businesses'],
+  description: 'Strategy, identity, design and engineering, composed into experiences people choose.',
   primaryAction: { label: 'Start a project', to: '/contact' },
-  secondaryAction: { label: 'Explore our work', to: '/work' },
+  secondaryAction: { label: 'View work', to: '/work' },
 }
 
 export const HOME_STATS = [
   { value: '06', label: 'specialists, one focused team' },
   { value: '04', label: 'connected capabilities' },
-  { value: 'Direct', label: 'collaboration with the people doing the work' },
+  { value: 'Direct', label: 'collaboration with the makers' },
 ]
 
 export const HOME_SECTIONS = {
   services: {
-    eyebrow: 'What we do',
-    title: 'Connected capabilities. One clear outcome.',
-    description: 'Each engagement brings the right mix of strategy, design and technology.',
+    eyebrow: 'Capabilities',
+    title: 'Four disciplines. One outcome.',
     actionLabel: 'View capability',
   },
   work: {
-    eyebrow: 'Example engagements',
-    title: 'Problems we are equipped to solve.',
-    description: 'Representative project types—not invented case studies or client claims.',
+    eyebrow: 'Selected work',
+    title: 'Problems worth solving.',
+    description: 'Focused engagements across brand, web and product.',
     actionLabel: 'View all work',
     actionTo: '/work',
   },
   partnership: {
     eyebrow: 'Working together',
     title: 'A partnership designed to stay useful.',
+  },
+  about: {
+    actionLabel: 'About the studio',
+    actionTo: '/about',
   },
 }
 
@@ -55,20 +59,28 @@ export const EXAMPLE_ENGAGEMENTS = [
 
 export const PARTNERSHIP_PRINCIPLES = [
   {
-    quote: 'You work directly with the people researching, designing and building the solution.',
+    number: '01',
     name: 'Direct access',
+    quote: 'You work directly with the people researching, designing and building the solution.',
     role: 'No account-management layers',
   },
   {
-    quote: 'Decisions are shared early, explained clearly and connected to the agreed project goals.',
+    number: '02',
     name: 'Visible decisions',
+    quote: 'Decisions are shared early, explained clearly and connected to the agreed project goals.',
     role: 'No big-reveal process',
+  },
+  {
+    number: '03',
+    name: 'Progress that lasts',
+    quote: 'We build systems teams can own, adapt and grow, not work that only we can maintain.',
+    role: 'Practical handover',
   },
 ]
 
 export const HOME_CTA = {
   eyebrow: 'Have an idea?',
   title: 'Let’s turn it into something people value.',
-  description: 'Share the rough version. We will help you find the clearest path forward.',
+  description: 'Share the rough version. We’ll help you find the clearest path forward.',
   action: { label: 'Tell us about it', to: '/contact' },
 }

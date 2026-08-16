@@ -1,150 +1,135 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import MagneticBtn from '../../components/primitives/MagneticBtn'
 import FadeIn, { FadeInStagger, StaggerItem } from '../../components/motion/FadeIn'
-import Eyebrow from '../../components/ui/Eyebrow'
-import { WORK_HERO, WORK_FILTERS, WORK_PROJECTS, WORK_SECTIONS, WORK_CTA } from '../../data/work'
-import { Link } from '../../app/router'
-import Aurora from '../../components/backgrounds/Aurora/Aurora'
+import ScrollRevealText from '../../components/motion/ScrollRevealText'
+import MediaFrame from '../../components/layout/MediaFrame'
+import { WORK_HERO, WORK_FILTERS, WORK_PROJECTS, WORK_METHOD, WORK_CTA, WORK_SECTIONS, WORK_UI } from '../../data/work'
 
 const pageVariants = {
   initial: { opacity: 0 },
   animate: { opacity: 1, transition: { duration: 0.4 } },
-  exit: { opacity: 0, transition: { duration: 0.25 } },
+  exit: { opacity: 0, transition: { duration: 0.2 } },
 }
+
+const usableFilters = WORK_FILTERS.filter(
+  (filter) => filter.id === 'all' || WORK_PROJECTS.some((p) => p.serviceId === filter.id)
+)
 
 export default function WorkContent() {
   const [activeFilter, setActiveFilter] = useState('all')
-
-  const filtered = activeFilter === 'all'
-    ? WORK_PROJECTS
-    : WORK_PROJECTS.filter(p => p.serviceId === activeFilter)
+  const filtered = useMemo(
+    () => (activeFilter === 'all' ? WORK_PROJECTS : WORK_PROJECTS.filter((p) => p.serviceId === activeFilter)),
+    [activeFilter]
+  )
 
   return (
-    <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit">
-
-      {/* Hero */}
-      <section
-        style={{
-          background: 'var(--bg-canvas)',
-          borderBottom: '1px solid var(--line)',
-          position: 'relative',
-          overflow: 'hidden',
-          minHeight: '60vh',
-          display: 'flex',
-          alignItems: 'center'
-        }}
-      >
-        <div style={{ position: 'absolute', inset: 0, zIndex: 1, opacity: 0.8 }}>
-          <Aurora 
-            colorStops={["#00FFFF", "#0088FF", "#0000FF"]} 
-            amplitude={1.2}
-            blend={0.5}
+    <motion.div className="ag-page wk-page" variants={pageVariants} initial="initial" animate="animate" exit="exit">
+      <section className="ag-section wk-hero">
+        <div className="ag-wrap">
+          <motion.p className="ag-eyebrow" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
+            {WORK_HERO.eyebrow}
+          </motion.p>
+          <ScrollRevealText
+            text={WORK_HERO.title}
+            reveal="slide"
+            stagger={0.045}
+            delay={0.05}
+            as="h1"
+            className="ag-h1"
+            style={{ maxWidth: '16ch', fontSize: 'clamp(2.6rem, 6vw, 4.8rem)' }}
           />
-        </div>
-        <div style={{ 
-          position: 'absolute', 
-          inset: 0, 
-          zIndex: 2, 
-          background: 'radial-gradient(var(--line) 1px, transparent 1px)',
-          backgroundSize: '24px 24px',
-          opacity: 0.5
-        }} />
-        
-        <div style={{ padding: 'calc(var(--header-height) + 2rem) var(--layout-gutter) clamp(4rem, 8vw, 6rem)', maxWidth: 'var(--layout-max)', margin: '0 auto', position: 'relative', zIndex: 3 }}>
-          <FadeIn>
-            <Eyebrow style={{ color: '#000' }}>{WORK_HERO.eyebrow}</Eyebrow>
-            <h1
-              style={{
-                fontFamily: 'var(--font-display)',
-                fontWeight: 800,
-                fontSize: 'var(--text-hero)',
-                letterSpacing: '-0.04em',
-                lineHeight: 1.0,
-                color: 'var(--ink)',
-                maxWidth: '18ch',
-                marginTop: '1rem',
-                marginBottom: '1.5rem',
-              }}
-            >
-              {WORK_HERO.title}
-            </h1>
-            <p style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-body-lg)', color: 'var(--ink-mid)', maxWidth: '52ch', lineHeight: 1.7 }}>
-              {WORK_HERO.description}
-            </p>
+          <FadeIn delay={0.16} y={12}>
+            <p className="ag-lede" style={{ marginTop: '1.1rem' }}>{WORK_HERO.description}</p>
           </FadeIn>
-        </div>
-      </section>
 
-      {/* Projects */}
-      <section style={{ background: 'var(--bg-canvas)', padding: 'clamp(4rem, 8vw, 7rem) var(--layout-gutter)' }}>
-        <div style={{ maxWidth: 'var(--layout-max)', margin: '0 auto' }}>
+          <FadeIn delay={0.22} y={10}>
+            <nav className="wk-jump" aria-label="Jump to a project">
+              {WORK_PROJECTS.map((project) => (
+                <a key={project.id} href={`#work-${project.id}`} className="wk-jump-link">
+                  <span>{project.number}</span>
+                  {project.title}
+                </a>
+              ))}
+            </nav>
+          </FadeIn>
 
-          {/* Filters */}
-          <FadeIn style={{ marginBottom: 'clamp(2.5rem, 5vw, 4rem)' }}>
-            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }} role="group" aria-label="Filter by service">
-              {WORK_FILTERS.map((filter) => (
+          <FadeIn delay={0.28} y={8}>
+            <div className="wk-filters" role="group" aria-label={WORK_UI.filterLabel}>
+              {usableFilters.map((filter) => (
                 <button
                   key={filter.id}
                   type="button"
                   onClick={() => setActiveFilter(filter.id)}
-                  style={{
-                    padding: '0.45rem 1rem',
-                    borderRadius: 'var(--radius-pill)',
-                    border: `1.5px solid ${activeFilter === filter.id ? 'var(--ink)' : 'var(--line-mid)'}`,
-                    background: activeFilter === filter.id ? 'var(--ink)' : 'transparent',
-                    color: activeFilter === filter.id ? 'var(--bg-canvas)' : 'var(--ink-mid)',
-                    fontFamily: 'var(--font-mono)',
-                    fontSize: '0.72rem',
-                    letterSpacing: '0.06em',
-                    textTransform: 'uppercase',
-                    cursor: 'pointer',
-                    transition: 'all 0.15s',
-                  }}
+                  className={`btn3d-chip${activeFilter === filter.id ? ' is-active' : ''}`}
                 >
                   {filter.label}
                 </button>
               ))}
             </div>
           </FadeIn>
+        </div>
+      </section>
 
-          {/* Project list */}
+      <section className="ag-section wk-archive">
+        <div className="ag-wrap">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeFilter}
+              className="wk-cases"
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
-              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.35 }}
             >
-              <FadeInStagger stagger={0.1}>
-                {filtered.map((project, i) => (
-                  <StaggerItem key={project.id}>
-                    <WorkProjectCard project={project} index={i} />
-                  </StaggerItem>
-                ))}
-              </FadeInStagger>
+              {filtered.map((project, i) => (
+                <CaseRow key={project.id} project={project} reverse={i % 2 === 1} />
+              ))}
             </motion.div>
           </AnimatePresence>
         </div>
       </section>
 
-      {/* CTA */}
-      <section style={{ background: 'var(--bg-dark)', color: 'var(--ink-inv)', padding: 'clamp(5rem, 10vw, 9rem) var(--layout-gutter)' }}>
-        <div style={{ maxWidth: 'var(--layout-max)', margin: '0 auto' }}>
-          <FadeIn>
-            <Eyebrow light>{WORK_CTA.eyebrow}</Eyebrow>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--text-headline)', letterSpacing: '-0.04em', color: 'var(--ink-inv)', marginTop: '0.75rem', marginBottom: '1.25rem', maxWidth: '18ch' }}>
-              {WORK_CTA.title}
-            </h2>
-            <p style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-body-lg)', color: 'var(--ink-inv-soft)', maxWidth: '44ch', lineHeight: 1.7, marginBottom: '2.5rem' }}>
-              {WORK_CTA.description}
-            </p>
-            <Link
-              to={WORK_CTA.action.to}
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.9rem 2rem', borderRadius: 'var(--radius-pill)', background: 'var(--accent)', color: 'var(--ink)', fontFamily: 'var(--font-body)', fontWeight: 600, fontSize: '0.95rem', textDecoration: 'none' }}
-            >
-              {WORK_CTA.action.label}
-            </Link>
+      <section className="ag-section wk-method-sec">
+        <div className="ag-wrap">
+          <FadeIn y={12}>
+            <p className="ag-eyebrow">{WORK_SECTIONS.method.eyebrow}</p>
+          </FadeIn>
+          <ScrollRevealText
+            text={WORK_SECTIONS.method.title}
+            reveal="slide"
+            stagger={0.04}
+            as="h2"
+            className="ag-h2"
+            style={{ marginBottom: '1.75rem', maxWidth: '18ch' }}
+          />
+          <div className="ag-card wk-method">
+            <FadeInStagger className="wk-method-grid" stagger={0.1}>
+              {WORK_METHOD.map((item) => (
+                <StaggerItem key={item.number}>
+                  <div className="wk-method-item">
+                    <span>{item.number}</span>
+                    <h3>{item.title}</h3>
+                    <p>{item.description}</p>
+                  </div>
+                </StaggerItem>
+              ))}
+            </FadeInStagger>
+          </div>
+        </div>
+      </section>
+
+      <section className="ag-section wk-end">
+        <div className="ag-wrap">
+          <FadeIn y={22}>
+            <div className="ag-card wk-cta">
+              <div>
+                <p className="ag-eyebrow">{WORK_CTA.eyebrow}</p>
+                <h2 className="ag-h2" style={{ fontSize: 'clamp(2rem, 4vw, 3.1rem)', maxWidth: '14ch' }}>{WORK_CTA.title}</h2>
+                <p className="ag-lede" style={{ marginTop: '0.85rem' }}>{WORK_CTA.description}</p>
+              </div>
+              <MagneticBtn to={WORK_CTA.action.to} variant="dark" size="lg">{WORK_CTA.action.label}</MagneticBtn>
+            </div>
           </FadeIn>
         </div>
       </section>
@@ -152,98 +137,67 @@ export default function WorkContent() {
   )
 }
 
-function WorkProjectCard({ project, index }) {
-  const [hovered, setHovered] = useState(false)
-
+function CaseRow({ project, reverse }) {
   return (
-    <Link to={`/work/${project.id}`} style={{ display: 'block', textDecoration: 'none' }}>
-      <article
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      data-cursor="view"
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '3rem 1fr',
-        gap: 'clamp(1.5rem, 3vw, 2.5rem)',
-        padding: 'clamp(2rem, 4vw, 3rem) 0',
-        borderBottom: '1px solid var(--line)',
-        cursor: 'pointer',
-      }}
+    <motion.article
+      id={`work-${project.id}`}
+      className={`ag-card wk-case${reverse ? ' is-reverse' : ''}`}
+      initial={{ opacity: 0, y: 36 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+      whileHover={{ y: -6, boxShadow: '0 32px 64px rgba(13,36,38,0.12)' }}
+      style={{ transition: 'box-shadow 0.4s ease' }}
     >
-      {/* Number */}
-      <span
-        style={{
-          fontFamily: 'var(--font-mono)',
-          fontSize: '0.72rem',
-          letterSpacing: '0.1em',
-          color: 'var(--accent-dark)',
-          paddingTop: '0.2rem',
-        }}
+      <motion.div
+        className="wk-case-media ag-img-reveal"
+        style={{ borderRadius: '20px' }}
+        initial={{ clipPath: 'inset(6% 6% 6% 6% round 20px)' }}
+        whileInView={{ clipPath: 'inset(0% 0% 0% 0% round 20px)' }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
       >
-        {project.number}
-      </span>
+        <MediaFrame src={project.image} alt={project.imageAlt} aspect="16 / 11" radius="20px" />
+      </motion.div>
+      <div className="wk-case-copy">
+        <p className="ag-eyebrow">{project.number} · {project.category}</p>
+        <h2>{project.title}</h2>
+        <p className="wk-case-summary">{project.summary}</p>
 
-      {/* Content */}
-      <div>
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem', marginBottom: '0.75rem', flexWrap: 'wrap' }}>
+        <dl className="wk-facts">
           <div>
-            <h2
-              style={{
-                fontFamily: 'var(--font-display)',
-                fontWeight: 800,
-                fontSize: 'clamp(1.5rem, 3vw, 2.25rem)',
-                letterSpacing: '-0.03em',
-                color: 'var(--ink)',
-                marginBottom: '0.25rem',
-                transition: 'color 0.2s',
-              }}
-            >
-              {project.title}
-            </h2>
-            <span
-              style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: '0.68rem',
-                letterSpacing: '0.1em',
-                textTransform: 'uppercase',
-                color: project.accent,
-              }}
-            >
-              {project.category}
-            </span>
+            <dt>{WORK_UI.challenge}</dt>
+            <dd>{project.challenge}</dd>
           </div>
-          <motion.svg
-            animate={{ x: hovered ? 4 : 0, y: hovered ? -4 : 0 }}
-            width="20" height="20" viewBox="0 0 20 20" fill="none"
-            style={{ color: 'var(--ink-soft)', flexShrink: 0, marginTop: '0.3rem' }}
-          >
-            <path d="M4 16L16 4M16 4H8M16 4V12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-          </motion.svg>
-        </div>
+          <div>
+            <dt>{WORK_UI.outcome}</dt>
+            <dd>{project.outcome}</dd>
+          </div>
+        </dl>
 
-        <p style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-body)', color: 'var(--ink-mid)', lineHeight: 1.7, maxWidth: '60ch', marginBottom: '1.25rem' }}>
-          {project.summary}
-        </p>
-
-        {/* Challenge / Approach / Outcome */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem' }}>
-          {[
-            { label: 'Challenge', text: project.challenge },
-            { label: 'Approach', text: project.approach },
-            { label: 'Outcome', text: project.outcome },
-          ].map((item) => (
-            <div key={item.label}>
-              <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-soft)', marginBottom: '0.4rem' }}>
-                {item.label}
-              </p>
-              <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.875rem', color: 'var(--ink-mid)', lineHeight: 1.6 }}>
-                {item.text}
-              </p>
-            </div>
+        <div className="wk-tags">
+          {project.focus.map((tag, i) => (
+            <motion.span
+              key={tag}
+              initial={{ opacity: 0, scale: 0.85 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.08 + i * 0.045, duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            >
+              {tag}
+            </motion.span>
           ))}
         </div>
+
+        <div className="ag-actions">
+          <MagneticBtn to={`/work/${project.id}`} variant="dark" size="md">View case</MagneticBtn>
+          {project.websiteUrl && (
+            <MagneticBtn href={project.websiteUrl} variant="light" size="md" target="_blank" rel="noreferrer">
+              {WORK_UI.visitWebsite}
+            </MagneticBtn>
+          )}
+        </div>
       </div>
-      </article>
-    </Link>
+    </motion.article>
   )
 }

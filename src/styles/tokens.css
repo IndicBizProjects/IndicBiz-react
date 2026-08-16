@@ -4,37 +4,38 @@
    ============================================ */
 
 :root {
-  /* ── Canvas & Surfaces ── */
-  --bg-canvas:       #F5F0E8;   /* cream — primary light canvas */
-  --bg-surface:      #FDFCF9;   /* near-white card surface */
-  --bg-dark:         #0A0A08;   /* near-black — hero, footer, CTAs */
-  --bg-dark-mid:     #141412;   /* elevated dark surface */
-  --bg-dark-card:    #1C1C19;   /* dark card surface */
+  /* ── Canvas & Surfaces — cool stone, quiet luxury ── */
+  --bg-canvas:       #F7F7F7;   /* Agencya canvas */
+  --bg-surface:      #EFF0F0;   /* Agencya inset surface */
+  --bg-dark:         #08090B;   /* deep ink — hero, footer, CTAs */
+  --bg-dark-mid:     #111318;   /* elevated dark surface */
+  --bg-dark-card:    #171A20;   /* dark card surface */
 
   /* ── Text on Light ── */
-  --ink:             #0E0E0C;   /* primary dark text */
-  --ink-mid:         #3A3834;   /* secondary dark text */
-  --ink-soft:        #6B6760;   /* muted dark text */
-  --ink-placeholder: #A8A49D;   /* placeholder text */
+  --brand-dot:       #8C7355;   /* warm brown period in the wordmark */
+  --ink:             #0B0C0F;   /* primary dark text */
+  --ink-mid:         #3A3F4A;   /* secondary dark text */
+  --ink-soft:        #6B7280;   /* muted dark text */
+  --ink-placeholder: #9AA1AD;   /* placeholder text */
 
   /* ── Text on Dark ── */
-  --ink-inv:         #F0EDE6;   /* primary text on dark */
-  --ink-inv-soft:    #8A8880;   /* muted text on dark */
+  --ink-inv:         #F2F3F5;   /* primary text on dark */
+  --ink-inv-soft:    #8B929E;   /* muted text on dark */
 
   /* ── Accent ── */
-  --accent:          #D1CECA;   /* gray — CTAs, highlights */
-  --accent-dark:     #8C8881;   /* darker gray for hover */
-  --accent-warm:     #E8E5E1;   /* light gray — secondary accent */
+  --accent:          #C8F04A;   /* soft chartreuse — CTAs, highlights */
+  --accent-dark:     #A8CC30;   /* darker accent for hover */
+  --accent-warm:     #9BE7D0;   /* mint secondary accent */
 
   /* ── Borders ── */
-  --line:            rgba(14, 14, 12, 0.10);   /* light section borders */
-  --line-mid:        rgba(14, 14, 12, 0.18);   /* stronger light borders */
-  --line-inv:        rgba(240, 237, 230, 0.10); /* dark section borders */
-  --line-inv-mid:    rgba(240, 237, 230, 0.18); /* stronger dark borders */
+  --line:            rgba(11, 12, 15, 0.08);
+  --line-mid:        rgba(11, 12, 15, 0.16);
+  --line-inv:        rgba(242, 243, 245, 0.10);
+  --line-inv-mid:    rgba(242, 243, 245, 0.18);
 
   /* ── Typography ── */
-  --font-display:    "Playfair Display", Georgia, serif;
-  --font-body:       "Inter", system-ui, sans-serif;
+  --font-display:    "Satoshi", "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-body:       "Inter", "Plus Jakarta Sans", system-ui, sans-serif;
   --font-mono:       "JetBrains Mono", "Fira Code", monospace;
 
   /* ── Type Scale (fluid) ── */
@@ -62,7 +63,11 @@
   /* ── Grid & Layout ── */
   --layout-max:    80rem;
   --layout-wide:   96rem;
-  --layout-gutter: clamp(1.25rem, 5vw, 3.5rem);
+  --layout-gutter: clamp(1rem, 4.2vw, 2.5rem);
+  --layout-content: min(73.75rem, calc(100% - (var(--layout-gutter) * 2)));
+  --bp-sm: 640px;
+  --bp-md: 860px;
+  --bp-lg: 1100px;
 
   /* ── Border Radius ── */
   --radius-sm:   0.375rem;
@@ -89,5 +94,5 @@
   --dur-crawl:       1200ms;
 
   /* ── Header ── */
-  --header-height: 5rem;
+  --header-height: clamp(4.25rem, 8vw, 5.5rem);
 }

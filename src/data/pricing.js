@@ -7,14 +7,14 @@ export const PRICING_HERO = {
 export const PRICING_PLANS = [
   {
     name: 'Foundation',
-    price: '₹15k–₹30k',
+    price: '₹15k to ₹30k',
     description: 'For new businesses that need a credible, focused start.',
     featured: false,
     features: ['Discovery workshop', 'Focused visual direction', 'Essential web presence', 'Launch guidance'],
   },
   {
     name: 'Momentum',
-    price: '₹40k–₹80k',
+    price: '₹40k to ₹80k',
     description: 'For growing brands ready for a complete digital system.',
     featured: true,
     features: ['Strategy and positioning', 'Custom design system', 'Responsive React build', 'Performance and SEO'],

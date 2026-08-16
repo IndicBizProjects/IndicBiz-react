@@ -1,0 +1,229 @@
+/* ============================================================
+   INDICBIZ — Agencya-style 3D buttons
+   Pulled from CryoDesign / Agencya: inset bevel, layered lift,
+   top reflection, press-in on active. One system, every button.
+   ============================================================ */
+
+:root {
+  --btn3d-radius: 999px;
+  --btn3d-lift:
+    0 0.71px 0.71px -0.67px rgba(0, 0, 0, 0.06),
+    0 1.81px 1.81px -1.33px rgba(0, 0, 0, 0.06),
+    0 3.62px 3.62px -2px rgba(0, 0, 0, 0.08),
+    0 8px 18px -4px rgba(0, 0, 0, 0.10);
+  --btn3d-lift-hover:
+    0 0.9px 0.9px -0.67px rgba(0, 0, 0, 0.07),
+    0 2.4px 2.4px -1.33px rgba(0, 0, 0, 0.08),
+    0 6.4px 6.4px -3px rgba(0, 0, 0, 0.09),
+    0 16px 28px -6px rgba(0, 0, 0, 0.14);
+  --btn3d-press:
+    inset 0 2px 6px rgba(0, 0, 0, 0.22),
+    0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.btn3d-wrap {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.btn3d {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: none;
+  border-radius: var(--btn3d-radius);
+  font-family: var(--font-body);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  text-decoration: none;
+  user-select: none;
+  cursor: pointer;
+  overflow: hidden;
+  transform: translateY(0);
+  transition:
+    transform 180ms var(--ease-out),
+    box-shadow 180ms var(--ease-out),
+    background 180ms var(--ease-out),
+    color 180ms var(--ease-out);
+}
+
+.btn3d:focus-visible {
+  outline: 2px solid var(--accent-dark);
+  outline-offset: 3px;
+}
+
+.btn3d:disabled,
+.btn3d[aria-disabled='true'] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn3d-face {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* Glossy top reflection — Agencya "reflection" layer */
+.btn3d-shine {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.34) 0%,
+    rgba(255, 255, 255, 0.08) 42%,
+    transparent 70%
+  );
+  mask-image: linear-gradient(0deg, transparent 32%, #000 100%);
+  -webkit-mask-image: linear-gradient(0deg, transparent 32%, #000 100%);
+}
+
+/* ── Dark / primary ── */
+.btn3d--dark,
+.btn3d--accent,
+.btn3d--primary {
+  background: #0b0c0f;
+  color: #ffffff;
+  box-shadow:
+    inset 0 0 5px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    var(--btn3d-lift);
+}
+
+.btn3d--dark .btn3d-shine,
+.btn3d--accent .btn3d-shine,
+.btn3d--primary .btn3d-shine {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.04) 45%,
+    transparent 70%
+  );
+}
+
+/* ── Light / secondary ── */
+.btn3d--light,
+.btn3d--outline,
+.btn3d--glass,
+.btn3d--neo,
+.btn3d--secondary {
+  background: #eff0f0;
+  color: #0b0c0f;
+  box-shadow:
+    inset 0 0 5px rgba(166, 166, 166, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    var(--btn3d-lift);
+}
+
+/* Hover — tone only, no lift or shape change */
+.btn3d-wrap:hover .btn3d--dark,
+.btn3d-wrap:hover .btn3d--accent,
+.btn3d-wrap:hover .btn3d--primary {
+  box-shadow:
+    inset 0 0 5px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    var(--btn3d-lift-hover);
+}
+
+.btn3d-wrap:hover .btn3d--light,
+.btn3d-wrap:hover .btn3d--outline,
+.btn3d-wrap:hover .btn3d--glass,
+.btn3d-wrap:hover .btn3d--neo,
+.btn3d-wrap:hover .btn3d--secondary {
+  box-shadow:
+    inset 0 0 5px rgba(166, 166, 166, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    var(--btn3d-lift-hover);
+}
+/* Press in */
+.btn3d-wrap:active .btn3d {
+  transform: translateY(2px) !important;
+  box-shadow: var(--btn3d-press) !important;
+}
+
+/* Sizes */
+.btn3d--sm {
+  padding: 0.55rem 1.15rem;
+  font-size: 0.82rem;
+  min-height: 2.5rem;
+}
+
+.btn3d--md {
+  padding: 0.78rem 1.55rem;
+  font-size: 0.92rem;
+  min-height: 2.75rem;
+}
+
+.btn3d--lg {
+  padding: clamp(0.85rem, 2vw, 0.95rem) clamp(1.25rem, 3vw, 2rem);
+  font-size: 1rem;
+  min-height: 3.15rem;
+}
+
+.btn3d--xl {
+  padding: 1.1rem 2.4rem;
+  font-size: 1.05rem;
+  min-height: 3.5rem;
+}
+
+/* Compact 3D chips — filters, form options */
+.btn3d-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.48rem 1.05rem;
+  border: none;
+  border-radius: var(--btn3d-radius);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  background: #eff0f0;
+  color: #3a3f4a;
+  box-shadow:
+    inset 0 0 4px rgba(166, 166, 166, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    var(--btn3d-lift);
+  transition: transform 160ms var(--ease-out), box-shadow 160ms var(--ease-out), background 160ms var(--ease-out), color 160ms var(--ease-out);
+}
+
+.btn3d-chip:hover {
+  box-shadow:
+    inset 0 0 4px rgba(166, 166, 166, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    var(--btn3d-lift-hover);
+}
+.btn3d-chip:active {
+  transform: translateY(1px);
+  box-shadow: var(--btn3d-press);
+}
+
+.btn3d-chip.is-active {
+  background: #0b0c0f;
+  color: #ffffff;
+  box-shadow:
+    inset 0 0 5px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    var(--btn3d-lift);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn3d,
+  .btn3d-wrap:hover .btn3d,
+  .btn3d-wrap:active .btn3d {
+    transition: none;
+    transform: none !important;
+  }
+}

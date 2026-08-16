@@ -14,17 +14,16 @@ export const SITE_UI = {
   mobileNavLabel: 'Mobile navigation',
   openNavLabel: 'Open navigation',
   closeNavLabel: 'Close navigation',
-  headerAction: 'Let’s talk',
+  headerAction: 'Get Started Now',
   contactGroup: 'Contact',
 }
 
 export const PRIMARY_NAV = [
-  { label: 'Home', to: '/' },
+  { label: 'Home', to: '/', end: true },
   { label: 'Services', to: '/services' },
-  { label: 'Our Work', to: '/work' },
+  { label: 'Work', to: '/work' },
   { label: 'About', to: '/about' },
   { label: 'Pricing', to: '/pricing' },
-  { label: 'UI Catalog', to: '/ui-catalog' },
   { label: 'Contact', to: '/contact' },
 ]
 
@@ -35,7 +34,7 @@ export const SOCIAL_LINKS = [
 ]
 
 export const FOOTER_GROUPS = [
-  { title: 'Explore', links: PRIMARY_NAV.slice(1) },
+  { title: 'Explore', links: PRIMARY_NAV },
   {
     title: 'Services',
     links: [
@@ -49,31 +48,31 @@ export const FOOTER_GROUPS = [
 
 export const ROUTE_META = {
   '/': {
-    title: 'IndicBiz — Digital clarity for ambitious businesses',
+    title: 'IndicBiz | Digital clarity for ambitious businesses',
     description: 'Brand, product and web experiences designed to help ambitious businesses grow.',
   },
   '/services': {
-    title: 'Services — IndicBiz',
+    title: 'Services | IndicBiz',
     description: 'Explore brand, web, product and growth services from IndicBiz.',
   },
   '/work': {
-    title: 'Our Work — IndicBiz',
+    title: 'Our Work | IndicBiz',
     description: 'Selected engagements across brand, web, product and growth from IndicBiz.',
   },
   '/about': {
-    title: 'About — IndicBiz',
+    title: 'About | IndicBiz',
     description: 'Meet the independent team building useful and memorable digital experiences.',
   },
   '/pricing': {
-    title: 'Pricing — IndicBiz',
+    title: 'Pricing | IndicBiz',
     description: 'Clear, flexible engagement options for brands at every stage.',
   },
   '/contact': {
-    title: 'Start a project — IndicBiz',
+    title: 'Start a project | IndicBiz',
     description: 'Tell IndicBiz what you are building and get a thoughtful project response.',
   },
   '/ui-catalog': {
-    title: 'UI Design Catalog — IndicBiz',
+    title: 'UI Design Catalog | IndicBiz',
     description: 'Explore our design components, templates, and styles directly from the source.',
   },
 }

@@ -255,16 +255,17 @@ const Topography = ({
     let mouseActiveTarget = 0;
 
     const onMouseMove = e => {
-      const rect = canvas.getBoundingClientRect();
-      targetMouse[0] = (e.clientX - rect.left) / rect.width;
-      targetMouse[1] = 1.0 - (e.clientY - rect.top) / rect.height;
-      mouseActiveTarget = 1;
+      const rect = container.getBoundingClientRect();
+      const inside =
+        e.clientX >= rect.left &&
+        e.clientX <= rect.right &&
+        e.clientY >= rect.top &&
+        e.clientY <= rect.bottom;
+      targetMouse[0] = (e.clientX - rect.left) / Math.max(rect.width, 1);
+      targetMouse[1] = 1.0 - (e.clientY - rect.top) / Math.max(rect.height, 1);
+      mouseActiveTarget = inside ? 1 : 0;
     };
-    const onMouseLeave = () => {
-      mouseActiveTarget = 0;
-    };
-    canvas.addEventListener('mousemove', onMouseMove);
-    canvas.addEventListener('mouseleave', onMouseLeave);
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
 
     const ctrlArrays = [
       program.uniforms.uCtrlA.value,
@@ -339,8 +340,7 @@ const Topography = ({
       ro.disconnect();
       io.disconnect();
       document.removeEventListener('visibilitychange', onVisibility);
-      canvas.removeEventListener('mousemove', onMouseMove);
-      canvas.removeEventListener('mouseleave', onMouseLeave);
+      window.removeEventListener('mousemove', onMouseMove);
       ctxMap.delete(container);
       try {
         container.removeChild(canvas);

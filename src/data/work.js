@@ -1,7 +1,7 @@
 export const WORK_HERO = {
   eyebrow: 'Our work',
   title: 'Selected engagements and the problems behind them.',
-  description: 'A focused look at the kinds of digital challenges we take on—identity, websites, products and growth—without invented awards or unsupported results.',
+  description: 'A focused look at the kinds of digital challenges we take on: identity, websites, products and growth, without invented awards or unsupported results.',
 }
 
 export const WORK_FILTERS = [
@@ -24,7 +24,12 @@ export const WORK_PROJECTS = [
     approach: 'We reorganised information architecture, refined the interface and delivered a responsive React foundation ready for ongoing content work.',
     outcome: 'Clearer navigation, faster page performance and a booking flow the team can maintain with confidence.',
     focus: ['Information architecture', 'Responsive UI', 'Performance'],
-    image: '/work/destinize-tours.png',
+    highlights: [
+      'Rebuilt the structure so tours and booking are easier to find',
+      'A responsive React site the team can keep updating',
+      'A calmer booking flow without invented performance claims',
+    ],
+    image: '/media/indicbiz-destinize.jpg',
     gallery: [
       '/work/destinize-tours-1.png',
       '/work/destinize-tours-2.png',
@@ -46,7 +51,12 @@ export const WORK_PROJECTS = [
     approach: 'We clarified positioning, built a flexible visual system and translated it into practical brand and digital guidance.',
     outcome: 'A coherent corporate identity ready for web and everyday communication with stakeholders.',
     focus: ['Positioning', 'Visual system', 'Corporate identity'],
-    image: '/work/blitz-india.png',
+    highlights: [
+      'A clearer corporate position for engineering work',
+      'A visual system ready for web and everyday use',
+      'A presence built to earn stakeholder trust',
+    ],
+    image: '/media/indicbiz-blitz.jpg',
     gallery: [
       '/work/blitz-india-1.png',
       '/work/blitz-india-2.png',
@@ -55,6 +65,7 @@ export const WORK_PROJECTS = [
     ],
     imageAlt: 'Blitz India Engineering website preview',
     websiteUrl: 'https://blitzindiaengineering.com/',
+    embeddable: false,
     accent: '#e5bf83',
   },
   {
@@ -68,7 +79,12 @@ export const WORK_PROJECTS = [
     approach: 'Through journey mapping and prototyping, we defined a clearer task model and a reusable component system for core workflows.',
     outcome: 'A more focused product experience with shared patterns the engineering team can extend.',
     focus: ['User journeys', 'Prototyping', 'Design systems'],
-    image: '/work/tamooz.png',
+    highlights: [
+      'A clearer task model for complex product flows',
+      'Prototypes used to test priorities before build',
+      'Reusable patterns the engineering team can extend',
+    ],
+    image: '/media/indicbiz-tamooz.jpg',
     gallery: [
       '/work/tamooz-1.png',
       '/work/tamooz-2.png',
@@ -111,7 +127,7 @@ export const WORK_METHOD = [
   {
     number: '02',
     title: 'Practical outcomes',
-    description: 'We describe what the engagement was designed to improve—clarity, usability, systems and momentum.',
+    description: 'We describe what the engagement was designed to improve: clarity, usability, systems and momentum.',
   },
   {
     number: '03',

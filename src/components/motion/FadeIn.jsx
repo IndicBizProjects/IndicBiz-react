@@ -1,10 +1,6 @@
-import { motion, useInView } from 'framer-motion'
-import { useRef } from 'react'
+import { motion } from 'framer-motion'
+import { easeOut, springSoft, staggerContainer, viewportOnce } from '../../lib/motion'
 
-/**
- * FadeIn — Scroll-triggered fade + translate animation
- * Wraps any children with an entrance animation when they enter the viewport
- */
 export default function FadeIn({
   children,
   className = '',
@@ -15,82 +11,47 @@ export default function FadeIn({
   scale = 1,
   once = true,
   threshold = 0.15,
-  as: Tag = 'div',
+  style,
 }) {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once, amount: threshold })
-
   return (
     <motion.div
-      ref={ref}
       className={className}
+      style={style}
       initial={{ opacity: 0, y, x, scale: scale === 1 ? 0.98 : scale }}
-      animate={isInView ? { opacity: 1, y: 0, x: 0, scale: 1 } : {}}
-      transition={{
-        duration,
-        delay,
-        ease: [0.16, 1, 0.3, 1],
-      }}
+      whileInView={{ opacity: 1, y: 0, x: 0, scale: 1 }}
+      viewport={{ once, amount: threshold }}
+      transition={{ duration, delay, ease: easeOut }}
     >
       {children}
     </motion.div>
   )
 }
 
-/**
- * FadeInStagger — Stagger children FadeIn animations
- */
-export function FadeInStagger({ children, className = '', stagger = 0.08, delay = 0, threshold = 0.1 }) {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, amount: threshold })
-
-  const containerVariants = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: stagger,
-        delayChildren: delay,
-      },
-    },
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 24 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] },
-    },
-  }
-
+export function FadeInStagger({ children, className = '', stagger = 0.08, delay = 0, threshold = 0.12 }) {
   return (
     <motion.div
-      ref={ref}
       className={className}
-      variants={containerVariants}
+      variants={staggerContainer(stagger, delay)}
       initial="hidden"
-      animate={isInView ? 'visible' : 'hidden'}
+      whileInView="visible"
+      viewport={{ ...viewportOnce, amount: threshold }}
     >
       {children}
     </motion.div>
   )
 }
 
-/**
- * StaggerItem — Must be used inside FadeInStagger
- */
 export function StaggerItem({ children, className = '' }) {
-  const itemVariants = {
-    hidden: { opacity: 0, y: 24 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] },
-    },
-  }
-
   return (
-    <motion.div className={className} variants={itemVariants}>
+    <motion.div className={className} variants={{
+      hidden: { opacity: 0, y: 28 },
+      visible: {
+        opacity: 1,
+        y: 0,
+        transition: springSoft,
+      },
+    }}
+    >
       {children}
     </motion.div>
   )

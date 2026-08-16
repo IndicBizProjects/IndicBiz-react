@@ -12,8 +12,8 @@ export const PROJECT_TYPES = [
   'Something else',
 ]
 
-export const BUDGET_OPTIONS = ['₹15k–₹30k', '₹40k–₹80k', '₹80k–₹2L', '₹2L+']
-export const TIMELINE_OPTIONS = ['Within 1 month', '1–3 months', '3–6 months', 'Exploring']
+export const BUDGET_OPTIONS = ['₹15k to ₹30k', '₹40k to ₹80k', '₹80k to ₹2L', '₹2L+']
+export const TIMELINE_OPTIONS = ['Within 1 month', '1 to 3 months', '3 to 6 months', 'Exploring']
 
 export const FORM_STEPS = [
   { number: 1, label: 'Project' },
@@ -36,7 +36,7 @@ export const FORM_COPY = {
   panels: [
     { title: 'What can we help you create?', description: 'Choose every area that feels relevant.' },
     { title: 'Who should we respond to?', description: 'Only the details needed for a useful reply.' },
-    { title: 'What shape is the project?', description: 'Estimates are fine—we can refine these together.' },
+    { title: 'What shape is the project?', description: 'Estimates are fine. We can refine these together.' },
     { title: 'What should we understand?', description: 'Goals, context, constraints or simply the rough idea.' },
   ],
   fields: {

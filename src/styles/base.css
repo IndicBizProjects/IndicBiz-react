@@ -18,7 +18,8 @@ body {
   overflow-x: hidden;
 }
 
-body[data-menu-open="true"] {
+body[data-menu-open="true"],
+body[data-loader="true"] {
   overflow: hidden;
 }
 
@@ -97,9 +98,9 @@ img, video {
 
 /* ── Reduced Motion ── */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *:not(.ag-marquee-track),
+  *:not(.ag-marquee-track)::before,
+  *:not(.ag-marquee-track)::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

@@ -1,16 +1,8 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Link } from '../../app/router'
-import FadeIn, { FadeInStagger, StaggerItem } from '../../components/motion/FadeIn'
-import Eyebrow from '../../components/ui/Eyebrow'
 import { WORK_PROJECTS } from '../../data/work'
-
-// Project card images — use placeholders until real images arrive
-const PROJECT_IMAGES = {
-  'editorial-platform': '/work/editorial-platform.svg',
-  'operations-dashboard': '/work/operations-dashboard.svg',
-  'hospitality-launch': '/work/hospitality-launch.svg',
-}
+import { HOME_SECTIONS } from '../../data/home'
 
 const FEATURED = WORK_PROJECTS.slice(0, 3)
 
@@ -19,206 +11,178 @@ export default function WorkPreview() {
     <section
       style={{
         background: 'var(--bg-canvas)',
-        padding: 'clamp(5rem, 10vw, 9rem) var(--layout-gutter)',
+        padding: 'clamp(5rem, 11vw, 9.5rem) var(--layout-gutter)',
       }}
     >
-      <div style={{ maxWidth: 'var(--layout-max)', margin: '0 auto' }}>
-
+      <div style={{ maxWidth: 'var(--layout-wide)', margin: '0 auto' }}>
         {/* Header */}
-        <FadeIn>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'flex-end',
-              justifyContent: 'space-between',
-              flexWrap: 'wrap',
-              gap: '1.5rem',
-              marginBottom: 'clamp(3rem, 6vw, 5rem)',
-            }}
-          >
-            <div>
-              <Eyebrow style={{ marginBottom: '1rem' }}>Selected work</Eyebrow>
-              <h2
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  fontWeight: 800,
-                  fontSize: 'var(--text-headline)',
-                  letterSpacing: '-0.04em',
-                  color: 'var(--ink)',
-                  marginTop: '0.75rem',
-                }}
-              >
-                Problems we are<br />equipped to solve.
-              </h2>
-            </div>
-            <Link
-              to="/work"
-              style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: '0.8rem',
-                letterSpacing: '0.06em',
-                textTransform: 'uppercase',
-                color: 'var(--ink-mid)',
-                textDecoration: 'none',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                flexShrink: 0,
-                borderBottom: '1px solid var(--line-mid)',
-                paddingBottom: '2px',
-                transition: 'color 0.2s, border-color 0.2s',
-              }}
-            >
-              View all work →
-            </Link>
-          </div>
-        </FadeIn>
+        <HeaderRow />
 
-        {/* Project list */}
-        <FadeInStagger stagger={0.12}>
+        {/* Work items */}
+        <div style={{ marginTop: 'clamp(2.5rem, 5vw, 4rem)' }}>
           {FEATURED.map((project, i) => (
-            <StaggerItem key={project.id}>
-              <WorkCard project={project} index={i} />
-            </StaggerItem>
+            <WorkRow key={project.id} project={project} index={i} />
           ))}
-        </FadeInStagger>
+        </div>
       </div>
     </section>
   )
 }
 
-function WorkCard({ project, index }) {
+function HeaderRow() {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, amount: 0.2 })
-
+  const inView = useInView(ref, { once: true, amount: 0.5 })
   return (
-    <motion.article
+    <div
       ref={ref}
-      data-cursor="view"
       style={{
-        display: 'grid',
-        gridTemplateColumns: index % 2 === 0 ? '1fr 1.2fr' : '1.2fr 1fr',
-        gap: 'clamp(2rem, 4vw, 4rem)',
-        alignItems: 'center',
-        padding: 'clamp(2.5rem, 5vw, 4rem) 0',
-        borderBottom: '1px solid var(--line)',
-        cursor: 'pointer',
+        display: 'flex',
+        alignItems: 'flex-end',
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        gap: '1.5rem',
       }}
-      whileHover={{ x: 4 }}
-      transition={{ type: 'spring', stiffness: 200, damping: 25 }}
     >
-      {/* Text content — order based on index */}
-      {index % 2 === 0 && (
-        <div>
-          <ProjectContent project={project} />
-        </div>
-      )}
-
-      {/* Image placeholder */}
-      <div
-        style={{
-          aspectRatio: '16/10',
-          borderRadius: 'var(--radius-md)',
-          background: project.accent + '22',
-          border: '1px solid var(--line)',
-          overflow: 'hidden',
-          position: 'relative',
-        }}
-      >
-        <motion.div
+      <div>
+        <motion.span
+          initial={{ opacity: 0, y: 10 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
           style={{
-            position: 'absolute',
-            inset: 0,
-            background: `linear-gradient(135deg, ${project.accent}33 0%, ${project.accent}11 100%)`,
-          }}
-          whileHover={{ scale: 1.04 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        />
-        <div
-          style={{
-            position: 'absolute',
-            bottom: '1rem',
-            left: '1rem',
+            display: 'inline-block',
             fontFamily: 'var(--font-mono)',
             fontSize: '0.7rem',
-            letterSpacing: '0.08em',
+            letterSpacing: '0.14em',
             textTransform: 'uppercase',
-            color: project.accent,
-            background: 'var(--bg-surface)',
-            padding: '0.3rem 0.6rem',
-            borderRadius: 'var(--radius-sm)',
+            color: 'var(--ink-soft)',
+            marginBottom: '0.9rem',
           }}
         >
-          {project.category}
-        </div>
+          {HOME_SECTIONS.work.eyebrow}
+        </motion.span>
+        <motion.h2
+          initial={{ opacity: 0, y: 18 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+          style={{
+            fontFamily: 'var(--font-display)',
+            fontWeight: 600,
+            fontSize: 'clamp(2rem, 4.5vw, 3.6rem)',
+            letterSpacing: '-0.04em',
+            lineHeight: 1.04,
+            color: 'var(--ink)',
+            margin: 0,
+          }}
+        >
+          {HOME_SECTIONS.work.title}
+        </motion.h2>
       </div>
-
-      {index % 2 !== 0 && (
-        <div>
-          <ProjectContent project={project} />
-        </div>
-      )}
-    </motion.article>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={inView ? { opacity: 1 } : {}}
+        transition={{ duration: 0.6, delay: 0.18 }}
+      >
+        <Link
+          to={HOME_SECTIONS.work.actionTo}
+          style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: '0.72rem',
+            letterSpacing: '0.1em',
+            textTransform: 'uppercase',
+            color: 'var(--ink-mid)',
+            textDecoration: 'none',
+            borderBottom: '1px solid var(--line-mid)',
+            paddingBottom: '2px',
+            transition: 'color 0.2s ease, border-color 0.2s ease',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.color = 'var(--ink)'; e.currentTarget.style.borderColor = 'var(--ink)' }}
+          onMouseLeave={e => { e.currentTarget.style.color = 'var(--ink-mid)'; e.currentTarget.style.borderColor = 'var(--line-mid)' }}
+        >
+          {HOME_SECTIONS.work.actionLabel} →
+        </Link>
+      </motion.div>
+    </div>
   )
 }
 
-function ProjectContent({ project }) {
+function WorkRow({ project, index }) {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, amount: 0.2 })
+
   return (
-    <div>
-      <span
-        style={{
-          fontFamily: 'var(--font-mono)',
-          fontSize: '0.72rem',
-          letterSpacing: '0.1em',
-          textTransform: 'uppercase',
-          color: 'var(--ink-soft)',
-        }}
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.65, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+    >
+      <Link
+        to={`/work/${project.id}`}
+        data-cursor="view"
+        style={{ display: 'block', textDecoration: 'none' }}
       >
-        {project.number}
-      </span>
-      <h3
-        style={{
-          fontFamily: 'var(--font-display)',
-          fontWeight: 800,
-          fontSize: 'clamp(1.5rem, 3vw, 2.25rem)',
-          letterSpacing: '-0.03em',
-          color: 'var(--ink)',
-          margin: '0.75rem 0 1rem',
-        }}
-      >
-        {project.title}
-      </h3>
-      <p
-        style={{
-          fontFamily: 'var(--font-body)',
-          fontSize: 'var(--text-body)',
-          color: 'var(--ink-mid)',
-          lineHeight: 1.7,
-          marginBottom: '1.5rem',
-          maxWidth: '40ch',
-        }}
-      >
-        {project.summary}
-      </p>
-      <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-        {project.focus.map((tag) => (
+        <motion.article
+          whileHover={{ x: 5, backgroundColor: `${project.accent}08` }}
+          transition={{ type: 'spring', stiffness: 200, damping: 25 }}
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '4.5rem 1fr auto',
+            gap: '1.5rem 2rem',
+            alignItems: 'center',
+            padding: 'clamp(1.75rem, 3.5vw, 2.25rem) 1rem',
+            borderTop: '1px solid var(--line)',
+            cursor: 'pointer',
+            borderRadius: 'var(--radius-md)',
+          }}
+        >
           <span
-            key={tag}
             style={{
               fontFamily: 'var(--font-mono)',
-              fontSize: '0.7rem',
-              letterSpacing: '0.06em',
-              textTransform: 'uppercase',
+              fontSize: '0.72rem',
+              letterSpacing: '0.12em',
               color: 'var(--ink-soft)',
-              background: 'var(--line)',
-              padding: '0.25rem 0.6rem',
-              borderRadius: 'var(--radius-pill)',
             }}
           >
-            {tag}
+            {project.number}
           </span>
-        ))}
-      </div>
-    </div>
+
+          <div>
+            <h3
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontWeight: 600,
+                fontSize: 'clamp(1.35rem, 2.4vw, 1.9rem)',
+                letterSpacing: '-0.03em',
+                margin: '0 0 0.35rem',
+                color: 'var(--ink)',
+              }}
+            >
+              {project.title}
+            </h3>
+            <p
+              style={{
+                fontFamily: 'var(--font-body)',
+                fontSize: '0.92rem',
+                color: 'var(--ink-soft)',
+                margin: 0,
+              }}
+            >
+              {project.category} · {project.focus.slice(0, 2).join(' · ')}
+            </p>
+          </div>
+
+          <motion.svg
+            whileHover={{ x: 3, y: -3 }}
+            style={{ color: 'var(--ink-soft)', flexShrink: 0, transition: 'color 0.2s' }}
+            width="18"
+            height="18"
+            viewBox="0 0 18 18"
+            fill="none"
+          >
+            <path d="M3 15L15 3M15 3H7M15 3V11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          </motion.svg>
+        </motion.article>
+      </Link>
+    </motion.div>
   )
 }

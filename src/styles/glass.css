@@ -1,0 +1,106 @@
+/* ============================================================
+   INDICBIZ — Glassmorphism Token System
+   Light-first frosted glass aesthetic (white canvas base)
+   ============================================================ */
+
+:root {
+  /* ── Glass Surfaces — light-mode frosted white ── */
+  --glass-bg:          rgba(255, 255, 255, 0.80);
+  --glass-bg-mid:      rgba(255, 255, 255, 0.55);
+  --glass-bg-strong:   rgba(255, 255, 255, 0.92);
+  --glass-bg-light:    rgba(244, 245, 247, 0.72);
+  --glass-border:      rgba(11, 12, 15, 0.08);
+  --glass-border-mid:  rgba(11, 12, 15, 0.14);
+  --glass-border-accent: rgba(168, 204, 48, 0.50);
+  --glass-blur:        blur(24px);
+  --glass-blur-sm:     blur(12px);
+  --glass-blur-lg:     blur(40px);
+
+  /* ── Glass Shadows — soft on light ── */
+  --glass-shadow:      0 4px 24px rgba(11, 12, 15, 0.07), 0 1px 4px rgba(11, 12, 15, 0.04), inset 0 1.5px 0 rgba(255, 255, 255, 0.9);
+  --glass-shadow-lg:   0 12px 48px rgba(11, 12, 15, 0.10), 0 4px 16px rgba(11, 12, 15, 0.06), inset 0 1.5px 0 rgba(255, 255, 255, 0.9);
+  --glass-shadow-accent: 0 0 0 2px rgba(168, 204, 48, 0.35), 0 8px 32px rgba(11, 12, 15, 0.10);
+
+  /* ── Glow Accents — soft on light bg ── */
+  --glow-chartreuse:   0 0 40px rgba(200, 240, 74, 0.18);
+  --glow-mint:         0 0 40px rgba(155, 231, 208, 0.15);
+  --glow-white:        0 0 30px rgba(255, 255, 255, 0.5);
+}
+
+/* ── Glass Card Utility Class ── */
+.glass-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+  border-radius: var(--radius-lg);
+}
+
+.glass-card:hover {
+  background: var(--glass-bg-strong);
+  border-color: var(--glass-border-mid);
+  box-shadow: var(--glass-shadow-lg);
+}
+
+.glass-card-accent {
+  border-color: var(--glass-border-accent);
+  box-shadow: var(--glass-shadow-accent);
+}
+
+/* ── Glass Input — light mode ── */
+.glass-input {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1.5px solid rgba(11, 12, 15, 0.10);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--ink);
+  border-radius: var(--radius-md);
+  transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-input:focus {
+  background: #ffffff;
+  border-color: rgba(168, 204, 48, 0.6);
+  box-shadow: 0 0 0 3px rgba(200, 240, 74, 0.14);
+  outline: none;
+}
+
+.glass-input::placeholder {
+  color: var(--ink-placeholder);
+}
+
+/* ── Glass Button — light mode ── */
+.glass-btn {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border-mid);
+  backdrop-filter: var(--glass-blur-sm);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  color: var(--ink);
+  transition: all 0.3s var(--ease-out);
+}
+
+.glass-btn:hover {
+  background: var(--glass-bg-strong);
+  border-color: var(--glass-border-accent);
+  box-shadow: var(--glass-shadow-accent);
+}
+
+/* ── Inner Glow Effect ── */
+.glass-inner-glow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at 30% 20%, rgba(200, 240, 74, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ── Glass Panel — light frosted section ── */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.70);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}

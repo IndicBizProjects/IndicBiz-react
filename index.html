@@ -3,18 +3,110 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <meta name="description" content="Brand, product and web experiences designed to help ambitious businesses grow." />
-    <meta name="theme-color" content="#f3f0e8" />
-    <meta property="og:title" content="IndicBiz — Digital clarity for ambitious businesses" />
+    <meta name="theme-color" content="#08090B" />
+    <meta property="og:title" content="IndicBiz | Digital clarity for ambitious businesses" />
     <meta property="og:description" content="Brand, product and web experiences designed to help ambitious businesses grow." />
     <meta property="og:type" content="website" />
-    <title>IndicBiz — Digital clarity for ambitious businesses</title>
+    <title>IndicBiz | Digital clarity for ambitious businesses</title>
   </head>
-  <body>
+  <body data-loader="true">
+    <div id="ib-splash" class="ib-splash" aria-hidden="true">
+      <p class="ib-splash-mark">
+        <span class="ib-core">i</span><span class="ib-clip ib-clip-mid">ndic</span><span class="ib-core">b</span><span class="ib-clip ib-clip-end">iz</span><span class="ib-dot">.</span>
+      </p>
+      <span class="ib-bar"></span>
+    </div>
+    <style>
+      .ib-splash {
+        position: fixed;
+        inset: 0;
+        z-index: 10000;
+        display: grid;
+        place-items: center;
+        background: #f7f7f7;
+        pointer-events: all;
+      }
+      .ib-splash-mark {
+        display: flex;
+        align-items: baseline;
+        margin: 0;
+        font-family: Satoshi, "Plus Jakarta Sans", system-ui, sans-serif;
+        font-weight: 700;
+        font-size: clamp(2.6rem, 8vw, 5rem);
+        letter-spacing: -0.04em;
+        line-height: 1;
+        color: #0d2426;
+        animation: ib-mark-in 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+      .ib-core,
+      .ib-clip,
+      .ib-dot {
+        display: inline-block;
+        white-space: nowrap;
+      }
+      .ib-clip {
+        overflow: hidden;
+        max-width: 0;
+        opacity: 0;
+      }
+      .ib-clip-mid {
+        animation: ib-open-mid 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards;
+      }
+      .ib-clip-end {
+        animation: ib-open-end 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.86s forwards;
+      }
+      .ib-dot {
+        color: #8c7355;
+        opacity: 0;
+        transform: translateX(-0.4em);
+        animation: ib-dot-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) 1.2s forwards;
+      }
+      .ib-bar {
+        position: absolute;
+        left: 50%;
+        bottom: 18%;
+        width: min(10rem, 36vw);
+        height: 1px;
+        background: #0d2426;
+        transform: translateX(-50%) scaleX(0);
+        transform-origin: left center;
+        animation: ib-bar 2.15s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+      }
+      .ib-splash.is-leaving {
+        animation: ib-leave 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+      @keyframes ib-mark-in {
+        from { opacity: 0; transform: translateY(12px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes ib-open-mid {
+        to { max-width: 4.4em; opacity: 1; }
+      }
+      @keyframes ib-open-end {
+        to { max-width: 2.2em; opacity: 1; }
+      }
+      @keyframes ib-dot-in {
+        to { opacity: 1; transform: translateX(0); }
+      }
+      @keyframes ib-bar {
+        to { transform: translateX(-50%) scaleX(1); }
+      }
+      @keyframes ib-leave {
+        to { opacity: 0; transform: translateY(-18px); visibility: hidden; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .ib-clip-mid { animation-duration: 0.45s; animation-delay: 0.2s; }
+        .ib-clip-end { animation-duration: 0.4s; animation-delay: 0.28s; }
+        .ib-dot { animation-duration: 0.25s; animation-delay: 0.4s; }
+        .ib-bar { animation-duration: 0.9s; animation-delay: 0s; }
+      }
+    </style>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

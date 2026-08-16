@@ -3,6 +3,7 @@ import { ArrowUpRight } from 'lucide-react'
 import { Link } from '../../app/router'
 import { DataIcon } from '../../data/mappers/icons'
 import SlideSection from '../motion/SlideSection'
+import MagneticBtn from './MagneticBtn'
 import styles from './ui.module.css'
 
 export function Container({ children, className = '' }) {
@@ -32,11 +33,12 @@ export function SectionHeader({ eyebrow, title, description, inverse = false, al
 }
 
 export function ButtonLink({ to, children, variant = 'primary' }) {
+  const tone = variant === 'accent' || variant === 'primary' || variant === 'dark' ? 'dark' : 'light'
   return (
-    <Link className={`${styles.button} ${styles[variant]}`} to={to}>
-      <span>{children}</span>
+    <MagneticBtn to={to} variant={tone} size="md">
+      {children}
       <ArrowUpRight size={17} aria-hidden="true" />
-    </Link>
+    </MagneticBtn>
   )
 }
 

@@ -1,8 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import FadeIn from '../../components/motion/FadeIn'
-import Eyebrow from '../../components/ui/Eyebrow'
-import { FileCode, Layout } from 'lucide-react'
+import { FileCode } from 'lucide-react'
 
 const pageVariants = {
   initial: { opacity: 0 },
@@ -85,15 +84,13 @@ export default function UiCatalogContent() {
   }
 
   return (
-    <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', paddingTop: 'var(--header-height)', background: '#0F0F11' }}>
-      <section style={{ padding: '2rem var(--layout-gutter)' }}>
-        <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', gap: '2rem', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+    <motion.div className="ag-page" variants={pageVariants} initial="initial" animate="animate" exit="exit" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <section className="ag-section" style={{ paddingTop: 'clamp(8.5rem, 14vw, 11rem)' }}>
+        <div className="ag-wrap" style={{ display: 'flex', flexWrap: 'wrap', gap: '2rem', justifyContent: 'space-between', alignItems: 'flex-end' }}>
           <FadeIn>
-            <Eyebrow style={{ color: '#00FFFF' }}>Browse all</Eyebrow>
-            <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '2.5rem', letterSpacing: '-0.04em', color: '#FFF', marginTop: '0.5rem' }}>
-              Universal Component Gallery
-            </h1>
-            <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.9rem', color: '#888', marginTop: '0.5rem', maxWidth: '600px' }}>
+            <p className="ag-eyebrow">Browse all</p>
+            <h1 className="ag-h2">Universal Component Gallery</h1>
+            <p className="ag-lede" style={{ marginTop: '0.75rem' }}>
               Browsing {loading ? '...' : allFiles.length} components across {repositories.length - 1} repositories.
             </p>
           </FadeIn>
@@ -104,12 +101,13 @@ export default function UiCatalogContent() {
                 value={selectedRepo}
                 onChange={handleRepoChange}
                 style={{
-                  background: '#1A1A1D',
-                  color: '#FFF',
-                  border: '1px solid rgba(255,255,255,0.2)',
-                  padding: '0.5rem 1rem',
-                  borderRadius: '8px',
-                  fontFamily: 'var(--font-mono)',
+                  background: '#eff0f0',
+                  color: '#0d2426',
+                  border: 'none',
+                  padding: '0.65rem 1rem',
+                  borderRadius: '16px',
+                  boxShadow: 'inset 0 0 5px rgba(166,166,166,0.35)',
+                  fontFamily: 'var(--font-body)',
                   fontSize: '0.85rem',
                   outline: 'none',
                   cursor: 'pointer'
@@ -138,13 +136,11 @@ export default function UiCatalogContent() {
               {displayedFiles.files.map((file, idx) => (
                 <div 
                   key={file.path + idx}
+                  className="ag-card"
                   style={{
-                    background: '#1A1A1D',
-                    borderRadius: '12px',
                     overflow: 'hidden',
                     display: 'flex',
                     flexDirection: 'column',
-                    border: '1px solid rgba(255,255,255,0.05)',
                     height: '240px',
                     position: 'relative'
                   }}
