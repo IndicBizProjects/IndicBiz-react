@@ -1,19 +1,3 @@
-/**
- * IndicBiz contact form → Google Sheet.
- *
- * Setup (once):
- * 1. https://script.google.com  → New project → paste this file
- * 2. Run setupContactSheet  (Review permissions → Allow)
- * 3. View → Logs for the Sheet URL
- * 4. Deploy → New deployment → Web app
- *      Execute as: Me
- *      Who has access: Anyone
- * 5. Copy the web app URL into IndicBiz/.env.local:
- *      VITE_CONTACT_API_URL=https://script.google.com/macros/s/.../exec
- * 6. Restart the Vite dev server
- *
- * If the sheet already exists, run ensureVisitorColumns instead of setupContactSheet.
- */
 
 var EXISTING_SHEET_ID = '1wHhxxl-x17rN1SQffzoNZ8WBxeGh9VdKjfBs_aB0sHo'
 
