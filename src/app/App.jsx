@@ -11,7 +11,6 @@ import { SITE_UI } from '../data/site'
 import BrandLoader from '../components/motion/BrandLoader'
 import ScrollProgress from '../components/motion/ScrollProgress'
 import { useRouter } from './routerContext'
-
 function LenisProvider() {
   useEffect(() => {
     const lenis = new Lenis({
@@ -32,7 +31,6 @@ function LenisProvider() {
 
   return null
 }
-
 export default function App() {
   const { pathname } = useRouter()
 
