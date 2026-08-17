@@ -57,11 +57,11 @@ export const VALUES = [
 
 export const TEAM = [
   {
-    name: 'Joel Daniel Vijaybhavanam',
-    first: 'Joel Daniel',
-    last: 'Vijaybhavanam',
+    name: 'VJ Daniel',
+    first: 'VJ',
+    last: 'Daniel',
     role: 'Co-founder',
-    initials: 'JD',
+    initials: 'VJ',
     icon: 'lead',
     group: 'Studio',
     tone: 'dark',
@@ -73,7 +73,7 @@ export const TEAM = [
     name: 'Kovid Sai Vemuri',
     first: 'Kovid Sai',
     last: 'Vemuri',
-    role: 'Self-Appointed CEO',
+    role: 'CEO',
     initials: 'KV',
     icon: 'design',
     group: 'Studio',
@@ -82,8 +82,8 @@ export const TEAM = [
     focus: 'Leads the studio, holds the standard of the work, and keeps every engagement pointed at a useful outcome.',
   },
   {
-    name: 'Naveen Madipalli',
-    first: 'Naveen',
+    name: 'Naveen Arun Jaswanth Madipalli',
+    first: 'Naveen Arun Jaswanth',
     last: 'Madipalli',
     role: 'Digital Marketing and Product Manager',
     initials: 'NM',
@@ -118,8 +118,8 @@ export const TEAM = [
     focus: 'Turns messy workflows into product decisions the team can ship.',
   },
   {
-    name: 'Bhargav Nalla',
-    first: 'Bhargav',
+    name: 'Bhargav Thirupathi Rao Nalla',
+    first: 'Bhargav Thirupathi Rao',
     last: 'Nalla',
     role: 'Lead Technical Member',
     initials: 'BN',
@@ -233,12 +233,13 @@ export const ABOUT_CTA = {
 
 export const ABOUT_SPECIALISTS = {
   eyebrow: 'Specialist craft',
-  title: 'Logo and motion, with NeoPixel Studio.',
-  body: 'IndicBiz leads the identity system. Logo design and logo animation are crafted in collaboration with NeoPixel Studio.',
+  title: 'Logo and motion, with Asish Tom Anish.',
+  body: 'IndicBiz leads the identity system. Logo design and logo animation are crafted by Asish Tom Anish at NeoPixel Studio.',
   partner: 'NeoPixel Studio',
+  person: 'Asish Tom Anish',
   chips: ['Logo craft', 'Motion marks', 'Everyday lockups'],
   split: [
     { label: 'IndicBiz', text: 'Holds the system, the rules and how the brand lives after launch.' },
-    { label: 'NeoPixel', text: 'Crafts the mark and the motion so the identity still feels itself in movement.' },
+    { label: 'Asish Tom Anish', text: 'Crafts the mark and the motion at NeoPixel Studio, so the identity still feels itself in movement.' },
   ],
 }

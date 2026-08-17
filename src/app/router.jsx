@@ -1,11 +1,15 @@
 import { useEffect, useMemo, useState } from 'react'
 import { RouterContext, useRouter } from './routerContext'
+import { normalizePath, restorePageScroll, splitLocation } from '../lib/scroll'
 
 export function RouterProvider({ children }) {
-  const [pathname, setPathname] = useState(window.location.pathname)
+  const [pathname, setPathname] = useState(() => normalizePath(window.location.pathname))
 
   useEffect(() => {
-    const handleNavigation = () => setPathname(window.location.pathname)
+    const handleNavigation = () => {
+      setPathname(normalizePath(window.location.pathname))
+      restorePageScroll(window.location.pathname + window.location.hash)
+    }
     window.addEventListener('popstate', handleNavigation)
     return () => window.removeEventListener('popstate', handleNavigation)
   }, [])
@@ -13,8 +17,16 @@ export function RouterProvider({ children }) {
   const value = useMemo(() => ({
     pathname,
     navigate(to, { replace = false } = {}) {
-      window.history[replace ? 'replaceState' : 'pushState']({}, '', to)
-      setPathname(window.location.pathname)
+      const { pathname: nextPath, hash, search } = splitLocation(to)
+      const nextUrl = `${nextPath}${search}${hash}`
+      const currentUrl = `${normalizePath(window.location.pathname)}${window.location.search}${window.location.hash}`
+
+      if (nextUrl !== currentUrl) {
+        window.history[replace ? 'replaceState' : 'pushState']({}, '', nextUrl)
+        setPathname(nextPath)
+      }
+
+      restorePageScroll(nextUrl)
     },
   }), [pathname])
 

@@ -19,9 +19,9 @@ export default function AppRoutes() {
 
   if (pathname === '/') Page = HomePage
   else if (pathname === '/services') Page = ServicesPage
-  else if (/^\/services\/[^/]+\/?$/.test(pathname)) Page = ServicePage
+  else if (/^\/services\/[^/]+$/.test(pathname)) Page = ServicePage
   else if (pathname === '/work') Page = WorkPage
-  else if (/^\/work\/[^/]+\/?$/.test(pathname)) Page = WorkDetailPage
+  else if (/^\/work\/[^/]+$/.test(pathname)) Page = WorkDetailPage
   else if (pathname === '/about') Page = AboutPage
   // else if (pathname === '/pricing') Page = PricingPage
   else if (pathname === '/contact') Page = ContactPage

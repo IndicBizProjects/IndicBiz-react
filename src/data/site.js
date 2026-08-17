@@ -28,13 +28,21 @@ export const PRIMARY_NAV = [
 ]
 
 export const SOCIAL_LINKS = [
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/indicbiz/' },
-  { label: 'Instagram', href: 'https://www.instagram.com/indicbiz' },
-  { label: 'X', href: 'https://x.com/IndicBiz' },
+  { id: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/company/indicbiz/' },
+  { id: 'instagram', label: 'Instagram', href: 'https://www.instagram.com/indicbiz' },
+  { id: 'twitter', label: 'Twitter', href: 'https://x.com/IndicBiz' },
 ]
 
 export const FOOTER_GROUPS = [
-  { title: 'Explore', links: PRIMARY_NAV },
+  {
+    title: 'Studio',
+    links: [
+      { label: 'Services', to: '/services' },
+      { label: 'Work', to: '/work' },
+      { label: 'About', to: '/about' },
+      { label: 'Contact', to: '/contact' },
+    ],
+  },
   {
     title: 'Services',
     links: [

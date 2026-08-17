@@ -11,6 +11,8 @@ import { SITE_UI } from '../data/site'
 import BrandLoader from '../components/motion/BrandLoader'
 import ScrollProgress from '../components/motion/ScrollProgress'
 import { useRouter } from './routerContext'
+import { setLenis } from '../lib/scroll'
+
 function LenisProvider() {
   useEffect(() => {
     const lenis = new Lenis({
@@ -20,13 +22,18 @@ function LenisProvider() {
       smoothTouch: false,
     })
 
+    setLenis(lenis)
+
     function raf(time) {
       lenis.raf(time)
       requestAnimationFrame(raf)
     }
     requestAnimationFrame(raf)
 
-    return () => lenis.destroy()
+    return () => {
+      setLenis(null)
+      lenis.destroy()
+    }
   }, [])
 
   return null

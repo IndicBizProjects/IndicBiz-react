@@ -259,14 +259,15 @@ export const BRAND_IDENTITY_DETAIL = {
     lead: 'A brand only works if it can leave the presentation and still look like itself, on a card, in a profile, in motion, in an inbox.',
     paragraphs: [
       'We start with what the business stands for, then design the mark and the system around it. The same identity should feel natural on a business card, a company profile, a website header and a short logo animation.',
-      'Logo craft and logo animation are made in collaboration with NeoPixel Studio. IndicBiz holds the system; NeoPixel brings the mark and the motion. You leave with files, rules and everyday applications, so the next person who needs a card, a deck or a social avatar does not have to invent the brand again.',
+      'Logo craft and logo animation are made by Asish Tom Anish at NeoPixel Studio. IndicBiz holds the system; Asish brings the mark and the motion. You leave with files, rules and everyday applications, so the next person who needs a card, a deck or a social avatar does not have to invent the brand again.',
     ],
   },
   collab: {
     eyebrow: 'In collaboration with',
     name: 'NeoPixel Studio',
-    title: 'Logos and logo animation, made with NeoPixel Studio.',
-    body: 'IndicBiz leads positioning, the wider identity kit and how the brand is used. Logo design and logo animation are crafted with NeoPixel Studio, so the still mark and the moving mark belong to the same idea.',
+    person: 'Asish Tom Anish',
+    personRole: 'Logo and motion',
+    body: 'IndicBiz holds the identity system. Asish Tom Anish crafts the still mark and the moving mark, so both belong to the same idea.',
     covers: ['Logo', 'Logo animation'],
   },
   featured: [
@@ -274,13 +275,13 @@ export const BRAND_IDENTITY_DETAIL = {
       number: '01',
       title: 'Logo',
       collab: true,
-      body: 'Primary mark, wordmark and responsive lockups that stay clear at every size, from a favicon to a signboard. Designed in collaboration with NeoPixel Studio.',
+      body: 'Primary mark, wordmark and responsive lockups that stay clear at every size, from a favicon to a signboard. Crafted by Asish Tom Anish.',
     },
     {
       number: '02',
       title: 'Logo animation',
       collab: true,
-      body: 'Motion versions of the mark for websites, reels, intros and presentations. Animated with NeoPixel Studio so the identity can move without falling apart.',
+      body: 'Motion versions of the mark for websites, reels, intros and presentations. Animated by Asish Tom Anish so the identity can move without falling apart.',
     },
     {
       number: '03',
@@ -347,7 +348,7 @@ export const BRAND_IDENTITY_DETAIL = {
       {
         number: '02',
         title: 'Design the system',
-        body: 'Logo explorations and motion with NeoPixel Studio, plus type and colour, enough to know the identity holds still and in movement.',
+        body: 'Logo explorations and motion by Asish Tom Anish at NeoPixel Studio, plus type and colour, enough to know the identity holds still and in movement.',
       },
       {
         number: '03',
@@ -376,7 +377,7 @@ export const BRAND_IDENTITY_DETAIL = {
     leave: {
       title: 'What you leave with',
       items: [
-        'Logo files and responsive lockups, still and in motion, made with NeoPixel Studio',
+        'Logo files and responsive lockups, still and in motion, crafted by Asish Tom Anish',
         'Business cards and a company profile ready to use',
         'The wider kit agreed in scope, stationery, digital, templates',
         'Guidelines and a file structure the team can keep tidy',

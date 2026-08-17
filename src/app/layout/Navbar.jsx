@@ -1,13 +1,19 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link, NavLink } from '../router'
+import { useRouter } from '../routerContext'
 import { PRIMARY_NAV, SITE_UI } from '../../data/site'
 import MagneticBtn from '../../components/primitives/MagneticBtn'
 import BrandMark from '../../components/primitives/BrandMark'
 
 export default function Navbar() {
+  const { pathname } = useRouter()
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    setOpen(false)
+  }, [pathname])
 
   useEffect(() => {
     document.body.dataset.menuOpen = String(open)

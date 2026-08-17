@@ -97,15 +97,17 @@ export default function ServiceFlagshipContent({ service }) {
           </FadeIn>
           <div className="bi-featured">
             {detail.featured.map((item, i) => (
-              <FadeIn key={item.title} delay={i * 0.07} y={18}>
+              <FadeIn key={item.title} className="bi-featured-cell" delay={i * 0.07} y={18}>
                 <article className={`ag-card bi-feature${i === 0 ? ' is-lead' : ''}`}>
                   <div className="bi-feature-top">
                     <span>{item.number}</span>
-                    {item.collab && (
+                    {item.collab ? (
                       <span className="bi-collab-pill">
                         <img src={neoPixelMark} alt="" />
                         With NeoPixel Studio
                       </span>
+                    ) : (
+                      <span className="bi-collab-slot" aria-hidden="true" />
                     )}
                   </div>
                   <h3>{item.title}</h3>
@@ -128,7 +130,11 @@ export default function ServiceFlagshipContent({ service }) {
                 <div className="bi-collab-copy">
                   <p className="ag-eyebrow">{detail.collab.eyebrow}</p>
                   <h2>{detail.collab.name}</h2>
-                  <p className="bi-collab-lead">{detail.collab.title}</p>
+                  <p className="bi-collab-by">
+                    {detail.collab.person}
+                    <span aria-hidden="true">·</span>
+                    {detail.collab.personRole}
+                  </p>
                   <p>{detail.collab.body}</p>
                   <div className="bi-chips">
                     {detail.collab.covers.map((item) => (

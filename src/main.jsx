@@ -7,7 +7,7 @@ import './styles/base.css'
 import './styles/glass.css'
 import './styles/neo.css'
 import './styles/buttons-3d.css'
-import './styles/agencya.css'
+import './styles/main.css'
 import App from './app/App.jsx'
 import { RouterProvider } from './app/router.jsx'
 

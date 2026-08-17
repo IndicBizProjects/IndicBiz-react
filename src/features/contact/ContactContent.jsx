@@ -18,6 +18,7 @@ import {
   FORM_INITIAL_VALUES,
 } from '../../data/contact'
 import { BRAND, SOCIAL_LINKS } from '../../data/site'
+import SocialIcon from '../../components/primitives/SocialIcon'
 import { createEnquiryMailto, submitProjectEnquiry } from '../../services/contactService'
 
 const pageVariants = {
@@ -286,8 +287,15 @@ export default function ContactContent() {
                 </ul>
                 <div className="ct-social">
                   {SOCIAL_LINKS.map((social) => (
-                    <a key={social.label} href={social.href} target="_blank" rel="noreferrer">
-                      {social.label}
+                    <a
+                      key={social.id}
+                      href={social.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={social.label}
+                      className="ct-social-link"
+                    >
+                      <SocialIcon name={social.id} />
                     </a>
                   ))}
                 </div>

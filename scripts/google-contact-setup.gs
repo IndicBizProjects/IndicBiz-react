@@ -1,5 +1,3 @@
-
-
 var EXISTING_SHEET_ID = ''
 
 var HEADERS = [

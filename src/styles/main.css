@@ -1,5 +1,5 @@
 /* ============================================================
-   Agencya layout system — pulled from CryoDesign template
+   Main layout system
    Soft canvas, inset 3D surfaces, asymmetric radii, stacked hero
    ============================================================ */
 
@@ -309,8 +309,7 @@
 .process-grid,
 .stats-grid,
 .contact-grid,
-.final-cta,
-.footer-grid {
+.final-cta {
   display: grid;
   gap: clamp(1rem, 3vw, 2rem);
   min-width: 0;
@@ -560,21 +559,34 @@
 
 .ct-social {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem 1rem;
+  align-items: center;
+  gap: 0.55rem;
   margin-top: 0.35rem;
   padding-top: 0.95rem;
   border-top: 1px solid rgba(13, 36, 38, 0.08);
 }
 
-.ct-social a {
-  font-size: 0.88rem;
-  font-weight: 600;
+.ct-social-link {
+  display: grid;
+  place-items: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 999px;
+  background: #eff0f0;
   color: #0d2426;
   text-decoration: none;
 }
 
-.ct-social a:hover { color: #4d9096; }
+.ct-social-link svg {
+  width: 1.05rem;
+  height: 1.05rem;
+  fill: currentColor;
+}
+
+.ct-social-link:hover {
+  background: #0d2426;
+  color: #f7f7f7;
+}
 
 .ct-steps {
   list-style: none;
@@ -665,18 +677,115 @@
   position: relative;
 }
 
-.footer-grid {
-  grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr));
-}
-
 .ib-footer {
   background: #f7f7f7;
-  padding: 0 var(--layout-gutter) clamp(1.25rem, 3vw, 2rem);
+  padding: 0 var(--layout-gutter) clamp(1.25rem, 3vw, 2.25rem);
 }
 
-.ib-footer-card {
-  padding: clamp(1.75rem, 5vw, 4rem);
-  border-radius: 40px 40px 24px 24px;
+.ib-footer-inner {
+  padding-top: clamp(2rem, 5vw, 3rem);
+  border-top: 1px solid rgba(13, 36, 38, 0.1);
+}
+
+.ib-footer-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) repeat(3, minmax(0, 0.9fr));
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: start;
+  padding-bottom: clamp(1.6rem, 3.5vw, 2.35rem);
+}
+
+.ib-footer-logo {
+  display: inline-flex;
+  text-decoration: none;
+  color: inherit;
+}
+
+.ib-footer-brand p {
+  max-width: 24ch;
+  margin: 0.85rem 0 1.15rem;
+  color: #505050;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.ib-footer-action {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #0d2426;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(13, 36, 38, 0.28);
+  padding-bottom: 0.12rem;
+}
+
+.ib-footer-action:hover {
+  color: #4d9096;
+  border-bottom-color: #4d9096;
+}
+
+.ib-footer-label {
+  margin: 0 0 0.85rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8c7355;
+}
+
+.ib-footer-col ul {
+  display: grid;
+  gap: 0.48rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ib-footer-col a,
+.ib-footer-col span {
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: #0d2426;
+  text-decoration: none;
+}
+
+.ib-footer-col span {
+  color: #505050;
+}
+
+.ib-footer-col a:hover {
+  color: #4d9096;
+}
+
+.ib-footer-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  margin-top: 1rem;
+}
+
+.ib-footer-social a {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #505050;
+}
+
+.ib-footer-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem 1.25rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid rgba(13, 36, 38, 0.08);
+}
+
+.ib-footer-bar small {
+  font-size: 0.76rem;
+  color: #707070;
 }
 
 @media (max-width: 900px) {
@@ -2861,14 +2970,26 @@
 .bi-featured {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 1fr;
   gap: 0.85rem;
+  align-items: stretch;
+}
+
+.bi-featured-cell {
+  min-height: 0;
+  height: 100%;
+  display: flex;
 }
 
 .bi-feature {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  min-height: 18.5rem;
   padding: clamp(1.6rem, 3vw, 2.25rem);
-  min-height: 14rem;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
 .bi-feature-top {
@@ -2876,6 +2997,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
+  min-height: 2.05rem;
   margin-bottom: 1.4rem;
 }
 
@@ -2899,6 +3021,14 @@
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: #0d2426;
+  white-space: nowrap;
+}
+
+.bi-collab-slot {
+  display: inline-block;
+  width: 1px;
+  height: 1.91rem;
+  visibility: hidden;
 }
 
 .bi-collab-pill img {
@@ -2906,6 +3036,7 @@
   height: 1.35rem;
   border-radius: 6px;
   object-fit: cover;
+  flex-shrink: 0;
 }
 
 .bi-feature.is-lead {
@@ -2920,6 +3051,8 @@
   font-weight: 700;
   font-size: clamp(1.6rem, 3vw, 2.2rem);
   letter-spacing: -0.04em;
+  line-height: 1.12;
+  min-height: 2.24em;
   margin-bottom: 0.7rem;
 }
 
@@ -2933,22 +3066,21 @@
 
 .bi-collab {
   display: grid;
-  grid-template-columns: auto 1fr;
-  gap: clamp(1.5rem, 4vw, 3rem);
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: clamp(1.25rem, 3vw, 2.25rem);
   align-items: center;
-  padding: clamp(1.5rem, 3.5vw, 2.5rem);
-  border-radius: 32px;
+  padding: clamp(1.35rem, 3vw, 2rem);
+  border-radius: 28px;
   background: #0d2426;
   color: #f7f7f7;
 }
 
 .bi-collab-mark {
-  width: clamp(7.5rem, 16vw, 10.5rem);
-  height: clamp(7.5rem, 16vw, 10.5rem);
-  border-radius: 28px;
+  width: clamp(6.5rem, 14vw, 8.75rem);
+  height: clamp(6.5rem, 14vw, 8.75rem);
+  border-radius: 22px;
   overflow: hidden;
   flex-shrink: 0;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.28);
 }
 
 .bi-collab-mark img {
@@ -2958,31 +3090,42 @@
   display: block;
 }
 
-.bi-collab-copy .ag-eyebrow { color: #b9c97a; }
+.bi-collab-copy .ag-eyebrow {
+  color: #b9c97a;
+  margin-bottom: 0.45rem;
+}
 
 .bi-collab-copy h2 {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(1.8rem, 3.6vw, 2.8rem);
+  font-size: clamp(1.55rem, 3vw, 2.15rem);
   letter-spacing: -0.045em;
   line-height: 1.05;
-  margin-bottom: 0.7rem;
+  margin: 0;
 }
 
-.bi-collab-lead {
-  font-family: var(--font-display);
+.bi-collab-by {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.45rem 0 0.85rem;
+  font-size: 0.9rem;
   font-weight: 600;
-  font-size: clamp(1.1rem, 1.8vw, 1.35rem);
-  letter-spacing: -0.03em;
-  line-height: 1.4;
-  margin-bottom: 0.7rem;
+  letter-spacing: -0.01em;
+  color: #b9c97a;
 }
 
-.bi-collab-copy p:last-of-type {
+.bi-collab-by span {
+  color: rgba(247, 247, 247, 0.35);
+  font-weight: 500;
+}
+
+.bi-collab-copy > p:not(.ag-eyebrow):not(.bi-collab-by) {
   color: rgba(247, 247, 247, 0.68);
-  line-height: 1.7;
-  max-width: 52ch;
-  margin-bottom: 1.15rem;
+  line-height: 1.65;
+  max-width: 48ch;
+  margin: 0 0 1rem;
 }
 
 .bi-chips {
@@ -2992,11 +3135,12 @@
 }
 
 .bi-chip {
-  padding: 0.4rem 0.75rem;
+  padding: 0.32rem 0.7rem;
   border-radius: 999px;
   background: rgba(247, 247, 247, 0.08);
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   font-weight: 600;
+  letter-spacing: 0.01em;
   color: #f7f7f7;
 }
 
@@ -3300,12 +3444,30 @@
     grid-template-columns: 1fr;
   }
 
+  .bi-featured {
+    grid-auto-rows: auto;
+  }
+
+  .bi-collab {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+  }
+
   .bi-hero-chip { right: 0.75rem; bottom: 8%; }
   .bi-story-copy { padding-top: 0; }
 }
 
 @media (max-width: 640px) {
   .bi-more { grid-template-columns: 1fr; }
+
+  .bi-collab {
+    grid-template-columns: 1fr;
+  }
+
+  .bi-collab-mark {
+    width: 5.5rem;
+    height: 5.5rem;
+  }
 }
 
 /* —— About studio stage —— */
@@ -4288,8 +4450,7 @@ html, body, #root, .ag-page {
 .process-grid,
 .stats-grid,
 .contact-grid,
-.final-cta,
-.footer-grid {
+.final-cta {
   min-width: 0;
 }
 
@@ -4323,11 +4484,11 @@ img, video, iframe, svg {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .footer-grid {
-    grid-template-columns: minmax(0, 1.3fr) 1fr 1fr;
+  .ib-footer-top {
+    grid-template-columns: minmax(0, 1.2fr) 1fr 1fr;
   }
 
-  .footer-grid > :last-child {
+  .ib-footer-top > :last-child {
     grid-column: 2 / 4;
   }
 }
@@ -4379,12 +4540,12 @@ img, video, iframe, svg {
     position: static;
   }
 
-  .footer-grid {
+  .ib-footer-top {
     grid-template-columns: 1fr 1fr;
   }
 
-  .footer-grid > :first-child,
-  .footer-grid > :last-child {
+  .ib-footer-top > :first-child,
+  .ib-footer-top > :last-child {
     grid-column: 1 / -1;
   }
 
