@@ -1,10 +1,16 @@
 import { REVIEW_RATING_FACTORS, projectIdFromLabel } from '../data/reviews'
 
+const DEFAULT_REVIEWS_SHEET_ID = '1pUbsor9BjR5L63BQ0Q6A21mopKAtwaPRyVvk5_Rn_iQ'
+const DEFAULT_REVIEWS_SHEET_NAME = 'Form Responses 1'
+
 export async function loadPublishedReviews() {
   const jsonUrl = import.meta.env.VITE_REVIEWS_FEED_URL
   const csvUrl =
     import.meta.env.VITE_REVIEWS_CSV_URL ||
-    sheetCsvUrl(import.meta.env.VITE_REVIEWS_SHEET_ID, import.meta.env.VITE_REVIEWS_SHEET_NAME)
+    sheetCsvUrl(
+      import.meta.env.VITE_REVIEWS_SHEET_ID || DEFAULT_REVIEWS_SHEET_ID,
+      import.meta.env.VITE_REVIEWS_SHEET_NAME || DEFAULT_REVIEWS_SHEET_NAME,
+    )
 
   try {
     if (jsonUrl) {

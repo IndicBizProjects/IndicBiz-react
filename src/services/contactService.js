@@ -16,8 +16,11 @@ function flattenEnquiry(payload) {
   }
 }
 
+const DEFAULT_CONTACT_API_URL =
+  'https://script.google.com/macros/s/AKfycbwrSA8KZh7TjQvMjZ4MosfFKA8jhplH3RWbDkpmDZHZDFWSd2cBAwUhUzMXP17bInUG/exec'
+
 export async function submitProjectEnquiry(payload) {
-  const endpoint = import.meta.env.VITE_CONTACT_API_URL
+  const endpoint = import.meta.env.VITE_CONTACT_API_URL || DEFAULT_CONTACT_API_URL
   const body = flattenEnquiry(payload)
 
   if (!endpoint) {
