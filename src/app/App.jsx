@@ -35,7 +35,6 @@ function LenisProvider() {
       lenis.destroy()
     }
   }, [])
-
   return null
 }
 export default function App() {
