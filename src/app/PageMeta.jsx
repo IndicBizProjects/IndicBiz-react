@@ -18,6 +18,5 @@ export default function PageMeta() {
     }
     description.content = meta.description
   }, [pathname])
-
   return null
 }
