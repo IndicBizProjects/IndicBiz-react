@@ -1,4 +1,5 @@
-var EXISTING_SHEET_ID = ''
+
+var EXISTING_SHEET_ID = '1wHhxxl-x17rN1SQffzoNZ8WBxeGh9VdKjfBs_aB0sHo'
 
 var HEADERS = [
   'Timestamp',
@@ -16,6 +17,15 @@ var HEADERS = [
   'Message',
   'Source',
   'Follow-up',
+  'IP',
+  'City',
+  'Region',
+  'Country',
+  'Postal',
+  'ISP',
+  'Timezone',
+  'VPN',
+  'Location',
 ]
 
 function setupContactSheet() {
@@ -33,6 +43,24 @@ function bindExistingSheet() {
   prepareSheet(ss.getSheets()[0])
   saveSpreadsheet(ss)
   logSetup()
+}
+
+function ensureVisitorColumns() {
+  var sheet = openContactSpreadsheet().getSheetByName('Enquiries') || openContactSpreadsheet().getSheets()[0]
+  var lastCol = Math.max(sheet.getLastColumn(), 1)
+  var headers = sheet.getRange(1, 1, 1, lastCol).getValues()[0].map(function (h) {
+    return String(h).trim()
+  })
+
+  HEADERS.forEach(function (header) {
+    if (headers.indexOf(header) === -1) {
+      sheet.getRange(1, sheet.getLastColumn() + 1).setValue(header)
+      headers.push(header)
+    }
+  })
+
+  sheet.getRange(1, 1, 1, sheet.getLastColumn()).setFontWeight('bold')
+  Logger.log('Visitor columns are in place.')
 }
 
 function prepareSheet(sheet) {
@@ -68,29 +96,45 @@ function doPost(e) {
     var data = readPayload(e)
     var ss = openContactSpreadsheet()
     var sheet = ss.getSheetByName('Enquiries') || ss.getSheets()[0]
-
-    sheet.appendRow([
-      new Date(),
-      data.name || '',
-      data.email || '',
-      data.phone || '',
-      data.company || '',
-      data.role || '',
-      data.services || '',
-      data.otherService || '',
-      data.status || '',
-      data.website || '',
-      data.budget || '',
-      data.timeline || '',
-      data.message || '',
-      data.source || '',
-      'New',
-    ])
-
+    var headers = sheet.getRange(1, 1, 1, Math.max(sheet.getLastColumn(), 1)).getValues()[0]
+    var row = headers.map(function (header) {
+      return valueForHeader(String(header).trim(), data)
+    })
+    sheet.appendRow(row)
     return jsonOutput({ ok: true })
   } catch (err) {
     return jsonOutput({ ok: false, error: String(err) })
   }
+}
+
+function valueForHeader(header, data) {
+  var map = {
+    Timestamp: new Date(),
+    Name: data.name || '',
+    Email: data.email || '',
+    Phone: data.phone || '',
+    Company: data.company || '',
+    Role: data.role || '',
+    Services: data.services || '',
+    'Other service': data.otherService || '',
+    'Project status': data.status || '',
+    Website: data.website || '',
+    Budget: data.budget || '',
+    Timeline: data.timeline || '',
+    Message: data.message || '',
+    Source: data.source || '',
+    'Follow-up': 'New',
+    IP: data.ip || '',
+    City: data.city || '',
+    Region: data.region || '',
+    Country: data.country || '',
+    Postal: data.postal || '',
+    ISP: data.isp || '',
+    Timezone: data.timezone || '',
+    VPN: data.vpn || '',
+    Location: data.location || '',
+  }
+  return map[header] != null ? map[header] : ''
 }
 
 function readPayload(e) {
