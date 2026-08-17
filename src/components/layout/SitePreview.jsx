@@ -10,10 +10,10 @@ export default function SitePreview({
   fallbackAlt,
 }) {
   const host = safeHost(url)
-  const frames = screenshots.filter(Boolean)
-  if (fallbackImage && !frames.includes(fallbackImage)) {
-    frames.push(fallbackImage)
-  }
+  const frames = [fallbackImage, ...screenshots]
+    .filter(Boolean)
+    .filter((src, i, list) => list.indexOf(src) === i)
+    .filter((src) => !/\/work\/.+\.png$/.test(String(src)))
 
   const [blocked, setBlocked] = useState(!embeddable)
   const [index, setIndex] = useState(0)
@@ -30,9 +30,11 @@ export default function SitePreview({
           <i /><i /><i />
         </span>
         <p className="wd-browser-url">{host}</p>
-        <MagneticBtn href={url} variant="dark" size="sm" target="_blank" rel="noreferrer">
-          Open live
-        </MagneticBtn>
+        <div className="wd-browser-open">
+          <MagneticBtn href={url} variant="dark" size="sm" target="_blank" rel="noreferrer">
+            Open live
+          </MagneticBtn>
+        </div>
       </div>
 
       <div className="wd-browser-stage">
@@ -47,35 +49,38 @@ export default function SitePreview({
           />
         )}
 
-        {showCapture && (
+        {showCapture && current && (
           <div className="wd-preview-fallback">
-            {current && <img src={current} alt={fallbackAlt || `${title} site preview`} />}
-            <div className="wd-preview-fallback-copy">
-              <p>
-                {embeddable
-                  ? 'This site cannot be embedded here.'
-                  : 'Live embedding is blocked by the site, so this is a captured preview.'}
-              </p>
-              <div className="wd-preview-actions">
-                {frames.length > 1 && (
-                  <div className="wd-preview-nav">
-                    <button type="button" className="wd-preview-arrow" onClick={prev} aria-label="Previous screen">
-                      ←
-                    </button>
-                    <span>{String(index + 1).padStart(2, '0')} / {String(frames.length).padStart(2, '0')}</span>
-                    <button type="button" className="wd-preview-arrow" onClick={next} aria-label="Next screen">
-                      →
-                    </button>
-                  </div>
-                )}
-                <MagneticBtn href={url} variant="dark" size="md" target="_blank" rel="noreferrer">
-                  Open {title}
-                </MagneticBtn>
-              </div>
-            </div>
+            <img src={current} alt={fallbackAlt || `${title} site preview`} />
           </div>
         )}
       </div>
+
+      {showCapture && (
+        <div className="wd-preview-caption">
+          <p>
+            {embeddable
+              ? 'This site cannot be embedded here.'
+              : 'Live embedding is blocked by the site, so this is a captured preview.'}
+          </p>
+          <div className="wd-preview-actions">
+            {frames.length > 1 && (
+              <div className="wd-preview-nav">
+                <button type="button" className="wd-preview-arrow" onClick={prev} aria-label="Previous screen">
+                  ←
+                </button>
+                <span>{String(index + 1).padStart(2, '0')} / {String(frames.length).padStart(2, '0')}</span>
+                <button type="button" className="wd-preview-arrow" onClick={next} aria-label="Next screen">
+                  →
+                </button>
+              </div>
+            )}
+            <MagneticBtn href={url} variant="dark" size="md" target="_blank" rel="noreferrer">
+              Open {title}
+            </MagneticBtn>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

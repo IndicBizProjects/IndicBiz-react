@@ -1,4 +1,4 @@
-import destinizeImage from '../assets/Projects/kerala.jpg'
+import destinizeImage from '../assets/Projects/kerala.png'
 import blitzImage from '../assets/Projects/blitz.jpg'
 import tamoozImage from '../assets/Projects/tamooz.jpg'
 

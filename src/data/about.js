@@ -19,7 +19,7 @@ export const STORY = {
 }
 
 export const ABOUT_STATS = [
-  { value: '06', label: 'Specialists', body: 'One focused team, from first brief to handover.' },
+  { value: '07', label: 'Specialists', body: 'One focused team, from first brief to handover.' },
   { value: '04', label: 'Capabilities', body: 'Brand, web, product and growth, connected, not siloed.' },
   { value: 'Direct', label: 'Access', body: 'You work with the people researching, designing and building.' },
 ]
@@ -66,7 +66,8 @@ export const TEAM = [
     group: 'Studio',
     tone: 'dark',
     size: 'lead',
-    focus: 'Sets the direction of the studio and stays in the client conversation from first brief to handover.',
+    focus: 'The person you brief is the person who stays on the work.',
+    foot: ['Founding partner', 'First brief to handover'],
   },
   {
     name: 'Kovid Sai Vemuri',
@@ -90,7 +91,19 @@ export const TEAM = [
     group: 'Product',
     tone: 'light',
     size: 'feature',
-    focus: 'Shapes the product, the offer and how the work reaches the right people.',
+    focus: 'Shapes the product, the offer and how the work reaches people.',
+  },
+  {
+    name: 'Alen Alex',
+    first: 'Alen',
+    last: 'Alex',
+    role: 'Director of Strategy',
+    initials: 'AA',
+    icon: 'clarity',
+    group: 'Studio',
+    tone: 'light',
+    size: 'strategy',
+    focus: 'Sets the strategy so each engagement points at a clear outcome.',
   },
   {
     name: 'Sudarshan Reddy Jalla',
@@ -102,7 +115,7 @@ export const TEAM = [
     group: 'Technical',
     tone: 'light',
     size: 'tech',
-    focus: 'Turns messy workflows into product decisions the team can build and ship.',
+    focus: 'Turns messy workflows into product decisions the team can ship.',
   },
   {
     name: 'Bhargav Nalla',
@@ -114,7 +127,7 @@ export const TEAM = [
     group: 'Technical',
     tone: 'light',
     size: 'tech',
-    focus: 'Builds the React foundations and keeps them clear enough to maintain.',
+    focus: 'Builds React foundations that stay clear enough to maintain.',
   },
   {
     name: 'Venkatesh Barad',
@@ -126,7 +139,7 @@ export const TEAM = [
     group: 'Technical',
     tone: 'light',
     size: 'tech',
-    focus: 'Owns the technical systems that keep the work fast, stable and ready to grow.',
+    focus: 'Keeps the technical systems fast, stable and ready to grow.',
   },
 ]
 

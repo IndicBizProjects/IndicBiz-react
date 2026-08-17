@@ -6,7 +6,6 @@ import MediaFrame from '../../components/layout/MediaFrame'
 import SitePreview from '../../components/layout/SitePreview'
 import MagneticBtn from '../../components/primitives/MagneticBtn'
 import FadeIn from '../../components/motion/FadeIn'
-import WorkField from './WorkField'
 import { WORK_PROJECTS, WORK_UI, WORK_CTA } from '../../data/work'
 import { SERVICES } from '../../data/services'
 
@@ -24,7 +23,6 @@ export default function WorkDetailContent() {
   if (!project) {
     return (
       <motion.div className="ag-page wk-page" variants={pageVariants} initial="initial" animate="animate" exit="exit">
-        <WorkField />
         <PageHero eyebrow="Work" title="Project not found" description="This engagement is not in the selected work archive." />
         <section className="ag-section" style={{ paddingTop: 0, textAlign: 'center' }}>
           <MagneticBtn to="/work" variant="dark" size="md">Back to our work</MagneticBtn>
@@ -42,10 +40,8 @@ export default function WorkDetailContent() {
   ]
 
   return (
-    <motion.div className="ag-page wk-page" variants={pageVariants} initial="initial" animate="animate" exit="exit">
-      <WorkField />
+      <motion.div className="ag-page wk-page" variants={pageVariants} initial="initial" animate="animate" exit="exit">
       <section className="wd-hero">
-        <div className="wk-hero-veil" aria-hidden="true" />
         <div className="ag-wrap">
           <FadeIn y={8} duration={0.5}>
             <Link to="/work" className="wd-back">← All work</Link>
@@ -79,11 +75,11 @@ export default function WorkDetailContent() {
                 transition={{ duration: 0.55, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
               >
                 {project.websiteUrl && (
-                  <MagneticBtn href={project.websiteUrl} variant="dark" size="lg" target="_blank" rel="noreferrer">
+                  <MagneticBtn href={project.websiteUrl} variant="dark" size="md" target="_blank" rel="noreferrer">
                     {WORK_UI.visitWebsite}
                   </MagneticBtn>
                 )}
-                <MagneticBtn to="/contact" variant="light" size="lg">Start a project</MagneticBtn>
+                <MagneticBtn to="/contact" variant="light" size="md">Start a project</MagneticBtn>
               </motion.div>
             </div>
 
@@ -105,7 +101,7 @@ export default function WorkDetailContent() {
               {[
                 { dt: 'Engagement', dd: project.category },
                 { dt: WORK_UI.relatedService, dd: relatedService ? relatedService.title : '', to: relatedService ? `/services/${relatedService.id}` : null },
-                { dt: 'Focus', dd: project.focus.join(' · ') },
+                { dt: 'Focus', chips: project.focus },
                 { dt: 'Live', dd: project.websiteUrl ? 'Open site ↗' : 'Private', href: project.websiteUrl },
               ].map((item, i) => (
                 <motion.div
@@ -117,7 +113,13 @@ export default function WorkDetailContent() {
                 >
                   <dt>{item.dt}</dt>
                   <dd>
-                    {item.to ? <Link to={item.to}>{item.dd}</Link> : item.href ? (
+                    {item.chips ? (
+                      <span className="wd-focus">
+                        {item.chips.map((chip) => (
+                          <span key={chip}>{chip}</span>
+                        ))}
+                      </span>
+                    ) : item.to ? <Link to={item.to}>{item.dd}</Link> : item.href ? (
                       <a href={item.href} target="_blank" rel="noreferrer">{item.dd}</a>
                     ) : item.dd}
                   </dd>

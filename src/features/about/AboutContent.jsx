@@ -205,7 +205,7 @@ export default function AboutContent() {
               </p>
             </FadeIn>
             <FadeIn delay={0.12} y={10}>
-              <p className="ab-roster-count" aria-hidden="true">06</p>
+              <p className="ab-roster-count" aria-hidden="true">{String(TEAM.length).padStart(2, '0')}</p>
             </FadeIn>
           </div>
 
@@ -233,6 +233,13 @@ export default function AboutContent() {
                   <p className="ab-person-role">{member.role}</p>
                   <p className="ab-person-focus">{member.focus}</p>
                 </div>
+                {member.foot && (
+                  <p className="ab-person-foot">
+                    {member.foot.map((item) => (
+                      <span key={item}>{item}</span>
+                    ))}
+                  </p>
+                )}
               </motion.article>
             ))}
           </div>

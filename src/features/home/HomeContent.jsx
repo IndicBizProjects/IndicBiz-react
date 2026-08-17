@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from 'framer-motion'
 import { springHover, staggerContainer, fadeUp, viewportOnce } from '../../lib/motion'
 import MagneticBtn from '../../components/primitives/MagneticBtn'
@@ -12,6 +13,8 @@ import { SERVICES, SERVICE_PROCESS } from '../../data/services'
 import { WORK_PROJECTS } from '../../data/work'
 import { VALUES } from '../../data/about'
 import { AboutIcon } from '../about/AboutIcons'
+import { REVIEW_RATING_FACTORS } from '../../data/reviews'
+import { loadPublishedReviews } from '../../services/reviewsService'
 import homeHeroImage from '../../assets/homeheroimg.png'
 
 const ease = [0.16, 1, 0.3, 1]
@@ -57,6 +60,7 @@ export default function HomeContent() {
       <Comparison />
       <Testimonials />
       <Campaigns />
+      <Reviews />
       <FinalCta />
     </motion.div>
   )
@@ -412,7 +416,7 @@ function Stats() {
             </FadeIn>
             <FadeInStagger className="ag-grid-3" stagger={0.08}>
               {[
-                { value: 6, label: 'Specialists', body: 'One focused team. No account-management layers.' },
+                { value: 7, label: 'Specialists', body: 'One focused team. No account-management layers.' },
                 { value: 4, label: 'Capabilities', body: 'Brand, web, product and growth, connected.' },
                 { value: 'Direct', label: 'Access', body: 'You work with the people making the work.' },
               ].map((s) => (
@@ -636,6 +640,106 @@ function Campaigns() {
         </FadeInStagger>
       </div>
     </section>
+  )
+}
+
+function Reviews() {
+  const [reviews, setReviews] = useState([])
+
+  useEffect(() => {
+    let active = true
+    loadPublishedReviews().then((rows) => {
+      if (!active) return
+      const featured = rows.filter((row) => row.featured)
+      const rest = rows.filter((row) => !row.featured)
+      setReviews([...featured, ...rest])
+    })
+    return () => {
+      active = false
+    }
+  }, [])
+
+  if (!reviews.length) return null
+
+  return (
+    <section className="ag-section ag-ghost-wrap" style={{ overflow: 'hidden', paddingTop: 0 }}>
+      <motion.span
+        className="ag-ghost-text"
+        aria-hidden="true"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 0.038 }}
+        viewport={viewportOnce}
+      >
+        REVIEWS
+      </motion.span>
+
+      <div className="ag-wrap" style={{ position: 'relative', zIndex: 1 }}>
+        <SectionHead
+          eyebrow={HOME_SECTIONS.reviews.eyebrow}
+          title={HOME_SECTIONS.reviews.title}
+          description={HOME_SECTIONS.reviews.description}
+        />
+
+        <div className="hm-reviews">
+          {reviews.map((review, i) => (
+            <motion.article
+              key={`${review.name}-${i}`}
+              className={`ag-card hm-review${i === 0 ? ' is-featured' : ''}`}
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={viewportOnce}
+              transition={{ delay: i * 0.08, duration: 0.65, ease }}
+              whileHover={{ y: -6 }}
+            >
+              <p className="hm-review-mark" aria-hidden="true">“</p>
+              {review.rating ? (
+                <p className="hm-review-rating" aria-label={`${review.rating} out of 5 overall`}>
+                  {'★'.repeat(review.rating)}{'☆'.repeat(Math.max(0, 5 - review.rating))}
+                </p>
+              ) : null}
+              {i === 0 ? <ReviewFactors ratings={review.ratings} /> : null}
+              <p className="hm-review-quote">{review.quote}</p>
+              <footer className="hm-review-who">
+                <div>
+                  <strong>{review.name || review.company}</strong>
+                  <span>
+                    {[review.role, review.company && review.name ? review.company : '', review.category]
+                      .filter(Boolean)
+                      .join(' · ')}
+                  </span>
+                </div>
+                {review.projectId ? (
+                  <MagneticBtn to={`/work/${review.projectId}`} variant="light" size="sm">
+                    View case
+                  </MagneticBtn>
+                ) : null}
+              </footer>
+            </motion.article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function ReviewFactors({ ratings }) {
+  const scored = REVIEW_RATING_FACTORS.filter((factor) => ratings?.[factor.key] > 0)
+  if (!scored.length) return null
+
+  return (
+    <ul className="hm-review-factors">
+      {scored.map((factor) => {
+        const value = ratings[factor.key]
+        return (
+          <li key={factor.key}>
+            <span>{factor.label}</span>
+            <span aria-label={`${value} out of 5`}>
+              {'★'.repeat(value)}{'☆'.repeat(Math.max(0, 5 - value))}
+            </span>
+          </li>
+        )
+      })}
+    </ul>
   )
 }
 

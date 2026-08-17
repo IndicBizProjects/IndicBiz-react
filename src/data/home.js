@@ -8,7 +8,7 @@ export const HOME_HERO = {
 }
 
 export const HOME_STATS = [
-  { value: '06', label: 'specialists, one focused team' },
+  { value: '07', label: 'specialists, one focused team' },
   { value: '04', label: 'connected capabilities' },
   { value: 'Direct', label: 'collaboration with the makers' },
 ]
@@ -29,6 +29,11 @@ export const HOME_SECTIONS = {
   partnership: {
     eyebrow: 'Working together',
     title: 'A partnership designed to stay useful.',
+  },
+  reviews: {
+    eyebrow: 'Reviews',
+    title: 'What the work felt like from the other side.',
+    description: 'Notes from teams we have built with. No invented awards. No inflated numbers.',
   },
   about: {
     actionLabel: 'About the studio',
