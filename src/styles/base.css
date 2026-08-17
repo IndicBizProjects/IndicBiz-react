@@ -25,6 +25,12 @@ body[data-loader="true"] {
 
 #root {
   min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+#main-content {
+  flex: 1;
 }
 
 /* ── Headings ── */
