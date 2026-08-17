@@ -4,65 +4,80 @@
    ============================================ */
 
 :root {
-  /* ── Canvas & Surfaces — cool stone, quiet luxury ── */
-  --bg-canvas:       #F7F7F7;   /* Agencya canvas */
-  --bg-surface:      #EFF0F0;   /* Agencya inset surface */
-  --bg-dark:         #08090B;   /* deep ink — hero, footer, CTAs */
-  --bg-dark-mid:     #111318;   /* elevated dark surface */
-  --bg-dark-card:    #171A20;   /* dark card surface */
+  /* ── Canvas & Surfaces — warm cream, earthy luxury ── */
+  --bg-canvas: #F2EFE9;
+  /* warm cream canvas */
+  --bg-surface: #EBE6DA;
+  /* slightly darker cream */
+  --bg-dark: #1C231D;
+  /* deep forest green/charcoal */
+  --bg-dark-mid: #252E26;
+  /* elevated dark surface */
+  --bg-dark-card: #2D382E;
+  /* dark card surface */
 
   /* ── Text on Light ── */
-  --brand-dot:       #8C7355;   /* warm brown period in the wordmark */
-  --ink:             #0B0C0F;   /* primary dark text */
-  --ink-mid:         #3A3F4A;   /* secondary dark text */
-  --ink-soft:        #6B7280;   /* muted dark text */
-  --ink-placeholder: #9AA1AD;   /* placeholder text */
+  --brand-dot: #5E6F5F;
+  /* logo forest green */
+  --ink: #161C17;
+  /* primary dark text (tinted green) */
+  --ink-mid: #3A453B;
+  /* secondary dark text */
+  --ink-soft: #667367;
+  /* muted dark text */
+  --ink-placeholder: #9BA69C;
+  /* placeholder text */
 
   /* ── Text on Dark ── */
-  --ink-inv:         #F2F3F5;   /* primary text on dark */
-  --ink-inv-soft:    #8B929E;   /* muted text on dark */
+  --ink-inv: #F2EFE9;
+  /* primary text on dark (cream) */
+  --ink-inv-soft: #A3B0A4;
+  /* muted text on dark */
 
   /* ── Accent ── */
-  --accent:          #C8F04A;   /* soft chartreuse — CTAs, highlights */
-  --accent-dark:     #A8CC30;   /* darker accent for hover */
-  --accent-warm:     #9BE7D0;   /* mint secondary accent */
+  --accent: #A5C4A8;
+  /* soft sage — CTAs, highlights */
+  --accent-dark: #83A387;
+  /* darker sage for hover */
+  --accent-warm: #D4C4A8;
+  /* warm gold secondary accent */
 
   /* ── Borders ── */
-  --line:            rgba(11, 12, 15, 0.08);
-  --line-mid:        rgba(11, 12, 15, 0.16);
-  --line-inv:        rgba(242, 243, 245, 0.10);
-  --line-inv-mid:    rgba(242, 243, 245, 0.18);
+  --line: rgba(11, 12, 15, 0.08);
+  --line-mid: rgba(11, 12, 15, 0.16);
+  --line-inv: rgba(242, 243, 245, 0.10);
+  --line-inv-mid: rgba(242, 243, 245, 0.18);
 
   /* ── Typography ── */
-  --font-display:    "Satoshi", "Plus Jakarta Sans", system-ui, sans-serif;
-  --font-body:       "Inter", "Plus Jakarta Sans", system-ui, sans-serif;
-  --font-mono:       "JetBrains Mono", "Fira Code", monospace;
+  --font-display: "Satoshi", "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-body: "Inter", "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
 
   /* ── Type Scale (fluid) ── */
-  --text-display:    clamp(3.5rem, 9vw, 8.5rem);
-  --text-hero:       clamp(2.5rem, 6vw, 5.5rem);
-  --text-headline:   clamp(2rem, 4vw, 3.75rem);
-  --text-title:      clamp(1.4rem, 2.5vw, 2rem);
-  --text-body-lg:    clamp(1.05rem, 1.5vw, 1.2rem);
-  --text-body:       clamp(0.95rem, 1.2vw, 1.05rem);
-  --text-small:      0.875rem;
-  --text-label:      0.72rem;
+  --text-display: clamp(3.5rem, 9vw, 8.5rem);
+  --text-hero: clamp(2.5rem, 6vw, 5.5rem);
+  --text-headline: clamp(2rem, 4vw, 3.75rem);
+  --text-title: clamp(1.4rem, 2.5vw, 2rem);
+  --text-body-lg: clamp(1.05rem, 1.5vw, 1.2rem);
+  --text-body: clamp(0.95rem, 1.2vw, 1.05rem);
+  --text-small: 0.875rem;
+  --text-label: 0.72rem;
 
   /* ── Spacing ── */
-  --space-1:   0.25rem;
-  --space-2:   0.5rem;
-  --space-3:   0.75rem;
-  --space-4:   1rem;
-  --space-5:   1.5rem;
-  --space-6:   2rem;
-  --space-7:   3rem;
-  --space-8:   clamp(3.5rem, 6vw, 5rem);
-  --space-9:   clamp(5rem, 10vw, 8rem);
-  --space-10:  clamp(7rem, 14vw, 12rem);
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: clamp(3.5rem, 6vw, 5rem);
+  --space-9: clamp(5rem, 10vw, 8rem);
+  --space-10: clamp(7rem, 14vw, 12rem);
 
   /* ── Grid & Layout ── */
-  --layout-max:    80rem;
-  --layout-wide:   96rem;
+  --layout-max: 80rem;
+  --layout-wide: 96rem;
   --layout-gutter: clamp(1rem, 4.2vw, 2.5rem);
   --layout-content: min(73.75rem, calc(100% - (var(--layout-gutter) * 2)));
   --bp-sm: 640px;
@@ -70,28 +85,28 @@
   --bp-lg: 1100px;
 
   /* ── Border Radius ── */
-  --radius-sm:   0.375rem;
-  --radius-md:   0.75rem;
-  --radius-lg:   1.5rem;
-  --radius-xl:   2.5rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1.5rem;
+  --radius-xl: 2.5rem;
   --radius-pill: 999px;
 
   /* ── Shadows ── */
-  --shadow-sm:  0 1px 3px rgba(14, 14, 12, 0.06), 0 1px 2px rgba(14, 14, 12, 0.04);
-  --shadow-md:  0 4px 20px rgba(14, 14, 12, 0.08), 0 2px 8px rgba(14, 14, 12, 0.04);
-  --shadow-lg:  0 16px 48px rgba(14, 14, 12, 0.10), 0 4px 16px rgba(14, 14, 12, 0.06);
-  --shadow-xl:  0 32px 80px rgba(14, 14, 12, 0.12);
+  --shadow-sm: 0 1px 3px rgba(14, 14, 12, 0.06), 0 1px 2px rgba(14, 14, 12, 0.04);
+  --shadow-md: 0 4px 20px rgba(14, 14, 12, 0.08), 0 2px 8px rgba(14, 14, 12, 0.04);
+  --shadow-lg: 0 16px 48px rgba(14, 14, 12, 0.10), 0 4px 16px rgba(14, 14, 12, 0.06);
+  --shadow-xl: 0 32px 80px rgba(14, 14, 12, 0.12);
 
   /* ── Motion ── */
-  --ease-out:        cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-out-expo:   cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in-expo:    cubic-bezier(0.7, 0, 0.84, 0);
-  --ease-bounce:     cubic-bezier(0.34, 1.56, 0.64, 1);
-  --ease-spring:     cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  --dur-fast:        180ms;
-  --dur-base:        480ms;
-  --dur-slow:        800ms;
-  --dur-crawl:       1200ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-expo: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --dur-fast: 180ms;
+  --dur-base: 480ms;
+  --dur-slow: 800ms;
+  --dur-crawl: 1200ms;
 
   /* ── Header ── */
   --header-height: clamp(4.25rem, 8vw, 5.5rem);
