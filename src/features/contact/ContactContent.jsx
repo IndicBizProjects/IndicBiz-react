@@ -65,7 +65,7 @@ export default function ContactContent() {
     try {
       const result = await submitProjectEnquiry(form)
       if (!result.delivered) {
-        window.location.href = createEnquiryMailto(form, BRAND.email)
+        window.location.href = createEnquiryMailto(result.payload || form, BRAND.email)
       }
       setSent(true)
     } catch {
