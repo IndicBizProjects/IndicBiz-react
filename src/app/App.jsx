@@ -33,7 +33,6 @@ function LenisProvider() {
 }
 export default function App() {
   const { pathname } = useRouter()
-
   return (
     <MotionConfig reducedMotion="user" transition={{ ease: [0.16, 1, 0.3, 1] }}>
       <ErrorBoundary>
