@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+  <ShortName>IndicBiz</ShortName>
+  <Description>Search IndicBiz Studio for services, case studies, and more.</Description>
+  <InputEncoding>UTF-8</InputEncoding>
+  <Url type="text/html" template="https://indicbiz.com/?q={searchTerms}"/>
+  <Image width="192" height="192" type="image/svg+xml">https://indicbiz.com/favicon.svg</Image>
+</OpenSearchDescription>

@@ -5,6 +5,7 @@ import PageHero from '../../components/layout/PageHero'
 import MediaFrame from '../../components/layout/MediaFrame'
 import SitePreview from '../../components/layout/SitePreview'
 import MagneticBtn from '../../components/primitives/MagneticBtn'
+import ShareButton from '../../components/primitives/ShareButton'
 import FadeIn from '../../components/motion/FadeIn'
 import { WORK_PROJECTS, WORK_UI, WORK_CTA } from '../../data/work'
 import { SERVICES } from '../../data/services'
@@ -79,7 +80,7 @@ export default function WorkDetailContent() {
                     {WORK_UI.visitWebsite}
                   </MagneticBtn>
                 )}
-                <MagneticBtn to="/contact" variant="light" size="md">Start a project</MagneticBtn>
+                <ShareButton title={project.title} text={project.summary} />
               </motion.div>
             </div>
 

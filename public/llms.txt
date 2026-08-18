@@ -1,0 +1,47 @@
+# IndicBiz
+
+> IndicBiz is an independent digital studio based in India, delivering brand identity, bespoke web development (React 19, Vite, Next.js, Tailwind CSS v4, GSAP, Lenis), UI/UX product design, and SEO/AEO growth systems to ambitious companies worldwide. Delivered directly by senior designers and engineers with no account-management middlemen.
+
+## Key Facts
+
+- Legal entity: IndicBiz Digital
+- Location: India (operating as a globally distributed, remote-first studio)
+- Global reach: Clients across North America, Europe, Middle East, and Asia-Pacific
+- Core team: 7 senior specialists covering strategy, visual design, motion design, React engineering, and growth
+- Engagement models: Transparent fixed-fee milestone projects and monthly retainers
+- Core tech stack: React 19, Vite, Next.js, Node.js, Tailwind CSS v4, Framer Motion, GSAP, Lenis, WebGL/Three.js
+- Contact: info@indicbiz.com · +91 76590 42808 · https://indicbiz.com/contact
+
+## Services
+
+- [Brand Identity](https://indicbiz.com/services/brand-identity): Positioning, logo systems, kinetic motion marks, typography, color systems, and brand guideline books for companies launching or repositioning.
+- [Web Experiences](https://indicbiz.com/services/web-experiences): Custom, accessible websites in React 19/Vite with production motion choreography (Framer Motion, GSAP, Lenis) — engineered for 95+ Core Web Vitals.
+- [Product Design](https://indicbiz.com/services/product-design): User research, user journey mapping, clickable Figma prototypes, and scalable design systems for SaaS and product teams.
+- [Growth & SEO](https://indicbiz.com/services/growth-seo): Technical SEO audits, Answer Engine Optimization (AEO) for AI search, Core Web Vitals optimization, and conversion rate optimization (CRO).
+
+## Selected Work & Case Studies
+
+- [Destinize Tours](https://indicbiz.com/work/destinize-tours): Global experiential travel booking platform featuring high-performance destination filtering, itinerary builders, and seamless enquiry conversions.
+- [Blitz India Engineering](https://indicbiz.com/work/blitz-india-engineering): Industrial engineering corporate presence rebuild featuring interactive technical capability catalogues and B2B quote funnels.
+- [Tamooz Middle East](https://indicbiz.com/work/tamooz-middle-east): Cross-border brand identity evolution and digital touchpoint ecosystem for high-growth Middle Eastern enterprise.
+- [Kashvi Creations](https://indicbiz.com/work/kashvi-creations): Premium artisanal textile e-commerce experience with curated storytelling, lookbooks, and high-conversion checkout flows.
+
+## Frequently Asked Questions (FAQ)
+
+- **Who is IndicBiz for?** Ambitious founders, startups, and established enterprises that want senior-level craft and direct maker communication without large agency overhead.
+- **What is IndicBiz's design philosophy?** "Clarity creates confidence" — stripping away digital noise until the core value is immediately visible and converts.
+- **Does IndicBiz do both design and development?** Yes. Complete end-to-end delivery from initial strategy and Figma UI/UX to production React frontend code and edge deployment.
+- **What is Answer Engine Optimization (AEO)?** Structuring site content, Schema.org graphs, and `llms.txt` knowledge bases so AI search engines (ChatGPT, Perplexity, Claude, Copilot) cite and recommend your brand accurately.
+- **How to start a project?** Submit a project enquiry at https://indicbiz.com/contact or email info@indicbiz.com.
+
+## Pages & Links
+
+- [Homepage](https://indicbiz.com/)
+- [All Services](https://indicbiz.com/services)
+- [Selected Work](https://indicbiz.com/work)
+- [About Studio](https://indicbiz.com/about)
+- [Contact & Discovery](https://indicbiz.com/contact)
+
+---
+
+For the exhaustive 113+ Q&A knowledge encyclopedia covering Studio, Services, Brand Identity, Web Engineering, Product Design, Growth/SEO, Process, and Comparisons, see [llms-full.txt](https://indicbiz.com/llms-full.txt).

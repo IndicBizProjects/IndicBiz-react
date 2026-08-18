@@ -11,7 +11,6 @@ const ContactPage = lazy(() => import('../pages/ContactPage'))
 const LogoPage = lazy(() => import('../pages/LogoPage'))
 const NotFoundPage = lazy(() => import('../pages/NotFoundPage'))
 const WorkDetailPage = lazy(() => import('../pages/WorkDetailPage'))
-const UiCatalogPage = lazy(() => import('../pages/UiCatalogPage'))
 
 export default function AppRoutes() {
   const { pathname } = useRouter()
@@ -25,7 +24,6 @@ export default function AppRoutes() {
   else if (pathname === '/about') Page = AboutPage
   // else if (pathname === '/pricing') Page = PricingPage
   else if (pathname === '/contact') Page = ContactPage
-  else if (pathname === '/ui-catalog') Page = UiCatalogPage
   else if (pathname === '/indic') Page = LogoPage
 
   return (

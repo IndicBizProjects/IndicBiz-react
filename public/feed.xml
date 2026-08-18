@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>IndicBiz Work</title>
+  <link>https://indicbiz.com</link>
+  <description>Digital clarity for ambitious businesses. Selected engagements.</description>
+  <atom:link href="https://indicbiz.com/feed.xml" rel="self" type="application/rss+xml" />
+  <item>
+    <title><![CDATA[Destinize Tours]]></title>
+    <link>https://indicbiz.com/work/all</link>
+    <guid isPermaLink="true">https://indicbiz.com/work/all</guid>
+    <description><![CDATA[A comprehensive travel booking platform and website rebuilt for clarity, speed and day-to-day usability.]]></description>
+    <pubDate>Tue, 18 Aug 2026 06:38:13 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Blitz India Engineering]]></title>
+    <link>https://indicbiz.com/work/blitz-india-engineering</link>
+    <guid isPermaLink="true">https://indicbiz.com/work/blitz-india-engineering</guid>
+    <description><![CDATA[A professional corporate website designed to showcase engineering capabilities and establish industry trust.]]></description>
+    <pubDate>Tue, 18 Aug 2026 06:38:13 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Tamooz]]></title>
+    <link>https://indicbiz.com/work/tamooz</link>
+    <guid isPermaLink="true">https://indicbiz.com/work/tamooz</guid>
+    <description><![CDATA[A modern product interface designed to turn complex data into calm, actionable decisions.]]></description>
+    <pubDate>Tue, 18 Aug 2026 06:38:13 GMT</pubDate>
+  </item>
+</channel>
+</rss>

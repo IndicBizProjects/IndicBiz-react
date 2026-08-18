@@ -79,10 +79,6 @@ export const ROUTE_META = {
     title: 'Start a project | IndicBiz',
     description: 'Tell IndicBiz what you are building and get a thoughtful project response.',
   },
-  '/ui-catalog': {
-    title: 'UI Design Catalog | IndicBiz',
-    description: 'Explore our design components, templates, and styles directly from the source.',
-  },
 }
 
 export const NOT_FOUND = {

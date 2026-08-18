@@ -4,6 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="search" type="application/opensearchdescription+xml" title="IndicBiz" href="/opensearch.xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,13 +13,68 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
     rel="stylesheet">
-  <meta name="description" content="Brand, product and web experiences designed to help ambitious businesses grow." />
-  <meta name="theme-color" content="#08090B" />
-  <meta property="og:title" content="IndicBiz | Digital clarity for ambitious businesses" />
-  <meta property="og:description"
-    content="Brand, product and web experiences designed to help ambitious businesses grow." />
-  <meta property="og:type" content="website" />
+  
   <title>IndicBiz | Digital clarity for ambitious businesses</title>
+  <meta name="description" content="We bring together brand strategy, creative identity, high-performance web development, and digital growth to turn ambitious business ideas into clear, measurable outcomes." />
+  <meta name="keywords" content="IndicBiz, digital agency India, brand identity, web development, product design UI UX, SEO agency India, growth marketing, React agency" />
+  <meta name="author" content="IndicBiz Digital" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta name="theme-color" content="#08090B" />
+  <meta name="geo.region" content="IN" />
+  <meta name="geo.placename" content="India" />
+  <link rel="canonical" href="https://indicbiz.com/" />
+
+  <!-- Open Graph / Facebook / LinkedIn -->
+  <meta property="og:title" content="IndicBiz | Digital clarity for ambitious businesses" />
+  <meta property="og:description" content="We bring together brand strategy, creative identity, high-performance web development, and digital growth to turn ambitious business ideas into clear, measurable outcomes." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://indicbiz.com/" />
+  <meta property="og:site_name" content="IndicBiz" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:image" content="https://indicbiz.com/favicon.svg" />
+  <meta property="og:image:alt" content="IndicBiz — Digital clarity for ambitious businesses" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@IndicBiz" />
+  <meta name="twitter:creator" content="@IndicBiz" />
+  <meta name="twitter:title" content="IndicBiz | Digital clarity for ambitious businesses" />
+  <meta name="twitter:description" content="We bring together brand strategy, creative identity, high-performance web development, and digital growth to turn ambitious business ideas into clear, measurable outcomes." />
+  <meta name="twitter:image" content="https://indicbiz.com/favicon.svg" />
+
+  <!-- Baseline Schema.org JSON-LD (Hydrated dynamically on route change) -->
+  <script id="ib-schema-graph" type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["Organization", "ProfessionalService"],
+        "@id": "https://indicbiz.com/#organization",
+        "name": "IndicBiz",
+        "legalName": "IndicBiz Digital",
+        "url": "https://indicbiz.com",
+        "logo": "https://indicbiz.com/favicon.svg",
+        "description": "Digital clarity for ambitious businesses.",
+        "email": "info@indicbiz.com",
+        "telephone": "+91 76590 42808",
+        "sameAs": [
+          "https://www.linkedin.com/company/indicbiz/",
+          "https://www.instagram.com/indicbiz",
+          "https://x.com/IndicBiz"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://indicbiz.com/#website",
+        "url": "https://indicbiz.com",
+        "name": "IndicBiz",
+        "publisher": {
+          "@id": "https://indicbiz.com/#organization"
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 
 <body data-loader="true">
@@ -168,6 +225,15 @@
   </style>
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(err => {
+          console.error('ServiceWorker registration failed: ', err);
+        });
+      });
+    }
+  </script>
 </body>
 
 </html>

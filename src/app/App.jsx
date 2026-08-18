@@ -10,6 +10,7 @@ import ScrollManager from './ScrollManager'
 import { SITE_UI } from '../data/site'
 import BrandLoader from '../components/motion/BrandLoader'
 import ScrollProgress from '../components/motion/ScrollProgress'
+import WhatsAppFAB from '../components/layout/WhatsAppFAB'
 import { useRouter } from './routerContext'
 import { setLenis } from '../lib/scroll'
 
@@ -54,6 +55,7 @@ export default function App() {
             <AppRoutes key={pathname} />
           </AnimatePresence>
         </main>
+        <WhatsAppFAB />
         <Footer />
       </ErrorBoundary>
     </MotionConfig>
