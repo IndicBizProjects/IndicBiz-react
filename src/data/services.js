@@ -2,6 +2,7 @@ import brandIdentityImage from '../assets/Services/brandidentity.png'
 import webExperiencesImage from '../assets/Services/webexp.png'
 import productDesignImage from '../assets/Services/productdesign.jpg'
 import growthSeoImage from '../assets/Services/growth.jpg'
+import brandIdentityCtaImage from '../assets/brandidentitycta.jpg'
 
 export const SERVICES = [
   {
@@ -252,6 +253,7 @@ export const BRAND_IDENTITY_DETAIL = {
   featuredTitle: 'Logo, motion, cards, profiles.',
   heroAction: 'Start an identity',
   ctaTitle: 'Ready for an identity that works everywhere?',
+  ctaImage: brandIdentityCtaImage,
   chip: 'From the mark to the things people actually hold and send.',
   story: {
     eyebrow: 'The complete identity',

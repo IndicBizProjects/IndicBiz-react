@@ -1,6 +1,6 @@
 import destinizeImage from '../assets/Projects/kerala.png'
-import blitzImage from '../assets/Projects/blitz.jpg'
-import tamoozImage from '../assets/Projects/tamooz.jpg'
+import blitzImage from '../assets/Projects/blitz.png'
+import tamoozImage from '../assets/Projects/TMLogo.png'
 
 export const WORK_HERO = {
   eyebrow: 'Our work',

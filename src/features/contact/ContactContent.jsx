@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import PageHero from '../../components/layout/PageHero'
 import MagneticBtn from '../../components/primitives/MagneticBtn'
 import FadeIn from '../../components/motion/FadeIn'
@@ -20,10 +20,11 @@ import {
 import { BRAND, SOCIAL_LINKS } from '../../data/site'
 import SocialIcon from '../../components/primitives/SocialIcon'
 import { createEnquiryMailto, submitProjectEnquiry } from '../../services/contactService'
+import { springHover, tapScale, springBouncy } from '../../lib/motion'
 
 const pageVariants = {
   initial: { opacity: 0 },
-  animate: { opacity: 1, transition: { duration: 0.4 } },
+  animate: { opacity: 1, transition: { duration: 0.45 } },
   exit: { opacity: 0, transition: { duration: 0.2 } },
 }
 
@@ -34,6 +35,7 @@ export default function ContactContent() {
   const [errors, setErrors] = useState({})
   const [sent, setSent] = useState(false)
   const [sending, setSending] = useState(false)
+  const [expandedFaq, setExpandedFaq] = useState(null)
 
   function setField(key, value) {
     setForm((f) => ({ ...f, [key]: value }))
@@ -91,7 +93,32 @@ export default function ContactContent() {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           >
             {sent ? (
-              <div className="ct-success">
+              <motion.div
+                className="ct-success"
+                initial={{ opacity: 0, scale: 0.92 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={springBouncy}
+              >
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.15, type: 'spring', stiffness: 380, damping: 20 }}
+                  style={{
+                    width: '64px',
+                    height: '64px',
+                    borderRadius: '50%',
+                    background: '#9ef01a',
+                    color: '#0d2426',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '1.8rem',
+                    fontWeight: 'bold',
+                    margin: '0 auto 1.5rem',
+                  }}
+                >
+                  ✓
+                </motion.div>
                 <p className="ag-eyebrow">Sent</p>
                 <h2 className="ag-h2">{FORM_COPY.success.title}</h2>
                 <p className="ag-lede">{FORM_COPY.success.delivered}</p>
@@ -99,7 +126,7 @@ export default function ContactContent() {
                 <MagneticBtn href={`mailto:${BRAND.email}`} variant="dark" size="md">
                   {FORM_COPY.success.action}
                 </MagneticBtn>
-              </div>
+              </motion.div>
             ) : (
               <>
                 <header className="ct-form-head">
@@ -162,16 +189,22 @@ export default function ContactContent() {
                     required
                     error={errors.services}
                   >
-                    {PROJECT_TYPES.map((type) => (
-                      <button
-                        key={type}
-                        type="button"
-                        onClick={() => toggleService(type)}
-                        className={`btn3d-chip${form.services.includes(type) ? ' is-active' : ''}`}
-                      >
-                        {type}
-                      </button>
-                    ))}
+                    {PROJECT_TYPES.map((type) => {
+                      const active = form.services.includes(type)
+                      return (
+                        <motion.button
+                          key={type}
+                          type="button"
+                          onClick={() => toggleService(type)}
+                          className={`btn3d-chip${active ? ' is-active' : ''}`}
+                          whileHover={{ scale: 1.04 }}
+                          whileTap={tapScale}
+                        >
+                          {active && <span style={{ marginRight: '0.35rem' }}>✓</span>}
+                          {type}
+                        </motion.button>
+                      )
+                    })}
                   </ChoiceGroup>
 
                   {form.services.includes('Something else') && (
@@ -184,16 +217,21 @@ export default function ContactContent() {
                   )}
 
                   <ChoiceGroup label={FORM_COPY.fields.status}>
-                    {PROJECT_STATUS.map((opt) => (
-                      <button
-                        key={opt}
-                        type="button"
-                        onClick={() => setField('status', opt)}
-                        className={`btn3d-chip${form.status === opt ? ' is-active' : ''}`}
-                      >
-                        {opt}
-                      </button>
-                    ))}
+                    {PROJECT_STATUS.map((opt) => {
+                      const active = form.status === opt
+                      return (
+                        <motion.button
+                          key={opt}
+                          type="button"
+                          onClick={() => setField('status', opt)}
+                          className={`btn3d-chip${active ? ' is-active' : ''}`}
+                          whileHover={{ scale: 1.04 }}
+                          whileTap={tapScale}
+                        >
+                          {opt}
+                        </motion.button>
+                      )
+                    })}
                   </ChoiceGroup>
 
                   <Field
@@ -208,28 +246,38 @@ export default function ContactContent() {
 
                 <FormSection {...FORM_COPY.sections[2]}>
                   <ChoiceGroup label={FORM_COPY.fields.budget} hint={FORM_COPY.hints.budget}>
-                    {BUDGET_OPTIONS.map((opt) => (
-                      <button
-                        key={opt}
-                        type="button"
-                        onClick={() => setField('budget', opt)}
-                        className={`btn3d-chip${form.budget === opt ? ' is-active' : ''}`}
-                      >
-                        {opt}
-                      </button>
-                    ))}
+                    {BUDGET_OPTIONS.map((opt) => {
+                      const active = form.budget === opt
+                      return (
+                        <motion.button
+                          key={opt}
+                          type="button"
+                          onClick={() => setField('budget', opt)}
+                          className={`btn3d-chip${active ? ' is-active' : ''}`}
+                          whileHover={{ scale: 1.04 }}
+                          whileTap={tapScale}
+                        >
+                          {opt}
+                        </motion.button>
+                      )
+                    })}
                   </ChoiceGroup>
                   <ChoiceGroup label={FORM_COPY.fields.timeline}>
-                    {TIMELINE_OPTIONS.map((opt) => (
-                      <button
-                        key={opt}
-                        type="button"
-                        onClick={() => setField('timeline', opt)}
-                        className={`btn3d-chip${form.timeline === opt ? ' is-active' : ''}`}
-                      >
-                        {opt}
-                      </button>
-                    ))}
+                    {TIMELINE_OPTIONS.map((opt) => {
+                      const active = form.timeline === opt
+                      return (
+                        <motion.button
+                          key={opt}
+                          type="button"
+                          onClick={() => setField('timeline', opt)}
+                          className={`btn3d-chip${active ? ' is-active' : ''}`}
+                          whileHover={{ scale: 1.04 }}
+                          whileTap={tapScale}
+                        >
+                          {opt}
+                        </motion.button>
+                      )
+                    })}
                   </ChoiceGroup>
                 </FormSection>
 
@@ -246,16 +294,21 @@ export default function ContactContent() {
                     rows={6}
                   />
                   <ChoiceGroup label={FORM_COPY.fields.source}>
-                    {SOURCE_OPTIONS.map((opt) => (
-                      <button
-                        key={opt}
-                        type="button"
-                        onClick={() => setField('source', opt)}
-                        className={`btn3d-chip${form.source === opt ? ' is-active' : ''}`}
-                      >
-                        {opt}
-                      </button>
-                    ))}
+                    {SOURCE_OPTIONS.map((opt) => {
+                      const active = form.source === opt
+                      return (
+                        <motion.button
+                          key={opt}
+                          type="button"
+                          onClick={() => setField('source', opt)}
+                          className={`btn3d-chip${active ? ' is-active' : ''}`}
+                          whileHover={{ scale: 1.04 }}
+                          whileTap={tapScale}
+                        >
+                          {opt}
+                        </motion.button>
+                      )
+                    })}
                   </ChoiceGroup>
                 </FormSection>
 
@@ -273,51 +326,54 @@ export default function ContactContent() {
 
           <aside className="ct-aside">
             <FadeIn y={16}>
-              <div className="ag-card ct-side">
+              <motion.div className="ag-card ct-side" whileHover={{ y: -4 }} transition={springHover}>
                 <p className="ag-eyebrow">{CONTACT_SECTIONS.channels.eyebrow}</p>
                 <h2>{CONTACT_SECTIONS.channels.title}</h2>
                 <p>Average reply within two working days.</p>
                 <ul>
                   {CONTACT_CHANNELS.map((ch) => (
-                    <li key={ch.title}>
+                    <motion.li key={ch.title} whileHover={{ x: 3 }} transition={springHover}>
                       <span>{ch.title}</span>
                       {ch.href ? <a href={ch.href}>{ch.value}</a> : <strong>{ch.value}</strong>}
-                    </li>
+                    </motion.li>
                   ))}
                 </ul>
                 <div className="ct-social">
                   {SOCIAL_LINKS.map((social) => (
-                    <a
+                    <motion.a
                       key={social.id}
                       href={social.href}
                       target="_blank"
                       rel="noreferrer"
                       aria-label={social.label}
                       className="ct-social-link"
+                      whileHover={{ scale: 1.15, y: -2 }}
+                      whileTap={tapScale}
+                      transition={springHover}
                     >
                       <SocialIcon name={social.id} />
-                    </a>
+                    </motion.a>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             </FadeIn>
 
             <FadeIn y={16} delay={0.08}>
-              <div className="ag-card ct-side">
+              <motion.div className="ag-card ct-side" whileHover={{ y: -4 }} transition={springHover}>
                 <p className="ag-eyebrow">{CONTACT_SECTIONS.process.eyebrow}</p>
                 <h2>{CONTACT_SECTIONS.process.title}</h2>
                 <ol className="ct-steps">
                   {CONTACT_PROCESS.map((step) => (
-                    <li key={step.number}>
+                    <motion.li key={step.number} whileHover={{ x: 3 }} transition={springHover}>
                       <span>{step.number}</span>
                       <div>
                         <strong>{step.title}</strong>
                         <p>{step.description}</p>
                       </div>
-                    </li>
+                    </motion.li>
                   ))}
                 </ol>
-              </div>
+              </motion.div>
             </FadeIn>
           </aside>
         </div>
@@ -330,18 +386,43 @@ export default function ContactContent() {
             <h2 className="ag-h2" style={{ marginBottom: '1.5rem' }}>{CONTACT_SECTIONS.faqs.title}</h2>
           </FadeIn>
           <div className="ag-card ct-faqs">
-            {CONTACT_FAQS.map((faq, i) => (
-              <motion.article
-                key={faq.question}
-                initial={{ opacity: 0, y: 14 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ delay: i * 0.05, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <h3>{faq.question}</h3>
-                <p>{faq.answer}</p>
-              </motion.article>
-            ))}
+            {CONTACT_FAQS.map((faq, i) => {
+              const isOpen = expandedFaq === i
+              return (
+                <motion.article
+                  key={faq.question}
+                  initial={{ opacity: 0, y: 14 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ delay: i * 0.05, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => setExpandedFaq(isOpen ? null : i)}
+                >
+                  <h3 style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span>{faq.question}</span>
+                    <motion.span
+                      animate={{ rotate: isOpen ? 180 : 0 }}
+                      transition={{ duration: 0.25 }}
+                      style={{ opacity: 0.5, fontSize: '0.85em', marginLeft: '0.5rem' }}
+                    >
+                      ▼
+                    </motion.span>
+                  </h3>
+                  <AnimatePresence initial={false}>
+                    {(isOpen || expandedFaq === null) && (
+                      <motion.p
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        {faq.answer}
+                      </motion.p>
+                    )}
+                  </AnimatePresence>
+                </motion.article>
+              )
+            })}
           </div>
         </div>
       </section>

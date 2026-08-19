@@ -21,6 +21,7 @@ import {
 } from '../../data/about'
 import { AboutIcon } from './AboutIcons'
 import neoPixelMark from '../../assets/Collab/NeoPixel.PNG'
+import { springHover, tapScale, tagPop } from '../../lib/motion'
 
 const pageVariants = {
   initial: { opacity: 0 },
@@ -29,7 +30,6 @@ const pageVariants = {
 }
 
 const ease = [0.16, 1, 0.3, 1]
-const springHoverCard = { type: 'spring', stiffness: 360, damping: 26 }
 
 export default function AboutContent() {
   return (
@@ -87,6 +87,7 @@ export default function AboutContent() {
               initial={{ opacity: 0, y: 36 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.75, delay: 0.28, ease }}
+              whileHover={{ scale: 1.015 }}
             >
               <div>
                 <p className="ab-stage-short">{ABOUT_HERO.short}</p>
@@ -111,8 +112,9 @@ export default function AboutContent() {
             <FadeIn key={stat.label} delay={i * 0.08} y={16}>
               <motion.article
                 className="ab-stat"
-                whileHover={{ y: -4, scale: 1.02 }}
-                transition={{ type: 'spring', stiffness: 360, damping: 26 }}
+                whileHover={{ y: -5, scale: 1.025 }}
+                whileTap={tapScale}
+                transition={springHover}
               >
                 <p className="ab-stat-value">
                   {stat.value === 'Direct' ? (
@@ -178,8 +180,9 @@ export default function AboutContent() {
               <StaggerItem key={value.number}>
                 <motion.article
                   className="ag-card ab-value ag-card-glow"
-                  whileHover={{ y: -6, scale: 1.018 }}
-                  transition={{ type: 'spring', stiffness: 360, damping: 26 }}
+                  whileHover={{ y: -6, scale: 1.02 }}
+                  whileTap={tapScale}
+                  transition={springHover}
                 >
                   <div className="ab-value-top">
                     <span className="ab-icon-wrap"><AboutIcon name={value.icon} /></span>
@@ -218,7 +221,8 @@ export default function AboutContent() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ delay: i * 0.06, duration: 0.65, ease }}
-                whileHover={{ y: -6 }}
+                whileHover={{ y: -6, scale: 1.015 }}
+                whileTap={tapScale}
               >
                 <span className="ab-person-mono" aria-hidden="true">{member.initials}</span>
                 <div className="ab-person-top">
@@ -261,20 +265,25 @@ export default function AboutContent() {
               whileInView={{ opacity: 1, clipPath: 'inset(0% 0% 0% 0% round 24px)' }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.9, ease }}
+              whileHover={{ scale: 1.02 }}
             >
               <MediaFrame src="/media/indicbiz-hero.jpg" alt="IndicBiz studio workspace" aspect="4 / 5" radius="20px" />
             </motion.div>
             <div className="ab-spine">
               {COLLABORATION_MODEL.map((item, i) => (
                 <FadeIn key={item.number} delay={i * 0.07} y={14}>
-                  <article className="ab-spine-step">
+                  <motion.article
+                    className="ab-spine-step"
+                    whileHover={{ x: 5 }}
+                    transition={springHover}
+                  >
                     <span className="ab-icon-wrap"><AboutIcon name={item.icon} /></span>
                     <div>
                       <p className="ag-eyebrow">{item.number}</p>
                       <h3>{item.title}</h3>
                       <p>{item.description}</p>
                     </div>
-                  </article>
+                  </motion.article>
                 </FadeIn>
               ))}
             </div>
@@ -290,6 +299,7 @@ export default function AboutContent() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.25 }}
             transition={{ duration: 0.7, ease }}
+            whileHover={{ y: -4, boxShadow: '0 32px 64px rgba(13,36,38,0.1)' }}
           >
             <div className="ab-specialist-visual">
               <motion.div
@@ -298,6 +308,7 @@ export default function AboutContent() {
                 whileInView={{ clipPath: 'inset(0% 0% 0% 0% round 28px)' }}
                 viewport={{ once: true, amount: 0.4 }}
                 transition={{ duration: 0.8, delay: 0.1, ease }}
+                whileHover={{ scale: 1.05, rotate: 2 }}
               >
                 <img src={neoPixelMark} alt={ABOUT_SPECIALISTS.partner} />
               </motion.div>
@@ -311,16 +322,25 @@ export default function AboutContent() {
 
               <div className="ab-specialist-split">
                 {ABOUT_SPECIALISTS.split.map((item) => (
-                  <div key={item.label}>
+                  <motion.div key={item.label} whileHover={{ x: 4 }} transition={springHover}>
                     <p className="ab-specialist-label">{item.label}</p>
                     <p>{item.text}</p>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
 
               <div className="ab-specialist-chips">
                 {ABOUT_SPECIALISTS.chips.map((chip) => (
-                  <span key={chip}>{chip}</span>
+                  <motion.span
+                    key={chip}
+                    variants={tagPop}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    whileHover={{ scale: 1.08 }}
+                  >
+                    {chip}
+                  </motion.span>
                 ))}
               </div>
 
@@ -351,7 +371,7 @@ export default function AboutContent() {
                   <FadeInStagger className="ab-tools" stagger={0.03}>
                     {group.tools.map((tool) => (
                       <StaggerItem key={tool.name}>
-                        <HoverLift y={-3}>
+                        <HoverLift y={-4}>
                           <article className="ab-tool">
                             <span className="ab-icon-wrap is-soft"><AboutIcon name={tool.icon} /></span>
                             <span>{tool.name}</span>
@@ -394,17 +414,17 @@ export default function AboutContent() {
       <section className="ag-section" style={{ paddingTop: 0 }}>
         <div className="ag-wrap">
           <FadeIn y={22}>
-          <div className="ab-cta">
-            <div>
-              <p className="ag-eyebrow" style={{ color: '#b9c97a' }}>{ABOUT_CTA.eyebrow}</p>
-              <h2>{ABOUT_CTA.title}</h2>
-              <p>{ABOUT_CTA.description}</p>
+            <div className="ab-cta">
+              <div>
+                <p className="ag-eyebrow" style={{ color: '#b9c97a' }}>{ABOUT_CTA.eyebrow}</p>
+                <h2>{ABOUT_CTA.title}</h2>
+                <p>{ABOUT_CTA.description}</p>
+              </div>
+              <div className="ag-actions">
+                <MagneticBtn to={ABOUT_CTA.action.to} variant="light" size="lg">{ABOUT_CTA.action.label}</MagneticBtn>
+                <MagneticBtn to="/services" variant="light" size="lg">All services</MagneticBtn>
+              </div>
             </div>
-            <div className="ag-actions">
-              <MagneticBtn to={ABOUT_CTA.action.to} variant="light" size="lg">{ABOUT_CTA.action.label}</MagneticBtn>
-              <MagneticBtn to="/services" variant="light" size="lg">All services</MagneticBtn>
-            </div>
-          </div>
           </FadeIn>
         </div>
       </section>

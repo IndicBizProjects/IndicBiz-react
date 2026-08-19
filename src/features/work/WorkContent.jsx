@@ -5,10 +5,11 @@ import FadeIn, { FadeInStagger, StaggerItem } from '../../components/motion/Fade
 import ScrollRevealText from '../../components/motion/ScrollRevealText'
 import MediaFrame from '../../components/layout/MediaFrame'
 import { WORK_HERO, WORK_FILTERS, WORK_PROJECTS, WORK_METHOD, WORK_CTA, WORK_SECTIONS, WORK_UI } from '../../data/work'
+import { springHover, tapScale, tagPop } from '../../lib/motion'
 
 const pageVariants = {
   initial: { opacity: 0 },
-  animate: { opacity: 1, transition: { duration: 0.4 } },
+  animate: { opacity: 1, transition: { duration: 0.45 } },
   exit: { opacity: 0, transition: { duration: 0.2 } },
 }
 
@@ -46,26 +47,54 @@ export default function WorkContent() {
           <FadeIn delay={0.22} y={10}>
             <nav className="wk-jump" aria-label="Jump to a project">
               {WORK_PROJECTS.map((project) => (
-                <a key={project.id} href={`#work-${project.id}`} className="wk-jump-link">
+                <motion.a
+                  key={project.id}
+                  href={`#work-${project.id}`}
+                  className="wk-jump-link"
+                  whileHover={{ scale: 1.04, x: 2 }}
+                  whileTap={tapScale}
+                  transition={springHover}
+                >
                   <span>{project.number}</span>
                   {project.title}
-                </a>
+                </motion.a>
               ))}
             </nav>
           </FadeIn>
 
           <FadeIn delay={0.28} y={8}>
             <div className="wk-filters" role="group" aria-label={WORK_UI.filterLabel}>
-              {usableFilters.map((filter) => (
-                <button
-                  key={filter.id}
-                  type="button"
-                  onClick={() => setActiveFilter(filter.id)}
-                  className={`btn3d-chip${activeFilter === filter.id ? ' is-active' : ''}`}
-                >
-                  {filter.label}
-                </button>
-              ))}
+              {usableFilters.map((filter) => {
+                const isActive = activeFilter === filter.id
+                return (
+                  <motion.button
+                    key={filter.id}
+                    type="button"
+                    onClick={() => setActiveFilter(filter.id)}
+                    className={`btn3d-chip${isActive ? ' is-active' : ''}`}
+                    style={{ position: 'relative' }}
+                    whileHover={{ scale: 1.04 }}
+                    whileTap={tapScale}
+                  >
+                    {isActive && (
+                      <motion.span
+                        layoutId="activeFilterPill"
+                        style={{
+                          position: 'absolute',
+                          inset: 0,
+                          borderRadius: '999px',
+                          background: '#0d2426',
+                          zIndex: 0,
+                        }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                      />
+                    )}
+                    <span style={{ position: 'relative', zIndex: 1, color: isActive ? '#f7f7f7' : undefined }}>
+                      {filter.label}
+                    </span>
+                  </motion.button>
+                )
+              })}
             </div>
           </FadeIn>
         </div>
@@ -77,10 +106,10 @@ export default function WorkContent() {
             <motion.div
               key={activeFilter}
               className="wk-cases"
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.35 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
             >
               {filtered.map((project, i) => (
                 <CaseRow key={project.id} project={project} reverse={i % 2 === 1} />
@@ -107,11 +136,15 @@ export default function WorkContent() {
             <FadeInStagger className="wk-method-grid" stagger={0.1}>
               {WORK_METHOD.map((item) => (
                 <StaggerItem key={item.number}>
-                  <div className="wk-method-item">
+                  <motion.div
+                    className="wk-method-item"
+                    whileHover={{ y: -4, x: 2 }}
+                    transition={springHover}
+                  >
                     <span>{item.number}</span>
                     <h3>{item.title}</h3>
                     <p>{item.description}</p>
-                  </div>
+                  </motion.div>
                 </StaggerItem>
               ))}
             </FadeInStagger>
@@ -156,6 +189,7 @@ function CaseRow({ project, reverse }) {
         whileInView={{ clipPath: 'inset(0% 0% 0% 0% round 20px)' }}
         viewport={{ once: true, amount: 0.15 }}
         transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+        whileHover={{ scale: 1.02 }}
       >
         <MediaFrame src={project.image} alt={project.imageAlt} aspect="16 / 11" radius="20px" />
       </motion.div>
@@ -165,24 +199,26 @@ function CaseRow({ project, reverse }) {
         <p className="wk-case-summary">{project.summary}</p>
 
         <dl className="wk-facts">
-          <div>
+          <motion.div whileHover={{ x: 3 }} transition={springHover}>
             <dt>{WORK_UI.challenge}</dt>
             <dd>{project.challenge}</dd>
-          </div>
-          <div>
+          </motion.div>
+          <motion.div whileHover={{ x: 3 }} transition={springHover}>
             <dt>{WORK_UI.outcome}</dt>
             <dd>{project.outcome}</dd>
-          </div>
+          </motion.div>
         </dl>
 
         <div className="wk-tags">
-          {project.focus.map((tag, i) => (
+          {project.focus.map((tag) => (
             <motion.span
               key={tag}
-              initial={{ opacity: 0, scale: 0.85 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              variants={tagPop}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true }}
-              transition={{ delay: 0.08 + i * 0.045, duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ scale: 1.08, y: -2 }}
+              transition={springHover}
             >
               {tag}
             </motion.span>

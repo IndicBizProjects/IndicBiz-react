@@ -1,21 +1,22 @@
-import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import PageHero from '../../components/layout/PageHero'
 import SectionHead from '../../components/layout/SectionHead'
 import MagneticBtn from '../../components/primitives/MagneticBtn'
-import FadeIn, { FadeInStagger, StaggerItem } from '../../components/motion/FadeIn'
-import ScrollRevealText from '../../components/motion/ScrollRevealText'
-import { viewportOnce } from '../../lib/motion'
+import { FadeInStagger, StaggerItem } from '../../components/motion/FadeIn'
+import { viewportOnce, tapScale, springCard } from '../../lib/motion'
 import { PRICING_HERO, PRICING_PLANS, PRICING_FAQS, ENGAGEMENT_INCLUSIONS, PRICING_CTA } from '../../data/pricing'
 
 const ease = [0.16, 1, 0.3, 1]
-const springCard = { type: 'spring', stiffness: 340, damping: 26 }
 const pageVariants = {
   initial: { opacity: 0 },
-  animate: { opacity: 1, transition: { duration: 0.4 } },
+  animate: { opacity: 1, transition: { duration: 0.45 } },
   exit: { opacity: 0, transition: { duration: 0.2 } },
 }
 
 export default function PricingContent() {
+  const [expandedFaq, setExpandedFaq] = useState(null)
+
   return (
     <motion.div className="ag-page" variants={pageVariants} initial="initial" animate="animate" exit="exit">
       <PageHero eyebrow={PRICING_HERO.eyebrow} title={PRICING_HERO.title} description={PRICING_HERO.description} />
@@ -46,13 +47,9 @@ export default function PricingContent() {
                     position: 'relative',
                     overflow: 'hidden',
                   }}
-                  initial={{ opacity: 0, y: 32 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={viewportOnce}
-                  transition={{ delay: i * 0.08, duration: 0.65, ease }}
                   whileHover={{ y: -8, scale: 1.022, boxShadow: '0 32px 64px rgba(13,36,38,0.13)' }}
-                  // separate transition for hover
-                  {...{ transition: springCard }}
+                  whileTap={tapScale}
+                  transition={springCard}
                 >
                   {/* Ghost plan number */}
                   <motion.span
@@ -79,7 +76,15 @@ export default function PricingContent() {
                     {String(i + 1).padStart(2, '0')}
                   </motion.span>
 
-                  {plan.featured && <p className="ag-eyebrow">Popular</p>}
+                  {plan.featured && (
+                    <motion.p
+                      className="ag-eyebrow"
+                      animate={{ scale: [1, 1.05, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    >
+                      Popular
+                    </motion.p>
+                  )}
                   <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1.4rem' }}>{plan.name}</h3>
 
                   <motion.p
@@ -104,6 +109,7 @@ export default function PricingContent() {
                         viewport={viewportOnce}
                         transition={{ delay: 0.2 + fi * 0.04, duration: 0.4, ease }}
                         style={{ padding: '0.55rem 0', borderTop: '1px solid rgba(13,36,38,0.08)' }}
+                        whileHover={{ x: 3 }}
                       >
                         ✓ {f}
                       </motion.li>
@@ -132,12 +138,13 @@ export default function PricingContent() {
         <div className="ag-wrap" style={{ position: 'relative', zIndex: 1 }}>
           <SectionHead eyebrow="Every engagement" title="The essentials are never extras" />
           <FadeInStagger className="ag-grid-2" stagger={0.1}>
-            {ENGAGEMENT_INCLUSIONS.map((item, i) => (
+            {ENGAGEMENT_INCLUSIONS.map((item) => (
               <StaggerItem key={item.number}>
                 <motion.div
                   className="ag-card ag-card-glow"
                   style={{ padding: '1.75rem', height: '100%' }}
                   whileHover={{ y: -6, scale: 1.018 }}
+                  whileTap={tapScale}
                   transition={springCard}
                 >
                   <p className="ag-eyebrow">{item.number}</p>
@@ -155,20 +162,44 @@ export default function PricingContent() {
         <div className="ag-wrap">
           <SectionHead eyebrow="FAQs" title="Questions & answers" />
           <div className="ag-card" style={{ padding: '1.5rem 2rem' }}>
-            {PRICING_FAQS.map((faq, i) => (
-              <motion.div
-                key={faq.question}
-                initial={{ opacity: 0, y: 14 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ delay: i * 0.055, duration: 0.45, ease }}
-                whileHover={{ x: 4 }}
-                style={{ padding: '1rem 0', borderBottom: '1px solid rgba(13,36,38,0.08)', cursor: 'default' }}
-              >
-                <p style={{ fontWeight: 700, marginBottom: '0.4rem' }}>{faq.question}</p>
-                <p style={{ color: '#505050' }}>{faq.answer}</p>
-              </motion.div>
-            ))}
+            {PRICING_FAQS.map((faq, i) => {
+              const isOpen = expandedFaq === i
+              return (
+                <motion.div
+                  key={faq.question}
+                  initial={{ opacity: 0, y: 14 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ delay: i * 0.055, duration: 0.45, ease }}
+                  style={{ padding: '1.1rem 0', borderBottom: '1px solid rgba(13,36,38,0.08)', cursor: 'pointer' }}
+                  onClick={() => setExpandedFaq(isOpen ? null : i)}
+                >
+                  <p style={{ fontWeight: 700, marginBottom: '0.4rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span>{faq.question}</span>
+                    <motion.span
+                      animate={{ rotate: isOpen ? 180 : 0 }}
+                      transition={{ duration: 0.25 }}
+                      style={{ opacity: 0.5, fontSize: '0.85em', marginLeft: '0.5rem' }}
+                    >
+                      ▼
+                    </motion.span>
+                  </p>
+                  <AnimatePresence initial={false}>
+                    {(isOpen || expandedFaq === null) && (
+                      <motion.p
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3 }}
+                        style={{ color: '#505050' }}
+                      >
+                        {faq.answer}
+                      </motion.p>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              )
+            })}
           </div>
 
           {/* CTA */}

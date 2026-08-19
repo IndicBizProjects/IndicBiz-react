@@ -1,6 +1,8 @@
+import { motion } from 'framer-motion'
 import { Link } from '../router'
 import { BRAND, FOOTER_GROUPS, SOCIAL_LINKS } from '../../data/site'
 import BrandMark from '../../components/primitives/BrandMark'
+import { springHover, viewportOnce } from '../../lib/motion'
 
 export default function Footer() {
   const year = new Date().getFullYear()
@@ -9,19 +11,35 @@ export default function Footer() {
     <footer className="ib-footer">
       <div className="ag-wrap">
         <div className="ib-footer-inner">
-          <div className="ib-footer-top">
+          <motion.div
+            className="ib-footer-top"
+            initial={{ opacity: 0, y: 32 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={viewportOnce}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          >
             <div className="ib-footer-brand">
               <Link to="/" aria-label="IndicBiz home" className="ib-footer-logo">
                 <BrandMark />
               </Link>
               <p>{BRAND.tagline}</p>
-              <Link to="/contact" className="ib-footer-action">
-                Start a project
-              </Link>
+              <motion.div whileHover={{ x: 4 }} transition={springHover} style={{ display: 'inline-block' }}>
+                <Link to="/contact" className="ib-footer-action">
+                  Start a project →
+                </Link>
+              </motion.div>
             </div>
 
-            {FOOTER_GROUPS.map((group) => (
-              <nav key={group.title} className="ib-footer-col" aria-label={`${group.title} links`}>
+            {FOOTER_GROUPS.map((group, gi) => (
+              <motion.nav
+                key={group.title}
+                className="ib-footer-col"
+                aria-label={`${group.title} links`}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={viewportOnce}
+                transition={{ delay: 0.08 + gi * 0.08, duration: 0.5 }}
+              >
                 <p className="ib-footer-label">{group.title}</p>
                 <ul>
                   {group.links.map((link) => (
@@ -30,10 +48,16 @@ export default function Footer() {
                     </li>
                   ))}
                 </ul>
-              </nav>
+              </motion.nav>
             ))}
 
-            <div className="ib-footer-col">
+            <motion.div
+              className="ib-footer-col"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={viewportOnce}
+              transition={{ delay: 0.24, duration: 0.5 }}
+            >
               <p className="ib-footer-label">Contact</p>
               <ul>
                 <li>
@@ -48,7 +72,16 @@ export default function Footer() {
               </ul>
               <div className="ib-footer-social">
                 {SOCIAL_LINKS.map((social) => (
-                  <a key={social.label} href={social.href} target="_blank" rel="noreferrer" aria-label={social.label}>
+                  <motion.a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={social.label}
+                    whileHover={{ y: -3, scale: 1.12 }}
+                    whileTap={{ scale: 0.92 }}
+                    transition={springHover}
+                  >
                     {social.id === 'linkedin' && (
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                     )}
@@ -61,11 +94,11 @@ export default function Footer() {
                     {social.id !== 'linkedin' && social.id !== 'instagram' && social.id !== 'twitter' && (
                       social.label
                     )}
-                  </a>
+                  </motion.a>
                 ))}
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           <div className="ib-footer-bar">
             <small>© {year} {BRAND.legalName}</small>

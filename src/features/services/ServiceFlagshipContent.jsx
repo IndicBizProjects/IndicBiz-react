@@ -2,9 +2,11 @@ import { motion } from 'framer-motion'
 import { Link } from '../../app/router'
 import MediaFrame from '../../components/layout/MediaFrame'
 import MagneticBtn from '../../components/primitives/MagneticBtn'
-import FadeIn from '../../components/motion/FadeIn'
+import FadeIn, { FadeInStagger, StaggerItem } from '../../components/motion/FadeIn'
+import ScrollRevealText from '../../components/motion/ScrollRevealText'
 import { SERVICES, SERVICES_PAGE, SERVICE_DETAILS } from '../../data/services'
 import neoPixelMark from '../../assets/Collab/NeoPixel.PNG'
+import { springHover, tagPop } from '../../lib/motion'
 
 const pageVariants = {
   initial: { opacity: 0 },
@@ -34,14 +36,14 @@ export default function ServiceFlagshipContent({ service }) {
               <motion.p className="ag-eyebrow" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
                 Capability · {service.number}
               </motion.p>
-              <motion.h1
+              <ScrollRevealText
+                text={service.title}
+                reveal="slide"
+                stagger={0.06}
+                delay={0.06}
+                as="h1"
                 className="ag-h1 bi-title"
-                initial={{ opacity: 0, y: 22 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.75, delay: 0.06, ease }}
-              >
-                {service.title}
-              </motion.h1>
+              />
               <motion.p
                 className="bi-short"
                 initial={{ opacity: 0, y: 14 }}
@@ -65,7 +67,6 @@ export default function ServiceFlagshipContent({ service }) {
                 transition={{ duration: 0.55, delay: 0.34, ease }}
               >
                 <MagneticBtn to="/contact" variant="dark" size="lg">{detail.heroAction}</MagneticBtn>
-                {/* <MagneticBtn to="/pricing" variant="light" size="lg">See engagement shapes</MagneticBtn> */}
               </motion.div>
             </div>
 
@@ -78,10 +79,16 @@ export default function ServiceFlagshipContent({ service }) {
               <div className="ag-card bi-hero-frame">
                 <MediaFrame src={service.image} alt={service.title} aspect="4 / 5" radius="22px" />
               </div>
-              <div className="bi-hero-chip">
+              <motion.div
+                className="bi-hero-chip"
+                initial={{ opacity: 0, scale: 0.85 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.45, duration: 0.5, type: 'spring' }}
+                whileHover={{ scale: 1.05 }}
+              >
                 <span>{service.number}</span>
                 <p>{detail.chip}</p>
-              </div>
+              </motion.div>
             </motion.div>
           </div>
         </div>
@@ -98,7 +105,11 @@ export default function ServiceFlagshipContent({ service }) {
           <div className="bi-featured">
             {detail.featured.map((item, i) => (
               <FadeIn key={item.title} className="bi-featured-cell" delay={i * 0.07} y={18}>
-                <article className={`ag-card bi-feature${i === 0 ? ' is-lead' : ''}`}>
+                <motion.article
+                  className={`ag-card bi-feature${i === 0 ? ' is-lead' : ''}`}
+                  whileHover={{ y: -6, scale: 1.02 }}
+                  transition={springHover}
+                >
                   <div className="bi-feature-top">
                     <span>{item.number}</span>
                     {item.collab ? (
@@ -112,7 +123,7 @@ export default function ServiceFlagshipContent({ service }) {
                   </div>
                   <h3>{item.title}</h3>
                   <p>{item.body}</p>
-                </article>
+                </motion.article>
               </FadeIn>
             ))}
           </div>
@@ -123,7 +134,11 @@ export default function ServiceFlagshipContent({ service }) {
         <section className="ag-section" style={{ paddingTop: 0 }}>
           <div className="ag-wrap">
             <FadeIn y={16}>
-              <article className="bi-collab">
+              <motion.article
+                className="bi-collab"
+                whileHover={{ y: -4, boxShadow: '0 24px 48px rgba(13,36,38,0.08)' }}
+                transition={springHover}
+              >
                 <div className="bi-collab-mark">
                   <img src={neoPixelMark} alt={detail.collab.name} />
                 </div>
@@ -138,11 +153,21 @@ export default function ServiceFlagshipContent({ service }) {
                   <p>{detail.collab.body}</p>
                   <div className="bi-chips">
                     {detail.collab.covers.map((item) => (
-                      <span key={item} className="bi-chip">{item}</span>
+                      <motion.span
+                        key={item}
+                        className="bi-chip"
+                        variants={tagPop}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true }}
+                        whileHover={{ scale: 1.06 }}
+                      >
+                        {item}
+                      </motion.span>
                     ))}
                   </div>
                 </div>
-              </article>
+              </motion.article>
             </FadeIn>
           </div>
         </section>
@@ -176,16 +201,20 @@ export default function ServiceFlagshipContent({ service }) {
             </h2>
             <p className="ag-lede" style={{ marginBottom: '2rem' }}>{detail.kit.description}</p>
           </FadeIn>
-          <div className="bi-kit">
-            {detail.kit.items.map((item, i) => (
-              <FadeIn key={item.title} delay={i * 0.05} y={14}>
-                <article className="bi-kit-item">
+          <FadeInStagger className="bi-kit" stagger={0.06}>
+            {detail.kit.items.map((item) => (
+              <StaggerItem key={item.title}>
+                <motion.article
+                  className="bi-kit-item"
+                  whileHover={{ y: -4, scale: 1.02 }}
+                  transition={springHover}
+                >
                   <h3>{item.title}</h3>
                   <p>{item.body}</p>
-                </article>
-              </FadeIn>
+                </motion.article>
+              </StaggerItem>
             ))}
-          </div>
+          </FadeInStagger>
         </div>
       </section>
 
@@ -193,17 +222,21 @@ export default function ServiceFlagshipContent({ service }) {
         <div className="ag-wrap">
           <p className="bi-band-eyebrow">Intended outcomes</p>
           <h2 className="bi-band-title">What the engagement is designed to leave behind.</h2>
-          <div className="bi-outcomes">
+          <FadeInStagger className="bi-outcomes" stagger={0.08}>
             {detail.outcomes.map((outcome, i) => (
-              <FadeIn key={outcome.title} delay={i * 0.08} y={16}>
-                <article className="bi-outcome">
+              <StaggerItem key={outcome.title}>
+                <motion.article
+                  className="bi-outcome"
+                  whileHover={{ y: -4, scale: 1.02 }}
+                  transition={springHover}
+                >
                   <span>{String(i + 1).padStart(2, '0')}</span>
                   <p>{outcome.title}</p>
                   <p className="bi-outcome-body">{outcome.body}</p>
-                </article>
-              </FadeIn>
+                </motion.article>
+              </StaggerItem>
             ))}
-          </div>
+          </FadeInStagger>
         </div>
       </section>
 
@@ -215,17 +248,21 @@ export default function ServiceFlagshipContent({ service }) {
               A strong fit for these situations.
             </h2>
           </FadeIn>
-          <div className="bi-situations">
+          <FadeInStagger className="bi-situations" stagger={0.08}>
             {detail.situations.map((item, i) => (
-              <FadeIn key={item.title} delay={i * 0.07} y={16}>
-                <article className="ag-card bi-situation">
+              <StaggerItem key={item.title}>
+                <motion.article
+                  className="ag-card bi-situation"
+                  whileHover={{ y: -5, scale: 1.02 }}
+                  transition={springHover}
+                >
                   <span>{String(i + 1).padStart(2, '0')}</span>
                   <h3>{item.title}</h3>
                   <p>{item.body}</p>
-                </article>
-              </FadeIn>
+                </motion.article>
+              </StaggerItem>
             ))}
-          </div>
+          </FadeInStagger>
         </div>
       </section>
 
@@ -241,13 +278,17 @@ export default function ServiceFlagshipContent({ service }) {
           <div className="bi-spine">
             {detail.method.steps.map((step, i) => (
               <FadeIn key={step.number} delay={i * 0.06} y={14}>
-                <article className="bi-spine-step">
+                <motion.article
+                  className="bi-spine-step"
+                  whileHover={{ x: 6 }}
+                  transition={springHover}
+                >
                   <span>{step.number}</span>
                   <div>
                     <h3>{step.title}</h3>
                     <p>{step.body}</p>
                   </div>
-                </article>
+                </motion.article>
               </FadeIn>
             ))}
           </div>
@@ -264,24 +305,32 @@ export default function ServiceFlagshipContent({ service }) {
           </FadeIn>
           <div className="bi-split">
             <FadeIn y={16}>
-              <div className="ag-card bi-panel">
+              <motion.div
+                className="ag-card bi-panel"
+                whileHover={{ y: -4 }}
+                transition={springHover}
+              >
                 <p className="ag-eyebrow">{detail.working.need.title}</p>
                 <ul className="bi-list">
                   {detail.working.need.items.map((item) => (
                     <li key={item}>{item}</li>
                   ))}
                 </ul>
-              </div>
+              </motion.div>
             </FadeIn>
             <FadeIn y={16} delay={0.08}>
-              <div className="ag-card bi-panel">
+              <motion.div
+                className="ag-card bi-panel"
+                whileHover={{ y: -4 }}
+                transition={springHover}
+              >
                 <p className="ag-eyebrow">{detail.working.leave.title}</p>
                 <ul className="bi-list">
                   {detail.working.leave.items.map((item) => (
                     <li key={item}>{item}</li>
                   ))}
                 </ul>
-              </div>
+              </motion.div>
             </FadeIn>
           </div>
         </div>
@@ -290,16 +339,17 @@ export default function ServiceFlagshipContent({ service }) {
       <section className="ag-section" style={{ paddingTop: 0 }}>
         <div className="ag-wrap">
           <FadeIn y={16}>
-            <div className="ag-card bi-engage">
+            <motion.div
+              className="ag-card bi-engage"
+              whileHover={{ scale: 1.015 }}
+              transition={springHover}
+            >
               <div>
                 <p className="ag-eyebrow">{detail.engagement.eyebrow}</p>
                 <h2>{detail.engagement.title}</h2>
                 <p>{detail.engagement.body}</p>
               </div>
-              {/* <MagneticBtn to={detail.engagement.action.to} variant="dark" size="md">
-                {detail.engagement.action.label}
-              </MagneticBtn> */}
-            </div>
+            </motion.div>
           </FadeIn>
         </div>
       </section>
@@ -307,34 +357,47 @@ export default function ServiceFlagshipContent({ service }) {
       <section className="ag-section" style={{ paddingTop: 0 }}>
         <div className="ag-wrap">
           <FadeIn y={22}>
-          <div className="bi-cta">
-            <div>
-              <p className="ag-eyebrow" style={{ color: '#b9c97a' }}>{SERVICES_PAGE.cta.eyebrow}</p>
-              <h2>{detail.ctaTitle}</h2>
-              <p>{SERVICES_PAGE.cta.description}</p>
+            <div className="bi-cta">
+              <div className="bi-cta-copy">
+                <p className="ag-eyebrow" style={{ color: service.accent || '#b9c97a' }}>{SERVICES_PAGE.cta.eyebrow}</p>
+                <h2>{detail.ctaTitle}</h2>
+                <p>{SERVICES_PAGE.cta.description}</p>
+                <div className="ag-actions" style={{ marginTop: '1.75rem' }}>
+                  <MagneticBtn to="/contact" variant="light" size="lg">{SERVICES_PAGE.cta.action.label}</MagneticBtn>
+                  <MagneticBtn to="/services" variant="light" size="lg">All services</MagneticBtn>
+                </div>
+              </div>
+              {detail.ctaImage && (
+                <motion.div
+                  className="ag-img-reveal bi-cta-media"
+                  style={{ borderRadius: '22px', flex: '1 1 320px', maxWidth: '440px', minWidth: 'min(100%, 280px)' }}
+                  initial={{ clipPath: 'inset(8% 8% 8% 8% round 22px)' }}
+                  whileInView={{ clipPath: 'inset(0% 0% 0% 0% round 22px)' }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+                  whileHover={{ scale: 1.02 }}
+                >
+                  <MediaFrame src={detail.ctaImage} alt={detail.ctaTitle} aspect="4 / 3" radius="22px" />
+                </motion.div>
+              )}
             </div>
-            <div className="ag-actions">
-              <MagneticBtn to="/contact" variant="light" size="lg">{SERVICES_PAGE.cta.action.label}</MagneticBtn>
-              <MagneticBtn to="/services" variant="light" size="lg">All services</MagneticBtn>
-            </div>
-          </div>
 
-          <nav className="bi-more" aria-label="Other services">
-            {others.map((item, i) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={{ delay: i * 0.07, duration: 0.45, ease }}
-              >
-                <Link to={`/services/${item.id}`} className="bi-more-link">
-                  <span>{item.number}</span>
-                  {item.title}
-                </Link>
-              </motion.div>
-            ))}
-          </nav>
+            <nav className="bi-more" aria-label="Other services">
+              {others.map((item, i) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.4 }}
+                  transition={{ delay: i * 0.07, duration: 0.45, ease }}
+                >
+                  <Link to={`/services/${item.id}`} className="bi-more-link">
+                    <span>{item.number}</span>
+                    {item.title}
+                  </Link>
+                </motion.div>
+              ))}
+            </nav>
           </FadeIn>
         </div>
       </section>

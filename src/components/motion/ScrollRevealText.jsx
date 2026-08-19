@@ -18,6 +18,9 @@ export default function ScrollRevealText({
   style,
   as: Tag = 'p',
   once = true,
+  highlightWords = [],
+  highlightColor = '#4d9096',
+  highlightClass = '',
 }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once, amount: 0.35 })
@@ -46,27 +49,39 @@ export default function ScrollRevealText({
       style={{ display: 'flex', flexWrap: 'wrap', gap: mode === 'chars' ? '0.01em' : '0.22em', ...style }}
       aria-label={text}
     >
-      {tokens.map((token, i) => (
-        <span
-          key={`${token}-${i}`}
-          className={reveal === 'slide' ? 'ag-reveal-mask' : undefined}
-          style={{ overflow: reveal === 'slide' ? 'hidden' : 'visible', display: 'inline-block' }}
-        >
-          <motion.span
-            style={{ display: 'inline-block', paddingBottom: '0.08em' }}
-            initial={getInitial()}
-            animate={isInView ? getAnimate() : getInitial()}
-            transition={{
-              type: 'spring',
-              visualDuration: reveal === 'clip' ? 0.55 : 0.6,
-              bounce: 0,
-              delay: delay + i * stagger,
-            }}
+      {tokens.map((token, i) => {
+        const cleanToken = token.replace(/[^a-zA-Z0-9]/g, '').toLowerCase()
+        const isHighlighted = highlightWords.some(
+          (w) => w.toLowerCase() === cleanToken || token.toLowerCase().includes(w.toLowerCase())
+        )
+
+        return (
+          <span
+            key={`${token}-${i}`}
+            className={reveal === 'slide' ? 'ag-reveal-mask' : undefined}
+            style={{ overflow: reveal === 'slide' ? 'hidden' : 'visible', display: 'inline-block' }}
           >
-            {token}
-          </motion.span>
-        </span>
-      ))}
+            <motion.span
+              className={isHighlighted ? `hm-hero-highlight ${highlightClass}`.trim() : undefined}
+              style={{
+                display: 'inline-block',
+                paddingBottom: '0.08em',
+                color: isHighlighted ? highlightColor : undefined,
+              }}
+              initial={getInitial()}
+              animate={isInView ? getAnimate() : getInitial()}
+              transition={{
+                type: 'spring',
+                visualDuration: reveal === 'clip' ? 0.55 : 0.6,
+                bounce: 0,
+                delay: delay + i * stagger,
+              }}
+            >
+              {token}
+            </motion.span>
+          </span>
+        )
+      })}
     </Tag>
   )
 }
@@ -81,7 +96,7 @@ export function ScrollProgressText({
   style,
   as: Tag = 'h2',
   activeColor,
-  inactiveColor,
+  inactiveColor = '#505050',
 }) {
   const ref = useRef(null)
   const { scrollYProgress } = useScroll({
@@ -127,7 +142,7 @@ function WordMask({ word, progress, start, end, activeColor, inactiveColor }) {
         display: 'inline-block',
         opacity,
         y,
-        color: activeColor || undefined,
+        color: activeColor || inactiveColor || undefined,
       }}
     >
       {word}

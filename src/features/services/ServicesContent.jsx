@@ -5,10 +5,11 @@ import FadeIn, { FadeInStagger, StaggerItem } from '../../components/motion/Fade
 import ScrollRevealText from '../../components/motion/ScrollRevealText'
 import MediaFrame from '../../components/layout/MediaFrame'
 import { SERVICES, SERVICES_PAGE, SERVICE_PROCESS } from '../../data/services'
+import { springHover, tapScale, tagPop, viewportOnce } from '../../lib/motion'
 
 const pageVariants = {
   initial: { opacity: 0 },
-  animate: { opacity: 1, transition: { duration: 0.4 } },
+  animate: { opacity: 1, transition: { duration: 0.45 } },
   exit: { opacity: 0, transition: { duration: 0.2 } },
 }
 
@@ -53,7 +54,8 @@ function ServicesHero() {
                   initial={{ opacity: 0, x: 16 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.22 + i * 0.07, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                  whileHover={{ x: 6 }}
+                  whileHover={{ x: 6, scale: 1.02 }}
+                  whileTap={tapScale}
                 >
                   <span>{service.number}</span>
                   {service.title}
@@ -98,8 +100,9 @@ function ServiceChapter({ service, reverse }) {
         className="svc-photo"
         initial={{ opacity: 0, clipPath: 'inset(8% 8% 8% 8% round 24px)' }}
         whileInView={{ opacity: 1, clipPath: 'inset(0% 0% 0% 0% round 24px)' }}
-        viewport={{ once: true, amount: 0.15 }}
+        viewport={viewportOnce}
         transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+        whileHover={{ scale: 1.02 }}
       >
         <div className="ag-card svc-photo-frame ag-img-reveal" style={{ borderRadius: '22px' }}>
           <MediaFrame src={service.image} alt={service.title} aspect="4 / 5" radius="22px" />
@@ -121,6 +124,7 @@ function ServiceChapter({ service, reverse }) {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, amount: 0.5 }}
               transition={{ delay: i * 0.06, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ x: 4 }}
             >
               {item}
             </motion.li>
@@ -129,7 +133,18 @@ function ServiceChapter({ service, reverse }) {
 
         <div className="svc-chips">
           {service.deliverables.slice(0, 3).map((item) => (
-            <span key={item} className="svc-chip">{item}</span>
+            <motion.span
+              key={item}
+              className="svc-chip"
+              variants={tagPop}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              whileHover={{ scale: 1.06, y: -2 }}
+              transition={springHover}
+            >
+              {item}
+            </motion.span>
           ))}
         </div>
 
@@ -166,12 +181,16 @@ function ProcessRail() {
           <FadeInStagger className="svc-rail-grid" stagger={0.1}>
             {SERVICE_PROCESS.map((step, i) => (
               <StaggerItem key={step.number}>
-                <div className="svc-rail-step">
+                <motion.div
+                  className="svc-rail-step"
+                  whileHover={{ y: -4, x: 2 }}
+                  transition={springHover}
+                >
                   <span className="svc-rail-num">{step.number}</span>
                   {i < SERVICE_PROCESS.length - 1 && <span className="svc-rail-line" aria-hidden="true" />}
                   <h3>{step.title}</h3>
                   <p>{step.description}</p>
-                </div>
+                </motion.div>
               </StaggerItem>
             ))}
           </FadeInStagger>

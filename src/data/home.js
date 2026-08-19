@@ -1,7 +1,7 @@
 export const HOME_HERO = {
   eyebrow: 'Independent digital studio · India',
-  title: 'Digital Clarity for Ambitious Businesses.',
-  titleLines: ['Digital Clarity for', 'Ambitious Businesses'],
+  title: 'Accelerating Growth for India’s Ambitious businesses via Tech & Strategy',
+  titleLines: ['Accelerating Growth for India’s', 'Ambitious Businesses via Tech & Strategy'],
   description: 'Strategy, identity, design and engineering, composed into experiences people choose.',
   primaryAction: { label: 'Start a project', to: '/contact' },
   secondaryAction: { label: 'View work', to: '/work' },

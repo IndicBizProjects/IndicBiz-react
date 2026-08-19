@@ -10,6 +10,8 @@ export default function MediaFrame({
   radius = '28px',
   parallax = true,
   aspect = '16 / 9',
+  objectPosition,
+  imgStyle,
 }) {
   const ref = useRef(null)
   const { scrollYProgress } = useScroll({
@@ -30,9 +32,20 @@ export default function MediaFrame({
       transition={{ duration: 0.75, ease: easeOut }}
     >
       {parallax ? (
-        <motion.img src={src} alt={alt} className="ag-media-shift" style={{ y, scale }} loading="lazy" />
+        <motion.img
+          src={src}
+          alt={alt}
+          className="ag-media-shift"
+          style={{ y, scale, objectPosition, ...imgStyle }}
+          loading="lazy"
+        />
       ) : (
-        <img src={src} alt={alt} loading="lazy" />
+        <img
+          src={src}
+          alt={alt}
+          style={{ objectPosition, ...imgStyle }}
+          loading="lazy"
+        />
       )}
     </motion.div>
   )

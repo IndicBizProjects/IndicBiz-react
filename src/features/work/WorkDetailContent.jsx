@@ -6,9 +6,11 @@ import MediaFrame from '../../components/layout/MediaFrame'
 import SitePreview from '../../components/layout/SitePreview'
 import MagneticBtn from '../../components/primitives/MagneticBtn'
 import ShareButton from '../../components/primitives/ShareButton'
-import FadeIn from '../../components/motion/FadeIn'
+import FadeIn, { FadeInStagger, StaggerItem } from '../../components/motion/FadeIn'
+import ScrollRevealText from '../../components/motion/ScrollRevealText'
 import { WORK_PROJECTS, WORK_UI, WORK_CTA } from '../../data/work'
 import { SERVICES } from '../../data/services'
+import { springHover, tapScale, tagPop } from '../../lib/motion'
 
 const pageVariants = {
   initial: { opacity: 0 },
@@ -41,7 +43,7 @@ export default function WorkDetailContent() {
   ]
 
   return (
-      <motion.div className="ag-page wk-page" variants={pageVariants} initial="initial" animate="animate" exit="exit">
+    <motion.div className="ag-page wk-page" variants={pageVariants} initial="initial" animate="animate" exit="exit">
       <section className="wd-hero">
         <div className="ag-wrap">
           <FadeIn y={8} duration={0.5}>
@@ -53,14 +55,14 @@ export default function WorkDetailContent() {
               <motion.p className="ag-eyebrow" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
                 {project.number} · {project.category}
               </motion.p>
-              <motion.h1
+              <ScrollRevealText
+                text={project.title}
+                reveal="slide"
+                stagger={0.05}
+                delay={0.08}
+                as="h1"
                 className="ag-h1 wd-title"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-              >
-                {project.title}
-              </motion.h1>
+              />
               <motion.p
                 className="ag-lede wd-lede"
                 initial={{ opacity: 0, y: 14 }}
@@ -86,47 +88,57 @@ export default function WorkDetailContent() {
 
             <motion.div
               className="wd-hero-media"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
             >
               <div className="ag-card wd-hero-frame">
-                <div className="wd-hero-photo">
+                <motion.div className="wd-hero-photo" whileHover={{ scale: 1.03 }} transition={{ duration: 0.45 }}>
                   <img src={project.image} alt={project.imageAlt} />
-                </div>
+                </motion.div>
               </div>
             </motion.div>
           </div>
 
           <dl className="wd-meta">
-              {[
-                { dt: 'Engagement', dd: project.category },
-                { dt: WORK_UI.relatedService, dd: relatedService ? relatedService.title : '', to: relatedService ? `/services/${relatedService.id}` : null },
-                { dt: 'Focus', chips: project.focus },
-                { dt: 'Live', dd: project.websiteUrl ? 'Open site ↗' : 'Private', href: project.websiteUrl },
-              ].map((item, i) => (
-                <motion.div
-                  key={item.dt}
-                  initial={{ opacity: 0, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.08 + i * 0.07, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  <dt>{item.dt}</dt>
-                  <dd>
-                    {item.chips ? (
-                      <span className="wd-focus">
-                        {item.chips.map((chip) => (
-                          <span key={chip}>{chip}</span>
-                        ))}
-                      </span>
-                    ) : item.to ? <Link to={item.to}>{item.dd}</Link> : item.href ? (
-                      <a href={item.href} target="_blank" rel="noreferrer">{item.dd}</a>
-                    ) : item.dd}
-                  </dd>
-                </motion.div>
-              ))}
-            </dl>
+            {[
+              { dt: 'Engagement', dd: project.category },
+              { dt: WORK_UI.relatedService, dd: relatedService ? relatedService.title : '', to: relatedService ? `/services/${relatedService.id}` : null },
+              { dt: 'Focus', chips: project.focus },
+              { dt: 'Live', dd: project.websiteUrl ? 'Open site ↗' : 'Private', href: project.websiteUrl },
+            ].map((item, i) => (
+              <motion.div
+                key={item.dt}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.08 + i * 0.07, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ y: -3 }}
+              >
+                <dt>{item.dt}</dt>
+                <dd>
+                  {item.chips ? (
+                    <span className="wd-focus">
+                      {item.chips.map((chip) => (
+                        <motion.span
+                          key={chip}
+                          variants={tagPop}
+                          initial="hidden"
+                          whileInView="visible"
+                          viewport={{ once: true }}
+                          whileHover={{ scale: 1.08 }}
+                        >
+                          {chip}
+                        </motion.span>
+                      ))}
+                    </span>
+                  ) : item.to ? <Link to={item.to}>{item.dd}</Link> : item.href ? (
+                    <a href={item.href} target="_blank" rel="noreferrer">{item.dd}</a>
+                  ) : item.dd}
+                </dd>
+              </motion.div>
+            ))}
+          </dl>
         </div>
       </section>
 
@@ -161,10 +173,14 @@ export default function WorkDetailContent() {
       <section className="ag-section" style={{ paddingTop: project.websiteUrl ? 0 : undefined }}>
         <div className="ag-wrap">
           <FadeIn y={16}>
-            <div className="ag-card wd-quote">
+            <motion.div
+              className="ag-card wd-quote"
+              whileHover={{ scale: 1.015, y: -4 }}
+              transition={springHover}
+            >
               <p className="ag-eyebrow">Outcome</p>
               <p>“{project.outcome}”</p>
-            </div>
+            </motion.div>
           </FadeIn>
         </div>
       </section>
@@ -178,16 +194,21 @@ export default function WorkDetailContent() {
                 The useful shifts from this engagement
               </h2>
             </FadeIn>
-            <div className="wd-highlights">
+            <FadeInStagger className="wd-highlights" stagger={0.08}>
               {project.highlights.map((item, i) => (
-                <FadeIn key={item} y={16} delay={i * 0.06}>
-                  <div className="ag-card wd-highlight">
+                <StaggerItem key={item}>
+                  <motion.div
+                    className="ag-card wd-highlight"
+                    whileHover={{ y: -4, scale: 1.02 }}
+                    whileTap={tapScale}
+                    transition={springHover}
+                  >
                     <span>{String(i + 1).padStart(2, '0')}</span>
                     <p>{item}</p>
-                  </div>
-                </FadeIn>
+                  </motion.div>
+                </StaggerItem>
               ))}
-            </div>
+            </FadeInStagger>
           </div>
         </section>
       )}
@@ -197,10 +218,14 @@ export default function WorkDetailContent() {
           <div className="wd-story">
             {chapters.map((chapter, i) => (
               <FadeIn key={chapter.id} y={22} delay={i * 0.06}>
-                <article className="wd-chapter">
+                <motion.article
+                  className="wd-chapter"
+                  whileHover={{ x: 4 }}
+                  transition={springHover}
+                >
                   <p className="ag-eyebrow">{chapter.number} · {chapter.heading}</p>
                   <p>{chapter.body}</p>
-                </article>
+                </motion.article>
               </FadeIn>
             ))}
           </div>
@@ -215,16 +240,21 @@ export default function WorkDetailContent() {
               What this engagement focused on
             </h2>
           </FadeIn>
-          <div className="wd-scope">
+          <FadeInStagger className="wd-scope" stagger={0.08}>
             {project.focus.map((item, i) => (
-              <FadeIn key={item} y={16} delay={i * 0.06}>
-                <div className="ag-card wd-scope-card">
+              <StaggerItem key={item}>
+                <motion.div
+                  className="ag-card wd-scope-card"
+                  whileHover={{ y: -4, scale: 1.02 }}
+                  whileTap={tapScale}
+                  transition={springHover}
+                >
                   <span>{String(i + 1).padStart(2, '0')}</span>
                   <p>{item}</p>
-                </div>
-              </FadeIn>
+                </motion.div>
+              </StaggerItem>
             ))}
-          </div>
+          </FadeInStagger>
         </div>
       </section>
 
@@ -237,7 +267,11 @@ export default function WorkDetailContent() {
           <div className="wd-related">
             {related.map((item) => (
               <FadeIn key={item.id} y={20}>
-                <article className="ag-card wd-related-card">
+                <motion.article
+                  className="ag-card wd-related-card"
+                  whileHover={{ y: -6, boxShadow: '0 24px 48px rgba(13,36,38,0.1)' }}
+                  transition={springHover}
+                >
                   <MediaFrame src={item.image} alt={item.imageAlt} aspect="16 / 10" radius="18px" />
                   <div className="wd-related-copy">
                     <p className="ag-eyebrow">{item.number} · {item.category}</p>
@@ -245,7 +279,7 @@ export default function WorkDetailContent() {
                     <p>{item.summary}</p>
                     <MagneticBtn to={`/work/${item.id}`} variant="light" size="sm">View case</MagneticBtn>
                   </div>
-                </article>
+                </motion.article>
               </FadeIn>
             ))}
           </div>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { springHover, staggerContainer, fadeUp, viewportOnce } from '../../lib/motion'
 import MagneticBtn from '../../components/primitives/MagneticBtn'
 import { Link } from '../../app/router'
@@ -16,6 +16,8 @@ import { AboutIcon } from '../about/AboutIcons'
 import { REVIEW_RATING_FACTORS } from '../../data/reviews'
 import { loadPublishedReviews } from '../../services/reviewsService'
 import homeHeroImage from '../../assets/homeheroimg.png'
+import homeAboutImage from '../../assets/homeAboutus.jpg'
+import ctaImage from '../../assets/cta.png'
 
 const ease = [0.16, 1, 0.3, 1]
 
@@ -74,7 +76,7 @@ function Hero() {
       className="ag-section"
       style={{ paddingTop: 'clamp(8.5rem, 14vw, 11rem)', textAlign: 'center' }}
     >
-      <div className="ag-wrap">
+      <div className="ag-wrap hm-hero-wrap">
         <motion.p className="ag-eyebrow" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
           {HOME_HERO.eyebrow}
         </motion.p>
@@ -96,6 +98,8 @@ function Hero() {
                 delay={0.08 + i * 0.18}
                 as="span"
                 className="hm-hero-line"
+                highlightWords={['Ambitious', 'Businesses']}
+                highlightColor="#4d9096"
               />
             ))}
           </h1>
@@ -115,41 +119,17 @@ function Hero() {
 }
 
 function HeroVisual() {
-  const reduceMotion = useReducedMotion()
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
-  const springX = useSpring(x, { stiffness: 120, damping: 18, mass: 0.4 })
-  const springY = useSpring(y, { stiffness: 120, damping: 18, mass: 0.4 })
-  const rotateX = useTransform(springY, [-80, 80], [7, -7])
-  const rotateY = useTransform(springX, [-80, 80], [-8, 8])
-
-  const onMove = (event) => {
-    const rect = event.currentTarget.getBoundingClientRect()
-    x.set(event.clientX - rect.left - rect.width / 2)
-    y.set(event.clientY - rect.top - rect.height / 2)
-  }
-
-  const onLeave = () => {
-    x.set(0)
-    y.set(0)
-  }
-
   return (
     <motion.div
       className="ag-card hm-hero-visual"
       initial={{ opacity: 0, clipPath: 'inset(12% 12% 12% 12% round 22px)' }}
       animate={{ opacity: 1, clipPath: 'inset(0% 0% 0% 0% round 22px)' }}
       transition={{ duration: 1.05, delay: 0.45, ease }}
-      style={reduceMotion ? undefined : { rotateX, rotateY, transformPerspective: 1100 }}
-      onMouseMove={reduceMotion ? undefined : onMove}
-      onMouseLeave={reduceMotion ? undefined : onLeave}
     >
       <span className="hm-hero-visual-glow" aria-hidden="true" />
-      <motion.img
+      <img
         src={homeHeroImage}
         alt="IndicBiz"
-        animate={reduceMotion ? undefined : { y: [0, -14, 0], scale: [1, 1.045, 1] }}
-        transition={reduceMotion ? undefined : { duration: 7.5, repeat: Infinity, ease: 'easeInOut' }}
       />
     </motion.div>
   )
@@ -449,7 +429,7 @@ function Stats() {
             style={{ transition: 'transform 0.45s cubic-bezier(0.16,1,0.3,1)' }}
           >
             <div className="ag-card ag-img-reveal" style={{ padding: '0.7rem', height: '100%', borderRadius: '28px' }}>
-              <MediaFrame src="/media/indicbiz-collab.jpg" alt="A quiet collaboration table" aspect="4 / 5" radius="22px" />
+              <MediaFrame src={homeAboutImage} alt="IndicBiz team working together" aspect="4 / 5" radius="22px" objectPosition="center 85%" />
             </div>
           </motion.div>
         </div>
@@ -797,7 +777,7 @@ function FinalCta() {
             viewport={viewportOnce}
             transition={{ duration: 0.85, delay: 0.15, ease }}
           >
-            <MediaFrame src="/media/indicbiz-collab.jpg" alt="" aspect="4 / 3" radius="22px" />
+            <MediaFrame src={ctaImage} alt="Start a project with IndicBiz" aspect="4 / 3" radius="22px" />
           </motion.div>
         </motion.div>
       </div>
